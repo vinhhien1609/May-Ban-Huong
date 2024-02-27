@@ -1,0 +1,2 @@
+define(["exports"],(function(t){"use strict";t.PAP_Click_DocsendHubEntryButton=function(t){return{class:"docsend",action:"click",object:"docsend_hub_entry_button",properties:t}},t.throttle=function(t,n){let e=!0,o=null;function u(){e=!0,null!==o&&(t(...o),o=null)}return function(...c){e?(e=!1,t(...c),setTimeout(u,n)):o=c}}}));
+//# sourceMappingURL=c_pap-events_docsend_click_docsend_hub_entry_button.js-vflvRrbx8.map

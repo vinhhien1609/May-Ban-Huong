@@ -1,0 +1,2 @@
+define(["exports","./e_file_viewer_edison_shmodel_file_async"],(function(e,i){"use strict";i.injectInternalStyle("/static/js/file_viewer/preview_core.module.out-vflt5SHBa.css",(e=>"._app_3orjr_4{align-items:flex-end;display:flex;flex-grow:1;height:100%;justify-content:center;position:relative;width:100%}@media (max-width:600px){._app_3orjr_4{width:100%!important}}"));e.app="_app_3orjr_4"}));
+//# sourceMappingURL=c_file_viewer_preview_core.js-vflGKtlix.map

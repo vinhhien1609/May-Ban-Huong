@@ -1,0 +1,2 @@
+define(["exports"],(function(e){"use strict";const i={size:1,minSize:.2,maxSize:5};e.getImageDefaultSizes=function(e,t){if(!e||!t)return i;const n=e.width/t.width,s=e.height/t.height,r=Math.max(n,s);if(r*i.maxSize<=.9)return i;const z=.9/r;return{size:z/5,minSize:z/25,maxSize:z}}}));
+//# sourceMappingURL=c_plugin_utils_getImageDefaultSizes.js-vflSMyVNV.map

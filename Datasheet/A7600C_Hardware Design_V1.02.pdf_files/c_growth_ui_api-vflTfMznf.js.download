@@ -1,0 +1,2 @@
+define(["exports","./e_file_viewer_edison_shmodel_file_async"],(function(e,s){"use strict";const o=(e,o,n)=>{(n||new s.UserApiV2Client).ns("growth").rpc("mark_onboarding_modules_as_completed",{modules:o},{subjectUserId:e})};e.markModuleAsCompleted=(e,s,n)=>{o(e,[s],n)}}));
+//# sourceMappingURL=c_growth_ui_api.js-vflKTBQt8.map

@@ -1,0 +1,2 @@
+define(["exports"],(function(t){"use strict";t.RafThrottle=class{constructor(t){this.request=()=>{this.ticking||(this.ticking=!0,this.currentRequestId=requestAnimationFrame((()=>{this.thunk(),this.ticking=!1})))},this.cancelPending=()=>{cancelAnimationFrame(this.currentRequestId)},this.thunk=t}}}));
+//# sourceMappingURL=c_raf_throttle.js-vflzdB4aX.map
