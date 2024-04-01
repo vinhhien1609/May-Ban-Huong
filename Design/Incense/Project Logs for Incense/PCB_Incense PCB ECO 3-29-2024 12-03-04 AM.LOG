@@ -1,0 +1,123 @@
+Removed Pin From Net: NetName=DGND Pin=J1-1
+Removed Pin From Net: NetName=DROP Pin=J1-2
+Removed Pin From Net: NetName=24V_MAIN Pin=J1-5
+Removed Pin From Net: NetName=DGND Pin=J2-1
+Removed Pin From Net: NetName=EMPTY Pin=J2-3
+Removed Pin From Net: NetName=24V_MAIN Pin=J2-5
+Removed Pin From Net: NetName=DGND Pin=J3-1
+Removed Pin From Net: NetName=DOOR Pin=J3-4
+Removed Pin From Net: NetName=24V_MAIN Pin=J3-5
+Removed Pin From Net: NetName=DGND Pin=JP1-1
+Removed Pin From Net: NetName=NetF1_1 Pin=JP1-2
+Removed Pin From Net: NetName=24V_MAIN Pin=JP2-1
+Removed Pin From Net: NetName=VADI_RX Pin=P2-1
+Removed Pin From Net: NetName=VADI_TX Pin=P2-2
+Removed Pin From Net: NetName=DGND Pin=P2-3
+Removed Pin From Net: NetName=NetL5_2 Pin=P2-4
+Removed Pin From Net: NetName=DGND Pin=P2-5
+Removed Pin From Net: NetName=12V_VADI Pin=P2-6
+Removed Pin From Net: NetName=GND Pin=P3-1
+Removed Pin From Net: NetName=GND Pin=P3-2
+Removed Pin From Net: NetName=GND Pin=P3-3
+Removed Pin From Net: NetName=V_motor Pin=P3-4
+Removed Pin From Net: NetName=SWap_motor_OUT Pin=P3-5
+Removed Pin From Net: NetName=Solenoid_out Pin=P3-6
+Removed Pin From Net: NetName=Heater2 Pin=P4-1
+Removed Pin From Net: NetName=Heater1 Pin=P4-2
+Removed Pin From Net: NetName=RELAY1_2 Pin=P4-3
+Removed Pin From Net: NetName=RELAY1_1 Pin=P4-4
+Removed Pin From Net: NetName=RELAY2_2 Pin=P4-5
+Removed Pin From Net: NetName=RELAY2_1 Pin=P4-6
+Removed Pin From Net: NetName=RELAY3_2 Pin=P4-7
+Removed Pin From Net: NetName=RELAY3_1 Pin=P4-8
+Removed Pin From Net: NetName=RELAY4_2 Pin=P4-9
+Removed Pin From Net: NetName=RELAY4_1 Pin=P4-10
+Removed Pin From Net: NetName=RELAY5_2 Pin=P4-11
+Removed Pin From Net: NetName=RELAY5_1 Pin=P4-12
+Removed Member From Class: ClassName=02-Insence_interface Member=J1
+Removed Member From Class: ClassName=02-Insence_interface Member=J2
+Removed Member From Class: ClassName=02-Insence_interface Member=J3
+Removed Member From Class: ClassName=02-Insence_interface Member=JP2
+Change Component Footprint: Designator=P4 Old Footprint=2EDGR-5.08-12P New Footprint=HDR2x3 4_2MM FEMALE TH RA
+Change Component Footprint: Designator=JP1 Old Footprint=010321021 New Footprint=HDR2x2 4_2MM FEMALE TH RA
+Change Component Footprint: Designator=P2 Old Footprint=HDR2x3 4_2MM FEMALE TH RA New Footprint=HDR2x4 4_2MM FEMALE TH RA
+Change Component Comment : Designator=P4 Old Comment=12POS_2EDG5.08 New Comment=HEADER 5557, 3x2
+Change Component Comment : Designator=JP1 Old Comment=HDR 2 POS 5.08mm New Comment=Header 2X2H
+Change Component Comment : Designator=P2 Old Comment=HEADER 5557, 3x2 New Comment=Header 4X2A
+Change component parameters: Designator = "P2" ("P2"); Footprint = "HDR2x3 4_2MM FEMALE TH RA"; UniqueID = "\GSAZXPGY" ("\GSAZXPGY")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters: Designator = "P4" ("P4"); Footprint = "2EDGR-5.08-12P"; UniqueID = "\MLTFLGTR" ("\MLTFLGTR")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Mouser"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "538-39-28-1063"; VariantName = "[No Variations]"
+Change component parameters: Designator = "JP1" ("JP1"); Footprint = "010321021"; UniqueID = "\GTAXULTN" ("\GTAXULTN")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=P7(HDR2x3 4_2MM FEMALE TH RA)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Mouser"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "538-39-28-1063"; VariantName = "[No Variations]"
+Added Component: Designator=P8(HDR2x5 4_2MM FEMALE TH RA)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=P9(HDR2x1 4_2MM FEMALE TH RA)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetF1_1 Pin=JP1-1
+Added Pin To Net: NetName=DGND Pin=JP1-2
+Added Pin To Net: NetName=NetF1_1 Pin=JP1-3
+Added Pin To Net: NetName=DGND Pin=JP1-4
+Added Pin To Net: NetName=24V_MAIN Pin=P2-1
+Added Pin To Net: NetName=24V_MAIN Pin=P2-2
+Added Pin To Net: NetName=EMPTY Pin=P2-3
+Added Pin To Net: NetName=EMPTY Pin=P2-3
+Added Pin To Net: NetName=DROP Pin=P2-4
+Added Pin To Net: NetName=DOOR Pin=P2-5
+Added Pin To Net: NetName=24V_MAIN Pin=P3-1
+Added Pin To Net: NetName=24V_MAIN Pin=P3-2
+Added Pin To Net: NetName=24V_MAIN Pin=P3-3
+Added Pin To Net: NetName=NetL5_2 Pin=P4-1
+Added Pin To Net: NetName=DGND Pin=P4-2
+Added Pin To Net: NetName=12V_VADI Pin=P4-3
+Added Pin To Net: NetName=VADI_RX Pin=P4-4
+Added Pin To Net: NetName=VADI_TX Pin=P4-5
+Added Pin To Net: NetName=DGND Pin=P4-6
+Added Pin To Net: NetName=V_motor Pin=P7-1
+Added Pin To Net: NetName=SWap_motor_OUT Pin=P7-2
+Added Pin To Net: NetName=Solenoid_out Pin=P7-3
+Added Pin To Net: NetName=GND Pin=P7-4
+Added Pin To Net: NetName=GND Pin=P7-5
+Added Pin To Net: NetName=GND Pin=P7-6
+Added Pin To Net: NetName=RELAY1_2 Pin=P8-1
+Added Pin To Net: NetName=RELAY2_2 Pin=P8-2
+Added Pin To Net: NetName=RELAY3_2 Pin=P8-3
+Added Pin To Net: NetName=RELAY4_2 Pin=P8-4
+Added Pin To Net: NetName=RELAY5_2 Pin=P8-5
+Added Pin To Net: NetName=RELAY1_1 Pin=P8-6
+Added Pin To Net: NetName=RELAY2_1 Pin=P8-7
+Added Pin To Net: NetName=RELAY3_1 Pin=P8-8
+Added Pin To Net: NetName=RELAY4_1 Pin=P8-9
+Added Pin To Net: NetName=RELAY5_1 Pin=P8-10
+Added Pin To Net: NetName=Heater2 Pin=P9-1
+Added Pin To Net: NetName=Heater1 Pin=P9-2
+Added Pin To Net: NetName=NetP3_4 Pin=P3-4
+Added Pin To Net: NetName=NetP3_4 Pin=R39-1
+Added Net: Name=NetP3_4
+Added Pin To Net: NetName=NetP3_5 Pin=P3-5
+Added Pin To Net: NetName=NetP3_5 Pin=R40-1
+Added Net: Name=NetP3_5
+Added Pin To Net: NetName=NetP3_6 Pin=P3-6
+Added Pin To Net: NetName=NetP3_6 Pin=R41-1
+Added Net: Name=NetP3_6
+Added Member To Class: ClassName=02-Insence_interface Member=Component P7 HEADER 5557, 3x2
+Added Member To Class: ClassName=02-Insence_interface Member=Component P8 Header 5X2A
+Added Member To Class: ClassName=02-Insence_interface Member=Component P9 Header 2H

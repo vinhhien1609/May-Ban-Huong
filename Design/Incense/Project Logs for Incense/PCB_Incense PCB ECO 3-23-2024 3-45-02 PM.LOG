@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=MCU_TX_VADI Pin=U6-25
+Removed Pin From Net: NetName=MCU_RX_VADI Pin=U6-26
+Removed Pin From Net: NetName=NetR21_2 Pin=U6-47
+Removed Pin From Net: NetName=NetR24_2 Pin=U6-48
+Added Pin To Net: NetName=NetR21_2 Pin=U6-25
+Added Pin To Net: NetName=NetR24_2 Pin=U6-26
+Added Pin To Net: NetName=MCU_TX_VADI Pin=U6-47
+Added Pin To Net: NetName=MCU_RX_VADI Pin=U6-48

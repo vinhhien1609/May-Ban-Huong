@@ -1,0 +1,21 @@
+Removed Pin From Net: NetName=NetC34_2 Pin=Q5-1
+Removed Pin From Net: NetName=+24V_SYS Pin=Q5-3
+Removed Pin From Net: NetName=SWap_motor_OUT Pin=Q8-1
+Removed Pin From Net: NetName=+24V_SYS Pin=Q8-3
+Removed Pin From Net: NetName=Solenoid_out Pin=Q11-1
+Removed Pin From Net: NetName=+24V_SYS Pin=Q11-3
+Change Component Footprint: Designator=Q5 Old Footprint=TO-252 New Footprint=E3
+Change Component Footprint: Designator=Q8 Old Footprint=TO-252 New Footprint=E3
+Change Component Footprint: Designator=Q11 Old Footprint=TO-252 New Footprint=E3
+Change Component Comment : Designator=Q5 Old Comment=AOD409 New Comment=MOSFET-P
+Change Component Comment : Designator=Q8 Old Comment=AOD409 New Comment=MOSFET-P
+Change Component Comment : Designator=Q11 Old Comment=AOD409 New Comment=MOSFET-P
+Change Component Library : Designator=Q5 Old Library=Miscellaneous Devices.IntLib New Library=lib.SchLib
+Change Component Library : Designator=Q8 Old Library=Miscellaneous Devices.IntLib New Library=lib.SchLib
+Change Component Library : Designator=Q11 Old Library=Miscellaneous Devices.IntLib New Library=lib.SchLib
+Added Pin To Net: NetName=+24V_SYS Pin=Q5-2
+Added Pin To Net: NetName=NetC34_2 Pin=Q5-3
+Added Pin To Net: NetName=+24V_SYS Pin=Q8-2
+Added Pin To Net: NetName=SWap_motor_OUT Pin=Q8-3
+Added Pin To Net: NetName=+24V_SYS Pin=Q11-2
+Added Pin To Net: NetName=Solenoid_out Pin=Q11-3

@@ -1,0 +1,28 @@
+Added Component: Designator=J2(CONUFL001-SMD)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://linxtechnologies.com/wp/product/mhf-rf-connectors/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Linx Technologies"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "CONUFL001-SMD-T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "712-CONUFL001-SMD-T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Linx-Technologies/CONUFL001-SMD-T?qs=EU6FO9ffTwfRdkBeQTdJWQ%3D%3D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Newark"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "77AK9897"; VariantName = "[No Variations]"
+Added Component: Designator=J3(CONUFL001-SMD)
+Add component (AddParameter): Name = "Arrow Part Number"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Arrow Price/Stock"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet Link"; Value = "https://linxtechnologies.com/wp/product/mhf-rf-connectors/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Linx Technologies"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "CONUFL001-SMD-T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Part Number"; Value = "712-CONUFL001-SMD-T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mouser Price/Stock"; Value = "https://www.mouser.co.uk/ProductDetail/Linx-Technologies/CONUFL001-SMD-T?qs=EU6FO9ffTwfRdkBeQTdJWQ%3D%3D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Newark"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "77AK9897"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetC55_1 Pin=J2-1
+Added Pin To Net: NetName=DGND Pin=J2-2
+Added Pin To Net: NetName=DGND Pin=J2-3
+Added Pin To Net: NetName=NetC58_1 Pin=J3-1
+Added Pin To Net: NetName=DGND Pin=J3-2
+Added Pin To Net: NetName=DGND Pin=J3-3
+Added Member To Class: ClassName=03_Incense_4G Member=Component J2 CONUFL001-SMD-T
+Added Member To Class: ClassName=03_Incense_4G Member=Component J3 CONUFL001-SMD-T

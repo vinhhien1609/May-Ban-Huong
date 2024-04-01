@@ -1,0 +1,6 @@
+Change Component Footprint: Designator=Q5 Old Footprint=E3 New Footprint=TO-252
+Change Component Footprint: Designator=Q8 Old Footprint=E3 New Footprint=TO-252
+Change Component Footprint: Designator=Q11 Old Footprint=E3 New Footprint=TO-252
+Added Pin To Net: NetName=+24V_SYS Pin=Q5-2
+Added Pin To Net: NetName=+24V_SYS Pin=Q8-2
+Added Pin To Net: NetName=+24V_SYS Pin=Q11-2

@@ -1,0 +1,21 @@
+Added Component: Designator=IC2(FT232)
+Add component (AddParameter): Name = "CATEGORY"; Value = "IC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "FTDI, Future Technology Devices International Ltd"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "FT232RL-REEL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "PROFILIC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "PL2303HX"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "FT232RL"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetIC2_1 Pin=IC2-1
+Added Pin To Net: NetName=U3V3 Pin=IC2-4
+Added Pin To Net: NetName=NetIC2_5 Pin=IC2-5
+Added Pin To Net: NetName=DGND Pin=IC2-7
+Added Pin To Net: NetName=USB1_D_P Pin=IC2-15
+Added Pin To Net: NetName=USB1_D_N Pin=IC2-16
+Added Pin To Net: NetName=U3V3 Pin=IC2-17
+Added Pin To Net: NetName=DGND Pin=IC2-18
+Added Pin To Net: NetName=5V_USB Pin=IC2-20
+Added Pin To Net: NetName=DGND Pin=IC2-21
+Added Pin To Net: NetName=DGND Pin=IC2-25
+Added Pin To Net: NetName=DGND Pin=IC2-26
+Added Member To Class: ClassName=04_Incense_MCU Member=Component IC2 FT232RL
