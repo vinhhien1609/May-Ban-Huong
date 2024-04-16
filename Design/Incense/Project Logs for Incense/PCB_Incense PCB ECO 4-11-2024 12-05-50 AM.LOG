@@ -1,0 +1,12 @@
+Removed Pin From Net: NetName=MCU_DEBUG_TX Pin=U6-25
+Removed Pin From Net: NetName=MCU_DEBUG_RX Pin=U6-26
+Removed Pin From Net: NetName=MCU_TX_VADI Pin=U6-47
+Removed Pin From Net: NetName=MCU_RX_VADI Pin=U6-48
+Removed Pin From Net: NetName=MCU_4G_TX Pin=U6-68
+Removed Pin From Net: NetName=MCU_4G_RX Pin=U6-69
+Added Pin To Net: NetName=MCU_TX_VADI Pin=U6-25
+Added Pin To Net: NetName=MCU_RX_VADI Pin=U6-26
+Added Pin To Net: NetName=MCU_4G_TX Pin=U6-47
+Added Pin To Net: NetName=MCU_4G_RX Pin=U6-48
+Added Pin To Net: NetName=MCU_DEBUG_TX Pin=U6-68
+Added Pin To Net: NetName=MCU_DEBUG_RX Pin=U6-69

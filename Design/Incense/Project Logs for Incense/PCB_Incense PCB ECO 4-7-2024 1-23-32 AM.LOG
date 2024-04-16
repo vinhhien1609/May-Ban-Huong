@@ -1,0 +1,30 @@
+Added Component: Designator=U8(SOIC-8)
+Add component (AddParameter): Name = "CATEGORY"; Value = "IC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "LM358BAIDR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "ON Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "LM358DR2G"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "UNIT"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "LM358BAIDR"; VariantName = "[No Variations]"
+Added Component: Designator=U9(SOIC-8)
+Add component (AddParameter): Name = "CATEGORY"; Value = "IC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "LM358BAIDR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "ON Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "LM358DR2G"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "UNIT"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "LM358BAIDR"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=I_M_SENSE Pin=U8-1
+Added Pin To Net: NetName=NetC81_2 Pin=U8-2
+Added Pin To Net: NetName=NetR122_1 Pin=U8-3
+Added Pin To Net: NetName=DGND Pin=U8-4
+Added Pin To Net: NetName=5V_OUT Pin=U8-8
+Added Pin To Net: NetName=NetR126_1 Pin=U9-5
+Added Pin To Net: NetName=NetC83_2 Pin=U9-6
+Added Pin To Net: NetName=NetC83_1 Pin=U9-7
+Added Member To Class: ClassName=02-Insence_interface Member=Component U8 LM358BIDGKR
+Added Member To Class: ClassName=02-Insence_interface Member=Component U9 LM358BAIDR

@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=MODEM_KEY Pin=U6-39
+Removed Pin From Net: NetName=NetR5_2 Pin=U6-40
+Removed Pin From Net: NetName=MODEM_RST Pin=U6-41
+Added Pin To Net: NetName=MODEM_RST Pin=U6-39
+Added Pin To Net: NetName=MODEM_KEY Pin=U6-40
+Added Pin To Net: NetName=NetR5_2 Pin=U6-41

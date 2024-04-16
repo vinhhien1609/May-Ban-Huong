@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=NetR50_2 Pin=U6-40
+Removed Pin From Net: NetName=LED_3 Pin=U6-73
+Removed Pin From Net: NetName=LED_2 Pin=U6-77
+Removed Pin From Net: NetName=LED_1 Pin=U6-81
+Removed Pin From Net: NetName=IN_DROP Pin=U6-82
+Removed Pin From Net: NetName=IN_EMPTY Pin=U6-84
+Removed Pin From Net: NetName=IN_DOOR Pin=U6-85
+Added Pin To Net: NetName=IN_DOOR Pin=U6-40
+Added Pin To Net: NetName=IN_EMPTY Pin=U6-41
+Added Pin To Net: NetName=IN_DROP Pin=U6-42
+Added Pin To Net: NetName=LED_1 Pin=U6-43
+Added Pin To Net: NetName=LED_2 Pin=U6-44
+Added Pin To Net: NetName=LED_3 Pin=U6-45
+Added Pin To Net: NetName=NetR50_2 Pin=U6-77
