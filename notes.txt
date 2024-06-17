@@ -1,0 +1,3 @@
+chưa có BAT RTC
+net BAT cần mix nguồn 3.3V tránh hết pin không hoạt động
+sai chân flash

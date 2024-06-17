@@ -1,0 +1,13 @@
+rct6_nv11_vdm\rtc_time.o: ..\Core\Driver\RTC_Time.c
+rct6_nv11_vdm\rtc_time.o: C:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
+rct6_nv11_vdm\rtc_time.o: .\RTE\_RCT6_NV11_VDM\RTE_Components.h
+rct6_nv11_vdm\rtc_time.o: ../Drivers/CMSIS/Include/core_cm3.h
+rct6_nv11_vdm\rtc_time.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+rct6_nv11_vdm\rtc_time.o: ../Drivers/CMSIS/Include/cmsis_version.h
+rct6_nv11_vdm\rtc_time.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+rct6_nv11_vdm\rtc_time.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+rct6_nv11_vdm\rtc_time.o: C:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\system_stm32f10x.h
+rct6_nv11_vdm\rtc_time.o: ..\Core\Driver\RTC_Time.h
+rct6_nv11_vdm\rtc_time.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
+rct6_nv11_vdm\rtc_time.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+rct6_nv11_vdm\rtc_time.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

@@ -1,0 +1,30 @@
+Added Component: Designator=J5(693021020811)
+Add component (AddParameter): Name = "Category"; Value = "Input/Output Connectors"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Website Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.we-online.com/redexpert/article/693021020811?ad"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Datasheet Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.we-online.com/redexpert/spec/693021020811?ad"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Contact Resistance"; Value = "100mOhm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Gender"; Value = "Receptacle"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Wurth Elektronik"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "693021020811"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Match Code"; Value = "WR-CRD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mount"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Pins"; Value = "6"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Temperature Max"; Value = "70°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Temperature Min"; Value = "-20°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "Tape and Reel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Rated Current"; Value = "0.5A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "Push & Push"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Withstanding Voltage"; Value = "500VAC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Working Voltage"; Value = "50VAC"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=SIM_VDD Pin=J5-C1
+Added Pin To Net: NetName=SIM_RST Pin=J5-C2
+Added Pin To Net: NetName=NetC52_1 Pin=J5-C3
+Added Pin To Net: NetName=DGND Pin=J5-C5
+Added Pin To Net: NetName=SIM_RST Pin=J5-C7
+Added Pin To Net: NetName=DGND Pin=J5-Shell
+Added Pin To Net: NetName=DGND Pin=J5-Shell
+Added Pin To Net: NetName=DGND Pin=J5-Shell
+Added Pin To Net: NetName=DGND Pin=J5-Shell
+Added Member To Class: ClassName=03_Incense_4G Member=Component J5 693021020811

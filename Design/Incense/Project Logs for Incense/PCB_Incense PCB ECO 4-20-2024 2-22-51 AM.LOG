@@ -1,0 +1,2 @@
+Removed Pin From Net: NetName=MCU_IO_BUZZ Pin=U6-98
+Added Pin To Net: NetName=MCU_IO_BUZZ Pin=U6-18

@@ -1,0 +1,9 @@
+Added Pin To Net: NetName=+24V_SYS Pin=C6-2
+Added Pin To Net: NetName=+24V_SYS Pin=C7-2
+Added Pin To Net: NetName=+24V_SYS Pin=C8-1
+Added Pin To Net: NetName=+24V_SYS Pin=C9-1
+Added Pin To Net: NetName=+24V_SYS Pin=D1-2
+Added Pin To Net: NetName=+24V_SYS Pin=IC1-7
+Added Room: Name=01-Insence_Power
+Added Room: Name=02-Insence_interface
+Added Room: Name=04_Incense_MCU

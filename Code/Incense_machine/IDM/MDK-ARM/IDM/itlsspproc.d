@@ -1,0 +1,12 @@
+idm\itlsspproc.o: ..\Core\User_Driver\ITLSSPProc.c
+idm\itlsspproc.o: ..\Core\User_Driver\ITLSSPProc.h
+idm\itlsspproc.o: ..\Core\User_Driver\SSPComs.h
+idm\itlsspproc.o: ..\Core\User_Driver\itl_types.h
+idm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+idm\itlsspproc.o: ..\Core\User_Driver\ssp_defines.h
+idm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
+idm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+idm\itlsspproc.o: ..\Core\User_Driver\Random.h
+idm\itlsspproc.o: ..\Core\User_Driver\Encryption.h
+idm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+idm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

@@ -1,0 +1,291 @@
+NV11 >> Getting information from Note Validator...
+NV11 >> Validator Found
+NV11 >> Encryption Setup
+
+
+NV11 >> Firmware: 0382
+NV11 >> Channels:
+NV11 >> channel 1: 1000 VND
+NV11 >> channel 2: 2000 VND
+NV11 >> channel 3: 5000 VND
+NV11 >> channel 4: 10000 VND
+NV11 >> channel 5: 20000 VND
+NV11 >> channel 6: 50000 VND
+NV11 >> channel 7: 100000 VND
+NV11 >> channel 8: 200000 VND
+
+NV11 >> Set Inhibits done!
+
+NV11 >> Enable Successfully
+
+NV11 Init Successful!
+Infinite loop
+
+[0:0:1]
+parse_poll:
+parse_poll:
+--------------------------------------
+[0:0:5]
+parse_poll:
+parse_poll:
+NV11 >> SSP_POLL_REJECTING
+
+[0:0:6]
+parse_poll:
+NV11 >> SSP_POLL_REJECTING
+parse_poll:
+NV11 >> SSP_POLL_REJECTING
+
+[0:0:7]
+parse_poll:
+NV11 >> Note Rejected
+parse_poll:
+------------------------------
+[0:2:55]
+parse_poll:
+NV11 >> Note Read 1 
+Menh gia tien: 1000 VND 
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:56]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:57]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:58]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:59]
+parse_poll:
+NV11 >> Fraud Attempt 1 
+NV11 >> Stacked
+parse_poll:
+--------------------------------------
+[0:1:15]
+parse_poll:
+NV11 >> Note Read 2 
+Menh gia tien: 2000 VND 
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:16]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:17]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:18]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:19]
+parse_poll:
+NV11 >> Fraud Attempt 2 
+NV11 >> Stacked
+parse_poll:
+------------------------------
+[0:3:22]
+parse_poll:
+parse_poll:
+NV11 >> Note Read 3 
+Menh gia tien: 5000 VND 
+
+[0:3:23]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:3:24]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:3:25]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:3:26]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Fraud Attempt 3 
+NV11 >> Stacked
+-----------------------------------
+[0:2:20]
+parse_poll:
+parse_poll:
+NV11 >> Note Read 4 
+Menh gia tien: 10000 VND 
+
+[0:2:21]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:22]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:23]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:24]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Fraud Attempt 4 
+NV11 >> Stacked
+------------------------------
+[0:4:11]
+parse_poll:
+parse_poll:
+NV11 >> Note Read 5 
+Menh gia tien: 20000 VND 
+
+[0:4:12]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:13]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:14]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:15]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Fraud Attempt 5 
+NV11 >> Stacked
+------------------------------
+[0:1:56]
+parse_poll:
+NV11 >> Note Read 6 
+Menh gia tien: 50000 VND 
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:57]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:58]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:1:59]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:2:0]
+parse_poll:
+NV11 >> Fraud Attempt 6 
+NV11 >> Stacked
+parse_poll:
+------------------------------
+[0:4:29]
+parse_poll:
+parse_poll:
+NV11 >> Note Read 7 
+Menh gia tien: 100000 VND 
+
+[0:4:30]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:31]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:32]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:33]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Fraud Attempt 7 
+NV11 >> Stacked
+------------------------------
+[0:4:54]
+parse_poll:
+NV11 >> Note Read 8 
+Menh gia tien: 200000 VND 
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:55]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:56]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:57]
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+parse_poll:
+NV11 >> Note SSP_POLL_STACKING
+
+[0:4:58]
+parse_poll:
+NV11 >> Fraud Attempt 8 
+NV11 >> Stacked
+parse_poll:
+------------------------------

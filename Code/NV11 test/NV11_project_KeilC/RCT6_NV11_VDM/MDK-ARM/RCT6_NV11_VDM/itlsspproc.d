@@ -1,0 +1,12 @@
+rct6_nv11_vdm\itlsspproc.o: ..\Core\Src\ssp_c\ITLSSPProc.c
+rct6_nv11_vdm\itlsspproc.o: ../Core/Inc/ssp_h/ITLSSPProc.h
+rct6_nv11_vdm\itlsspproc.o: ../Core/Inc/ssp_h/SSPComs.h
+rct6_nv11_vdm\itlsspproc.o: ../Core/Inc/ssp_h/itl_types.h
+rct6_nv11_vdm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+rct6_nv11_vdm\itlsspproc.o: ../Core/Inc/ssp_h/ssp_defines.h
+rct6_nv11_vdm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
+rct6_nv11_vdm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+rct6_nv11_vdm\itlsspproc.o: ../Core/Inc/ssp_h/Random.h
+rct6_nv11_vdm\itlsspproc.o: ../Core/Inc/ssp_h/Encryption.h
+rct6_nv11_vdm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+rct6_nv11_vdm\itlsspproc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

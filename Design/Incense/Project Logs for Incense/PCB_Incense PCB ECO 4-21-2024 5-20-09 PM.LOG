@@ -1,0 +1,76 @@
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-1
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-2
+Removed Pin From Net: NetName=4G_KEY Pin=LTE CAT4-3
+Removed Pin From Net: NetName=4G_RST Pin=LTE CAT4-4
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-5
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-10
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-14
+Removed Pin From Net: NetName=VDD_1V8 Pin=LTE CAT4-15
+Removed Pin From Net: NetName=SIM_DATA Pin=LTE CAT4-17
+Removed Pin From Net: NetName=SIM_RST Pin=LTE CAT4-18
+Removed Pin From Net: NetName=SIM_CLK Pin=LTE CAT4-19
+Removed Pin From Net: NetName=SIM_VDD Pin=LTE CAT4-20
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-37
+Removed Pin From Net: NetName=VBAT_4G Pin=LTE CAT4-38
+Removed Pin From Net: NetName=VBAT_4G Pin=LTE CAT4-39
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-40
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-41
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-43
+Removed Pin From Net: NetName=VDD_AUX_3V Pin=LTE CAT4-44
+Removed Pin From Net: NetName=Net_Light Pin=LTE CAT4-51
+Removed Pin From Net: NetName=Flight_mode Pin=LTE CAT4-54
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-57
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-58
+Removed Pin From Net: NetName=RF_AUX_4G Pin=LTE CAT4-59
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-60
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-61
+Removed Pin From Net: NetName=VBAT_4G Pin=LTE CAT4-62
+Removed Pin From Net: NetName=VBAT_4G Pin=LTE CAT4-63
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-64
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-65
+Removed Pin From Net: NetName=4G_RX Pin=LTE CAT4-68
+Removed Pin From Net: NetName=4G_TX Pin=LTE CAT4-71
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-77
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-78
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-80
+Removed Pin From Net: NetName=DGND Pin=LTE CAT4-81
+Removed Pin From Net: NetName=RF_4G Pin=LTE CAT4-82
+Added Component: Designator=U9(SIM7600C_L1)
+Added Pin To Net: NetName=DGND Pin=U9-1
+Added Pin To Net: NetName=DGND Pin=U9-2
+Added Pin To Net: NetName=4G_KEY Pin=U9-3
+Added Pin To Net: NetName=4G_RST Pin=U9-4
+Added Pin To Net: NetName=DGND Pin=U9-5
+Added Pin To Net: NetName=DGND Pin=U9-10
+Added Pin To Net: NetName=DGND Pin=U9-14
+Added Pin To Net: NetName=VDD_1V8 Pin=U9-15
+Added Pin To Net: NetName=SIM_DATA Pin=U9-17
+Added Pin To Net: NetName=SIM_RST Pin=U9-18
+Added Pin To Net: NetName=SIM_CLK Pin=U9-19
+Added Pin To Net: NetName=SIM_VDD Pin=U9-20
+Added Pin To Net: NetName=DGND Pin=U9-37
+Added Pin To Net: NetName=VBAT_4G Pin=U9-38
+Added Pin To Net: NetName=VBAT_4G Pin=U9-39
+Added Pin To Net: NetName=DGND Pin=U9-40
+Added Pin To Net: NetName=DGND Pin=U9-41
+Added Pin To Net: NetName=DGND Pin=U9-43
+Added Pin To Net: NetName=VDD_AUX_3V Pin=U9-44
+Added Pin To Net: NetName=Net_Light Pin=U9-51
+Added Pin To Net: NetName=Flight_mode Pin=U9-54
+Added Pin To Net: NetName=DGND Pin=U9-57
+Added Pin To Net: NetName=DGND Pin=U9-58
+Added Pin To Net: NetName=RF_AUX_4G Pin=U9-59
+Added Pin To Net: NetName=DGND Pin=U9-60
+Added Pin To Net: NetName=DGND Pin=U9-61
+Added Pin To Net: NetName=VBAT_4G Pin=U9-62
+Added Pin To Net: NetName=VBAT_4G Pin=U9-63
+Added Pin To Net: NetName=DGND Pin=U9-64
+Added Pin To Net: NetName=DGND Pin=U9-65
+Added Pin To Net: NetName=4G_RX Pin=U9-68
+Added Pin To Net: NetName=4G_TX Pin=U9-71
+Added Pin To Net: NetName=DGND Pin=U9-77
+Added Pin To Net: NetName=DGND Pin=U9-78
+Added Pin To Net: NetName=DGND Pin=U9-80
+Added Pin To Net: NetName=DGND Pin=U9-81
+Added Pin To Net: NetName=RF_4G Pin=U9-82
+Added Member To Class: ClassName=03_Incense_4G Member=Component U9 LTE CAT4
