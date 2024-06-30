@@ -22,11 +22,19 @@
 #include <string.h>
 #include <stdbool.h>
 
+
+
 /* Private function prototypes -----------------------------------------------*/
 unsigned char scan_BT(void);
+void Menu_draw(void);
 
 /* Private variables ---------------------------------------------------------*/
-
+typedef enum displayType{
+	Home = 0U,
+	Password,
+	Setup,
+	TimeSetup
+} Display_Typedef;
 #endif
 
 /*********************************************************************************************************

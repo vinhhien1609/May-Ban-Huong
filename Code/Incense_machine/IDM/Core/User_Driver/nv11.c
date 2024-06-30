@@ -431,7 +431,6 @@ bool NV11_Init(void)
         DEBUG_INFO("NV11 >> channel %d: %d %s\r\n", i + 1, m_setup_req.ChannelData[i].value, m_setup_req.ChannelData[i].cc);
     }
 		HAL_Delay(1000); printf("\r\n");
-		
     /* Cho phep dau doc tien hoat dong -> Ket qua ok = 0xF0 */
     nv11_response = ssp6_enable(sspC);
     if (nv11_response != SSP_RESPONSE_OK)
@@ -449,6 +448,7 @@ bool NV11_Init(void)
         {
             /* Ham cai dat cac kenh tien te duoc phep tra lai */
             ssp6_set_coinmech_inhibits(sspC, m_setup_req.ChannelData[i].value, m_setup_req.ChannelData[i].cc, ENABLED);
+
         }
     }
     /* Neu la cac loai dau doc tien khac */
@@ -1816,7 +1816,7 @@ int8_t vdm_NV11_Init(void)
 		return INIT_OK;
 }
 
-static int8_t vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
+static void vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
 {
 	uint32_t i;
 	int8_t poll_ret;
@@ -1982,18 +1982,25 @@ static int8_t vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
 				{
 					case NO_FAILUE: /* Khong co loi*/
 						DEBUG_INFO("NV11 >> No failure\r\n");
+					break;
 					case SENSOR_FLAP: /* Loi cam bien nap thanh toan */
 						DEBUG_ERROR("NV11 >> Optical sensor flap\r\n");
+					break;
 					case SENSOR_EXIT: /* Loi cam bien Exit */
 						DEBUG_ERROR("NV11 >> Optical sensor exit\r\n");
+					break;
 					case SENSOR_COIL1: /* Loi cam bien cuon 1 */
 						DEBUG_ERROR("NV11 >> Coil sensor 1\r\n");
+					break;
 					case SENSOR_COIL2: /* Loi cam bien cuon 2 */
 						DEBUG_ERROR("NV11 >> Coil sensor 2\r\n");
+					break;
 					case NOT_INITIALISED: /* Loi thiet bi khong duoc khoi tao */
 						DEBUG_INFO("NV11 >> Unit not initialised\r\n");
+					break;
 					case CHECKSUM_ERROR: /* Loi checksum */
 						DEBUG_ERROR("NV11 >> Data checksum error\r\n");
+					break;
 					case COMMAND_RECAL: /* Hieu chinh lai bang lenh yeu cau (loi thoi)*/
 						DEBUG_ERROR("NV11 >> Recalibration by command required\r\n");
 						ssp6_run_calibration(sspC);
@@ -2062,8 +2069,8 @@ int8_t vdm_NV11_Process(uint32_t poll_time)
 			/* Thuc hien ham doc cac su kien trong NV11, neu phan hoi ve la 0xF0 -> phan tich cac su kien */
 			else
 			{
-//				printf("parse_poll:\r\n");
-				return vdm_parse_poll(&m_ssp_cmd, &m_poll, false); /* Thuc hien phan tich cac su kien NV11 */
+				printf("parse_poll:\r\n");
+				vdm_parse_poll(&m_ssp_cmd, &m_poll, false); /* Thuc hien phan tich cac su kien NV11 */
 			}
 	}
 	

@@ -1,19 +1,27 @@
 #include "GSM_APP.h"
 #include "main.h"
 
-#define MaxCommand_GSM	3	//added 05/07/2010
-#define MaxCommand_GSMLength	12	//added 05/07/2010
+#define MaxCommand_GSM	9	//added 05/07/2010
+#define MaxCommand_GSMLength	26	//added 05/07/2010
 unsigned char commandGSMList[MaxCommand_GSM][MaxCommand_GSMLength]={
-												 	/*0*/	"SIM REMOVED",
+												 	/*0*/	"+CPIN: READY",
 														 		"+CSQ: ",
 												 			 	"GSV,",
-
+																"OK",
+																"45201",		//COPS
+																"+NETOPEN: 1",
+																"Network is already opened",
+																"+IPCLOSE:",
+																"+CIPOPEN:",
 															  };	//added 05/07/2010
 
 //uint8_t queueUART2[];	//receiver queue
 uint16_t topQueue, bottomQueue;
-uint8_t GSM_buffer[MAX_QUEUE];
+uint16_t AT_timeout=0;
+uint8_t GSM_buffer[MAX_QUEUE], TCP_step=0, current_TCP_step=255, AT_respone=0;
+extern UART_HandleTypeDef huart3;
 extern GSM_State GSM;
+char s[50];
 //------------------------------------- for GSM module
 
 void GSM_init(void)
@@ -43,7 +51,121 @@ char readGSM_Buff(void)
 	}
 	return temp;
 }
-																
+
+void TCP_connect(void)
+{
+	switch(TCP_step)
+	{
+		case 0:
+			if(current_TCP_step != TCP_step)
+			{
+				current_TCP_step = TCP_step;
+				AT_respone =AT_SENDING;
+				AT_timeout =0;
+				sprintf(s, "AT+COPS?\r\n");
+				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+				GSM.Connect4G =0;
+			}
+			else
+			{
+				if(AT_timeout>2000)
+				{
+					AT_timeout=0;
+					HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+				}				
+			}
+			break;			
+		case 1:
+			if(current_TCP_step != TCP_step)
+			{
+				current_TCP_step = TCP_step;
+				AT_respone =AT_SENDING;
+				AT_timeout =0;
+				sprintf(s, "AT+QICSGP=1,1,\"m-wap\",\"mms\",\"mms\",1\r\n");
+				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+			}
+			else
+			{
+				if(AT_respone==OK)
+					TCP_step =2;
+				else
+					if(AT_timeout>2000)
+					{
+						AT_timeout=0;
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+					}				
+			}
+			break;
+			
+		case 2:
+			if(current_TCP_step != TCP_step)
+			{
+				current_TCP_step = TCP_step;
+				AT_respone =AT_SENDING;
+				AT_timeout =0;
+				sprintf(s, "AT+QIACT=1\r\n");
+				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+			}
+			else
+			{
+				if(AT_respone==OK)
+					TCP_step =3;
+				else
+					if(AT_timeout>2000)
+					{
+						AT_timeout=0;
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+					}
+			}
+			break;
+		case 3:
+			if(current_TCP_step != TCP_step)
+			{
+				current_TCP_step = TCP_step;
+				AT_respone =AT_SENDING;
+				AT_timeout =0;
+				sprintf(s, "AT+NETOPEN\r\n");
+				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+			}
+			else
+			{
+				if(AT_respone==OK)
+					TCP_step =5;
+				else
+				{
+					if(AT_timeout>2000)
+					{
+						AT_timeout=0;						
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
+					}	
+				}					
+			}
+			break;				
+		case 5:
+			if(current_TCP_step != TCP_step)
+			{
+				current_TCP_step = TCP_step;
+				AT_respone =AT_SENDING;
+				AT_timeout =0;
+				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"203.171.20.62\",9201\r\n");
+				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+			}
+			else
+			{
+				if(AT_respone==OK)
+					TCP_step =6;
+				else
+					if(AT_timeout>2000)
+					{
+						AT_timeout=0;						
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
+					}						
+			}
+			break;			
+	}
+}	
+ 
+
 unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/07/2010
 {
 	char c=0, buffer[100];
@@ -82,7 +204,8 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 					switch (i)
 					{
 						case	0:	// position data (including position, velocity and time).
-							GSM.SimReady =0;
+							GSM.SimReady =1;
+							HAL_UART_Transmit_DMA(&huart3,"AT+AUTOCSQ=1,0\r\n",17);
 						break;
 							
 							
@@ -109,7 +232,25 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 //							GSM.CSQ +=buffer[1]-'0';
 //						}
 						break;
-							//break;
+					case 3:
+						AT_respone =OK;
+						break;
+					case 4:
+						TCP_step =1;		//start connect TCP/IP
+						break;
+					case 5:
+						AT_respone = NETOPEN_READY;
+						TCP_step = 5;
+						break;
+					case 6:
+						TCP_step =5;
+						break;	
+					case 7:
+						TCP_step =0;
+						break;
+					case 8:
+						GSM.Connect4G =1;
+						break;
 					}
 					return i;
 				}//end if

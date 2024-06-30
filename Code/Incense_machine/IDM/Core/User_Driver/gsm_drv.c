@@ -8,7 +8,7 @@ void GSM_UART_init()
 {
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart3, GSM_buffer, MAX_QUEUE);
 }
-void GSM_PWR(uint8_t pwr)
+void GSM_PWR(GPIO_PinState pwr)
 {
 	HAL_GPIO_WritePin(EN_PWR_GSM_GPIO_Port, EN_PWR_GSM_Pin, pwr);
 }

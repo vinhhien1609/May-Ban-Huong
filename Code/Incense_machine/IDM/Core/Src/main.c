@@ -38,12 +38,19 @@
 #include "GSM_drv.h"
 #include "GSM_app.h"
 #include "USER_GUIDE.h"
+#include "dht_sensor.h"
+#include "IDM.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+
 extern uint8_t rx1_buffer[256];
-uint8_t isSecond =0;
+extern uint16_t AT_timeout;
+uint8_t isSecond =0, isSecond_display=0;
+DHT_HandleTypeDef DHT_21;
+extern uint32_t count;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -61,10 +68,6 @@ ADC_HandleTypeDef hadc1;
 
 RTC_HandleTypeDef hrtc;
 
-SD_HandleTypeDef hsd;
-
-SPI_HandleTypeDef hspi1;
-
 TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart1;
@@ -78,8 +81,9 @@ DMA_HandleTypeDef hdma_usart3_rx;
 DMA_HandleTypeDef hdma_usart3_tx;
 
 /* USER CODE BEGIN PV */
-extern	TimeStruct currentTime;
+extern	rtc_date_time_t currentTime;
 GSM_State GSM;
+extern IDM_PARA IDM;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,9 +95,8 @@ static void MX_USART1_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART3_UART_Init(void);
-static void MX_SPI1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_SDIO_SD_Init(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -130,9 +133,7 @@ PUTCHAR_PROTOTYPE
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	char s[100], temp;
-	char day[7][4] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
-	unsigned char 	key_pressed=255, NV11IsOK=0;
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -159,14 +160,24 @@ int main(void)
   MX_ADC1_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
-  MX_SPI1_Init();
   MX_TIM6_Init();
-  MX_SDIO_SD_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+	
+	//init DHT21
+	DHT_Sensor_Init(&DHT_21);
+	DHT_21.values.humidity =0;
+	HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_SET);
+	//END init DHT21
 	HAL_TIM_Base_Start_IT(&htim6);
 	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(SWAP_MOTOR_GPIO_Port, SWAP_MOTOR_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_SET);
 	HAL_Delay(500);	
-	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);	
+	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+//	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_RESET);
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
 	//LCD
 	GLcd_Init(glcd_lcd_write_pin, 0);
@@ -175,15 +186,15 @@ int main(void)
 //	test_nv11();
 	GLcd_DrawString("Init NV9...", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
 	GLcd_Flush();
-	ssp_serial_initialize();
-  ITLSSP_Init();
+	ssp_serial_initialize();	
+  ITLSSP_Init();	
 	int8_t i8_nv11_init = vdm_NV11_Init();
+	
 	if(i8_nv11_init == INIT_OK)
 	{
 		GLcd_DrawString("Init NV9...OK", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
 		GLcd_Flush();
 		printf("NV11 Init Successful!\r\n");
-		NV11IsOK =1;
 	}
 	else
 	{
@@ -191,47 +202,46 @@ int main(void)
 		GLcd_Flush();
 		printf("NV11 Init Fail: %d\r\n",i8_nv11_init);
 	}
+
 //	HAL_Delay(500);
 	GSM_init();
+	IDM_init();
 	printf("Infinite loop\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+		HAL_GPIO_WritePin(SWAP_MOTOR_GPIO_Port, SWAP_MOTOR_Pin, GPIO_PIN_RESET);
+		GLcd_ClearScreen(BLACK);
+	
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if(NV11IsOK)
-		{
-			temp = vdm_NV11_Process(1000);
-			if(temp==ERR_POLL_TIMEOUT)
-				NV11IsOK=0;
-		}
-		
+
+		vdm_NV11_Process(1000);
 		checkGPSCommand();
+		Scan_IDM();
+		Menu_draw();
 		if(isSecond)
 		{
-			isSecond=0;
+			isSecond=0;			
+			if(GSM.CSQ>10)
+				TCP_connect();
 			currentTime = getRTC();
-			sprintf(s,"%s %02d/%02d/%d %d:%02d:%02d", day[currentTime.dayofDate], currentTime.date, currentTime.month, currentTime.year, currentTime.hour, currentTime.minute, currentTime.second);
-			printf("RTC: %s\r\n", s);
-			GLcd_ClearScreen(BLACK);
-			GLcd_DrawString(s, 0, 0, WHITE);
-			sprintf(s,"SIM-%d CSQ %d", GSM.SimReady, GSM.CSQ);
-			GLcd_DrawString(s, 0, 10, WHITE);
-			sprintf(s,"KEY %c", key_pressed);
-			GLcd_DrawString(s, 0, 20, WHITE);
-//			sprintf(s,"MON %d %d", NV11_GetStoredNoteByChannel(0), NV11_GetStoredNoteByChannel(1));
-//			GLcd_DrawString(s, 0, 30, WHITE);
 			
-			GLcd_Flush();
-//			HAL_Delay(900);
-			if(currentTime.second%5==0 && (GSM.SimReady!=255))
-				HAL_UART_Transmit_DMA(&huart3,"AT+CSQ\r\n",9);
+			if(currentTime.second%10==0)
+			{
+				if(DHT_Sensor_Read(&DHT_21)!=READ_OK)
+				{
+					DHT_21.values.humidity =0;
+					DHT_21.values.temperature =0;
+				}
+				IDM.Humidity = (uint8_t)DHT_21.values.humidity;			
+			}
 		}
-		key_pressed = scan_BT();
+
   }
 
   /* USER CODE END 3 */
@@ -252,7 +262,7 @@ void SystemClock_Config(void)
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV2;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -272,7 +282,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -283,6 +293,54 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
+  /** Enables the Clock Security System
+  */
+  HAL_RCC_EnableCSS();
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* RTC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(RTC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(RTC_IRQn);
+  /* DMA1_Channel2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
+  /* DMA1_Channel3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 2, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+  /* DMA1_Channel4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 3, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
+  /* DMA1_Channel5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 4, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
+  /* DMA1_Channel6_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
+  /* DMA1_Channel7_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+  /* EXTI9_5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  /* USART1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART1_IRQn, 8, 0);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
+  /* USART2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART2_IRQn, 9, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 10, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* TIM6_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM6_IRQn, 7, 0);
+  HAL_NVIC_EnableIRQ(TIM6_IRQn);
 }
 
 /**
@@ -363,7 +421,7 @@ static void MX_RTC_Init(void)
 
   /* USER CODE BEGIN Check_RTC_BKUP */
 	HAL_RTCEx_SetSecond_IT(&hrtc);
-	if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1)==0x3F22)
+	if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1)==0x3F20)
 	{
 		return;
 	}
@@ -389,85 +447,15 @@ static void MX_RTC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
-	currentTime.year = 24;
+	currentTime.year = 2024;
 	currentTime.month = 6;
-	currentTime.date = 16;
-	currentTime.hour=15;
-	currentTime.minute=25;
+	currentTime.day = 29;
+	currentTime.hour=2;
+	currentTime.minute=01;
 	currentTime.second=00;		
 	setRTC(currentTime);
-	HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0x3F22);
+	HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0x3F20);
   /* USER CODE END RTC_Init 2 */
-
-}
-
-/**
-  * @brief SDIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SDIO_SD_Init(void)
-{
-
-  /* USER CODE BEGIN SDIO_Init 0 */
-
-  /* USER CODE END SDIO_Init 0 */
-
-  /* USER CODE BEGIN SDIO_Init 1 */
-
-  /* USER CODE END SDIO_Init 1 */
-  hsd.Instance = SDIO;
-  hsd.Init.ClockEdge = SDIO_CLOCK_EDGE_RISING;
-  hsd.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
-  hsd.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
-  hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
-  hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
-  hsd.Init.ClockDiv = 0;
-  if (HAL_SD_Init(&hsd) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SDIO_Init 2 */
-
-  /* USER CODE END SDIO_Init 2 */
-
-}
-
-/**
-  * @brief SPI1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI1_Init(void)
-{
-
-  /* USER CODE BEGIN SPI1_Init 0 */
-
-  /* USER CODE END SPI1_Init 0 */
-
-  /* USER CODE BEGIN SPI1_Init 1 */
-
-  /* USER CODE END SPI1_Init 1 */
-  /* SPI1 parameter configuration*/
-  hspi1.Instance = SPI1;
-  hspi1.Init.Mode = SPI_MODE_MASTER;
-  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi1.Init.NSS = SPI_NSS_HARD_OUTPUT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
-  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi1.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI1_Init 2 */
-
-  /* USER CODE END SPI1_Init 2 */
 
 }
 
@@ -489,10 +477,10 @@ static void MX_TIM6_Init(void)
 
   /* USER CODE END TIM6_Init 1 */
   htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 35999;
+  htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1999;
-  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim6.Init.Period = 17999;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
     Error_Handler();
@@ -617,26 +605,6 @@ static void MX_DMA_Init(void)
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
 
-  /* DMA interrupt init */
-  /* DMA1_Channel2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
-  /* DMA1_Channel3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
-  /* DMA1_Channel4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
-  /* DMA1_Channel5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
-  /* DMA1_Channel6_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
-  /* DMA1_Channel7_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
-
 }
 
 /**
@@ -658,10 +626,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, BUZZER_Pin|KEY_COL1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, Heater_Pin|MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|Heater_Pin|MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED3_Pin|LED2_Pin|LCD_CS_Pin|LCD_CLK_Pin
@@ -673,10 +641,10 @@ static void MX_GPIO_Init(void)
                           |RELAY1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LCD_RESET_Pin|KEY_COL4_Pin|KEY_COL3_Pin|KEY_COL2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, LCD_RESET_Pin|KEY_COL3_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : BUZZER_Pin KEY_COL1_Pin */
-  GPIO_InitStruct.Pin = BUZZER_Pin|KEY_COL1_Pin;
+  /*Configure GPIO pins : BUZZER_Pin KEY_COL1_Pin KEY_COL2_Pin */
+  GPIO_InitStruct.Pin = BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -684,8 +652,9 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : DHT21_Pin */
   GPIO_InitStruct.Pin = DHT21_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(DHT21_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Heater_Pin MCU_LCD_LIGHT_Pin */
@@ -695,11 +664,23 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Empty_Pin DROP_Pin */
-  GPIO_InitStruct.Pin = Empty_Pin|DROP_Pin;
+  /*Configure GPIO pins : Flash_SS_Pin Flash_SCK_Pin Flash_MISO_Pin FLASH_MOSI_Pin */
+  GPIO_InitStruct.Pin = Flash_SS_Pin|Flash_SCK_Pin|Flash_MISO_Pin|FLASH_MOSI_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Empty_Pin */
+  GPIO_InitStruct.Pin = Empty_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(Empty_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Drop_Pin */
+  GPIO_InitStruct.Pin = Drop_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(Drop_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DOOR_Pin MCU_IN4_Pin MCU_IN5_Pin */
   GPIO_InitStruct.Pin = DOOR_Pin|MCU_IN4_Pin|MCU_IN5_Pin;
@@ -740,8 +721,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LCD_RESET_Pin KEY_COL4_Pin KEY_COL3_Pin KEY_COL2_Pin */
-  GPIO_InitStruct.Pin = LCD_RESET_Pin|KEY_COL4_Pin|KEY_COL3_Pin|KEY_COL2_Pin;
+  /*Configure GPIO pins : LCD_RESET_Pin KEY_COL3_Pin */
+  GPIO_InitStruct.Pin = LCD_RESET_Pin|KEY_COL3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -753,17 +734,27 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : KEY_ROW4_Pin KEY_ROW3_Pin KEY_ROW2_Pin */
-  GPIO_InitStruct.Pin = KEY_ROW4_Pin|KEY_ROW3_Pin|KEY_ROW2_Pin;
+  /*Configure GPIO pins : KEY_ROW3_Pin KEY_ROW4_Pin KEY_ROW1_Pin KEY_ROW2_Pin
+                           KEY_COL4_Pin */
+  GPIO_InitStruct.Pin = KEY_ROW3_Pin|KEY_ROW4_Pin|KEY_ROW1_Pin|KEY_ROW2_Pin
+                          |KEY_COL4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : KEY_ROW1_Pin */
-  GPIO_InitStruct.Pin = KEY_ROW1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(KEY_ROW1_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pins : PC8 PC9 PC10 PC11
+                           PC12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
+                          |GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PD2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -776,8 +767,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   UNUSED(htim);
 	if(htim->Instance == htim6.Instance)
 	{
-	//	HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
-
+//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
+		if(count <= 0xFFFFF)
+			count ++;
+		if(AT_timeout <0xFFFF)
+			AT_timeout++;
+		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
+		
 	}
 }
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
@@ -789,8 +785,10 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
    */
 //	HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
 			isSecond =1;
+	isSecond_display ++;
 	
 }
+
 
 /* USER CODE END 4 */
 
@@ -802,7 +800,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
+  printf("error\r\n");
+	__disable_irq();
+	
   while (1)
   {
   }

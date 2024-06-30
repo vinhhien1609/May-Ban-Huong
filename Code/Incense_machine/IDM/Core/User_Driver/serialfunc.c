@@ -228,7 +228,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
   UNUSED(huart);
 	if(huart->Instance == huart2.Instance)
 	{
-//		HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
+//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port,MCU_LCD_LIGHT_Pin);
 	}
 	if(huart->Instance == huart1.Instance)
 	{
@@ -255,7 +255,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 	int16_t temp;
   UNUSED(huart);
   UNUSED(Size);
-	if(huart->Instance == huart2.Instance)
+	if(huart->Instance == huart2.Instance)		//SSP
 	{
 //		HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
 		uint32_t rx_bytes = Size;
@@ -287,7 +287,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, m_ssp_rx_dma_buffer, SSP_DMA_RX_BUFFER_SIZE);
 		m_dma_over_flow++;
 	}
-	if(huart->Instance == huart1.Instance)
+	if(huart->Instance == huart1.Instance)	//debug
 	{
 //		rx1_cnt++;
 //		if(Size<256) rx1_size = Size;
@@ -302,16 +302,18 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 //				buff[3*i+2] = ' ';
 //			}
 //			HAL_UART_Transmit_DMA(&huart1, buff, 3*rx1_size+2);
+				HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
+
+		
 		if(temp< rx1_size)
 			HAL_UART_Transmit_DMA(&huart3,rx1_buffer + temp, rx1_size-temp);
 		else
 		{
 			HAL_UART_Transmit_DMA(&huart3,rx1_buffer + temp, 256-temp);
 			HAL_UART_Transmit_DMA(&huart3,rx1_buffer, rx1_size);
-		}		
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
+		}
 	}
-	if(huart->Instance == huart3.Instance)
+	if(huart->Instance == huart3.Instance)		//GSM
 	{
 //		for(n=0; n<sizeof(GSM_buffer_DMA); n++)
 //		{

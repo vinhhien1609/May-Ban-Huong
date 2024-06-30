@@ -141,7 +141,7 @@ int32_t SSPSendCommand(const SSP_PORT port, SSP_COMMAND *cmd)
             if (sleep)
             {
             	//vTaskDelay(2);
-							HAL_Delay(2);
+							HAL_Delay(2);		//hiendv
             }
         }
 

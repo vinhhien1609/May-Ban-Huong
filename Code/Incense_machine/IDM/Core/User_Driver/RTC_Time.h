@@ -22,21 +22,22 @@
 #include <stdio.h>
 #include <string.h>
 
-
-typedef struct {
-	 char year;
-	 char month;
-	 char date;
-	 char dayofDate;
-	 char hour;
-	 char minute;
-	 char second;
-} TimeStruct;
+typedef struct
+{
+    uint16_t year;
+    uint8_t month;
+    uint8_t day;
+    uint8_t hour;
+    uint8_t minute;
+    uint8_t second;
+    uint8_t weekday; // 0-6, 0 = sunday, 1 = monday, ... 6 = sat
+} rtc_date_time_t;
 
 /* Private function prototypes -----------------------------------------------*/
 void RTC_Init(void);
-TimeStruct getRTC(void);
-void setRTC(TimeStruct time);
+rtc_date_time_t getRTC(void);
+void setRTC(rtc_date_time_t time);
+void get_time(rtc_date_time_t *rtime);
 
 /* Private variables ---------------------------------------------------------*/
 

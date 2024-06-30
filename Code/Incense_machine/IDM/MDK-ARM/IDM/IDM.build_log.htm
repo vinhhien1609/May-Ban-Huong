@@ -22,16 +22,26 @@ Dialog DLL:      TCM.DLL V1.36.5.0
  
 <h2>Project:</h2>
 C:\Data\The Anh\Ban huong\May-Ban-Huong\Code\Incense_machine\IDM\MDK-ARM\IDM.uvprojx
-Project File Date:  06/16/2024
+Project File Date:  06/30/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'IDM'
-compiling IMD.c...
-..\Core\User_Driver\IMD.c(45): error:  #41: expression must have arithmetic or pointer type
-  	if(IDM_Status.Motor_conveyer)	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_SET);
-..\Core\User_Driver\IMD.c: 0 warnings, 1 error
-"IDM\IDM.axf" - 1 Error(s), 0 Warning(s).
+compiling vdm_language.c...
+..\Core\User_Driver\vdm_language.h(149): warning:  #1295-D: Deprecated declaration vdm_language_get_current_lang - give arg types
+  vdm_language_t vdm_language_get_current_lang();
+..\Core\User_Driver\vdm_language.c(16): warning:  #1296-D: extended constant initialiser used
+  uint16_t MANG[15] = (uint16_t)"ABCDEF0";//"NH\x1EACP M\x1EACT KH\x1EA8U";
+..\Core\User_Driver\vdm_language.c(16): warning:  #767-D: conversion from pointer to smaller integer
+  uint16_t MANG[15] = (uint16_t)"ABCDEF0";//"NH\x1EACP M\x1EACT KH\x1EA8U";
+..\Core\User_Driver\vdm_language.c(16): error:  #69: integer conversion resulted in truncation
+  uint16_t MANG[15] = (uint16_t)"ABCDEF0";//"NH\x1EACP M\x1EACT KH\x1EA8U";
+..\Core\User_Driver\vdm_language.c(21): error:  #29: expected an expression
+  };
+..\Core\User_Driver\vdm_language.c(146): warning:  #177-D: variable "data"  was declared but never referenced
+      int8_t data;
+..\Core\User_Driver\vdm_language.c: 4 warnings, 2 errors
+"IDM\IDM.axf" - 2 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -55,7 +65,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.3.0
 Target not created.
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

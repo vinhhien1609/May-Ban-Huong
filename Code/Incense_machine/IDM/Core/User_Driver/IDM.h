@@ -46,11 +46,21 @@ typedef struct {
 	unsigned char TimeConveyerRun;	// thoi gian conveyer quay 1-100s
 	unsigned int TotalInsenseBuy;					// tong so que cos the ban 1-1000
 	unsigned int NumberBuyEmpty;		// so luong ban khi bao Empty 1-1000
-	unsigned char Humidity;		// so luong ban khi bao Empty 1-100
+	unsigned int TimePUSHIsense;		// time push huong	s
+	float Humidity;		// so luong ban khi bao Empty 1-100
+	unsigned char HumidityMAX;	// gia tr? cai dat do am
 } IDM_PARA;
 
+typedef struct {
+	unsigned int Money;
+	unsigned int TotalIsenseDroped;
+} BUY_PARA;
+
+#define MAXTimeDropRespone	150		//ms
+
 /* Private function prototypes -----------------------------------------------*/
-void IDM_Init(void);
+void IDM_init(void);
+void Scan_IDM(void);
 
 /* Private variables ---------------------------------------------------------*/
 

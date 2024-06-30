@@ -15,7 +15,7 @@
 #define LCD_FUNCTION_SET_EXTENDED_GRAPHIC 0x26
 #define LCD_SET_GDRAM_ADDRESS 0x80
 
-#define DELAY_GPIO_ACTION           0//50
+#define DELAY_GPIO_ACTION           2//50
 
 static font_t *m_font;
 static uint8_t m_off_buffer[(GLCD_WIDTH * GLCD_HEIGHT) / 8];
@@ -25,8 +25,8 @@ static void send_cmd(uint8_t command);
 static void send_lcd(uint8_t data1, uint8_t data2);
 static void send_slow(uint8_t data);
 static void cmd_delay(void);
-static void goto_extended_mode();
-static void goto_basic_mode();
+static void goto_extended_mode(void);
+static void goto_basic_mode(void);
 static void set_graphics_address(uint32_t r, uint32_t c);
 
 static glcd_pin_write_cb_t m_write_cb = 0;
@@ -42,29 +42,28 @@ static glcd_protect_cb_t m_lock = 0;
 
 void glcd_lcd_write_pin(glcd_lcd_pin_t pin, uint32_t output)
 {
-	
-//	HAL_GPIO_TogglePin(BUZZ_GPIO_Port,BUZZ_Pin);
+	GPIO_PinState outpin;
     if (output)
     {
-        output = GPIO_PIN_SET;
+        outpin = GPIO_PIN_SET;
     }
     else
     {
-        output = GPIO_PIN_RESET;
+        outpin = GPIO_PIN_RESET;
     }
 
     switch (pin)
     {
     case GLCD_LCD_PIN_CS:
-				HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, output);
+				HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, outpin);
         break;
 
     case GLCD_LCD_PIN_CLK:
-        HAL_GPIO_WritePin(LCD_CLK_GPIO_Port, LCD_CLK_Pin, output);
+        HAL_GPIO_WritePin(LCD_CLK_GPIO_Port, LCD_CLK_Pin, outpin);
         break;
 
     case GLCD_LCD_PIN_DATA:
-        HAL_GPIO_WritePin(LCD_DATA_GPIO_Port, LCD_DATA_Pin, output);
+        HAL_GPIO_WritePin(LCD_DATA_GPIO_Port, LCD_DATA_Pin, outpin);
         break;
 
     default:
@@ -201,8 +200,10 @@ void GLcd_DrawChar(char c, int32_t x, int32_t y, int32_t color)
         {
             if (CHECKBIT(tmp, j)) /* Kiem tra tung bit trong tmp */
             {
-                GLcd_DrawPoint(tmp_y - j, y + i, color); /* Neu = 1 thi ve dot len man hinh*/
+               GLcd_DrawPoint(tmp_y - j, y + i, color); /* Neu = 1 thi ve dot len man hinh*/
             }
+						else
+							GLcd_DrawPoint(tmp_y - j, y + i, BLACK); /* Neu = 1 thi ve dot len man hinh*/
         }
     }
 }
@@ -685,13 +686,13 @@ static void cmd_delay()		// not importance function
 	while (i--);
 }
 
-static void goto_extended_mode()
+static void goto_extended_mode(void)
 {
     send_cmd(LCD_FUNCTION_SET_EXTENDED_GRAPHIC);
     cmd_delay();
 }
 
-static void goto_basic_mode()
+static void goto_basic_mode(void)
 {
     send_cmd(LCD_FUNCTION_SET_BASIC_ALPHA);
     cmd_delay();

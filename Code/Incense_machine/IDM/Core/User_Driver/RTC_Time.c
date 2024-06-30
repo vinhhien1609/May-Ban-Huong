@@ -21,7 +21,7 @@
 /* Private define ------------------------------------------------------------*/
 //#define RTCClockOutput_Enable  /* RTC Clock/64 is output on tamper pin(PC.13) */  
 
-TimeStruct currentTime;
+rtc_date_time_t currentTime;
 extern RTC_HandleTypeDef hrtc;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -358,16 +358,16 @@ static void RTC_Configuration(void)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-void setRTC(TimeStruct ttime)
+void setRTC(rtc_date_time_t ttime)
 {
   struct tm time;
 
   memset(&time, 0 , sizeof(time) );
 	RTC_Configuration();
 //  printf("=======================Time Settings==========================\r\n");
-  time.tm_year=ttime.year + 2000;
+  time.tm_year=ttime.year;
   time.tm_mon=ttime.month-1;
-  time.tm_mday=ttime.date;
+  time.tm_mday=ttime.day;
   time.tm_hour=ttime.hour;
   time.tm_min=ttime.minute;
   time.tm_sec=ttime.second;
@@ -385,7 +385,7 @@ void setRTC(TimeStruct ttime)
 *******************************************************************************/
 void RTC_Init(void)
 {
-	TimeStruct t;
+	rtc_date_time_t t;
   if (HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1) != 0xA5A5)
   {
     /* Backup data register value is not correct or not yet programmed (when
@@ -395,9 +395,9 @@ void RTC_Init(void)
 
     /* RTC Configuration */
     RTC_Configuration();
-		t.year = 18;
+		t.year = 2024;
 		t.month = 9;
-		t.date = 16;
+		t.day = 16;
 		t.hour=9;
 		t.minute=0;
 		t.second=0;		
@@ -498,18 +498,35 @@ static uint8_t RTC_WeekDayNum(uint32_t nYear, uint8_t nMonth, uint8_t nDay)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-TimeStruct getRTC(void)
+rtc_date_time_t getRTC(void)
 {
    struct tm time;
-	TimeStruct timeRead;
+	rtc_date_time_t timeRead;
    time = Time_GetCalendarTime();
 	 timeRead.second = time.tm_sec;
 	 timeRead.minute = time.tm_min;
 	 timeRead.hour = time.tm_hour;
-	 timeRead.date = time.tm_mday;
+	 timeRead.day = time.tm_mday;
 	 timeRead.month = time.tm_mon+1;
-	 timeRead.year = time.tm_year%100;
-	 timeRead.dayofDate = (char)RTC_WeekDayNum(timeRead.year, timeRead.month, timeRead.date);
+	 timeRead.year = time.tm_year;
+	 timeRead.weekday = (char)RTC_WeekDayNum(timeRead.year, timeRead.month, timeRead.day);
 	 return (timeRead);
+}
+
+void get_time(rtc_date_time_t *rtime)
+{
+   struct tm time;
+   time = Time_GetCalendarTime();
+	 rtime->second = time.tm_sec;
+	 rtime->minute = time.tm_min;
+	 rtime->hour = time.tm_hour;
+	 rtime->day = time.tm_mday;
+	 rtime->month = time.tm_mon+1;
+	 rtime->year = time.tm_year;
+	 rtime->weekday = (char)RTC_WeekDayNum(rtime->year, rtime->month, rtime->day);	
+    if (rtime->year > 2000)
+    {
+        rtime->year -= 2000;
+    }
 }
 

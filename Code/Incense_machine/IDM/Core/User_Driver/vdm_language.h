@@ -1,0 +1,162 @@
+
+#ifndef VDM_LANGUAGE_H
+#define VDM_LANGUAGE_H
+
+/**
+ * \defgroup        vdm_language Vending machine language settings
+ * \brief           Language settings
+ * \{
+ */
+
+#include <stdint.h>
+
+/* The supported language */
+typedef enum
+{
+    VDM_LANG_VNI = 0x00,   /* Vietnamese */
+    VDM_LANG_ENGLISH = 0x01,   /* English */
+    VDM_LANG_MAX    /* The end of languages */
+} vdm_language_t;
+
+
+/* The IDs of strings */
+typedef enum
+{
+    VDM_LANG_ENTER_PASSWORD,
+    VDM_LANG_ENTER_NEW_PASSWORD,
+    VDM_LANG_ENTER_PASSWORD_AGAIN,
+    VDM_LANG_PASSWORD_NOT_MATCH,
+    VDM_LANG_DONE,
+    VDM_LANG_TOTAL_SALES,
+    VDM_LANG_DAILY_SALES,
+    VDM_LANG_MONTHLY_SALES,
+    VDM_LANG_YEARLY_SALES,
+    VDM_LANG_KEY_SLOT,
+    VDM_LANG_PRICE_CAPACITY,
+    VDM_LANG_PRICE,
+    VDM_LANG_CAPACITY,
+    VDM_LANG_LED_ON_OFF,
+    VDM_LANG_DROP_SENSOR,
+    VDM_LANG_ERROR_LOG,
+    VDM_LANG_MOTOR_ERROR,
+    VDM_LANG_PAYMENT_SYS_ERR,
+    VDM_LANG_CLEAR_ERROR,
+    VDM_LANG_CLEAR_ERROR_HW,
+    VDM_LANG_NO_ERROR,
+    VDM_LANG_NV11_ERROR,
+    VDM_LANG_TEST_SLOT,
+    VDM_LANG_CASH_IN_OUT,
+    VDM_LANG_TOTAL_CASH_IN,
+    VDM_LANG_TOTAL_CASH_OUT,
+    VDM_LANG_CLEAR_BALANCE,
+    VDM_LANG_SET_TEMPERATURE,
+    VDM_LANG_SET_TIME,
+    VDM_LANG_BILL_CHANGE,
+    VDM_LANG_ON_OFF,
+    VDM_LANG_CASH_FILL,
+    VDM_LANG_EMPTY_RECYCLER,
+    VDM_LANG_VIEW_INFO,
+    VDM_LANG_SLOT_NUMBER,
+    VDM_LANG_COLUMN_NUMBER,
+    VDM_LANG_ROW_NUMBER,
+    VDM_LANG_ACCEPT_NOTE,
+    VDM_LANG_REFUND_NOTE,
+    VDM_LANG_ACCEPT_ERROR,
+    VDM_LANG_LANGUAGE,
+    VDM_LANG_VIETNAMESE,
+	VDM_LANG_ID_ENGLISH,
+    VDM_LANG_CHANGE_PASSWORD,
+    VDM_LANG_VIEW_VEND_ID,
+    VDM_LANG_SET_SERVER_IP,
+    VDM_LANG_ADVANCE_SETTING,
+    VDM_LANG_QUANTITY,
+    VDM_LANG_AMOUNT,
+    VDM_LANG_ON,
+    VDM_LANG_OFF,
+    VDM_LANG_FACTORY_RESET,
+    VDM_LANG_CALLING,
+    VDM_LANG_NO_ANSWER,
+    VDM_LANG_NUMBER_BUSY,
+    VDM_LANG_SIGNAL_LOST,
+    VDM_LANG_CALLING_ERROR,
+    VDM_LANG_OPERATOR_NUMBER,
+    VDM_LANG_AUDIO_SETTING,
+    VDM_LANG_AUDIO_ONOFF,
+    VDM_LANG_MAIN_VOLUME,
+    VDM_LANG_CALL_VOLUME,
+    VDM_LANG_MICROPHONE_LEVEL,
+    VDM_LANG_STACK_STORED_CASH_ERROR,
+    /**/
+    VDM_LANG_TESTING_SLOT,
+    VDM_LANG_ERROR_SLOT,
+    /**/
+    /**/
+    VDM_LANG_VIEW_FIRMWARE,
+    VDM_LANG_FIRMWARE_CURRENT,
+    /**/
+    VDM_LANG_INIT_PARAMETER,
+    VDM_LANG_CHANGE_PASSWORD_1,
+    VDM_LANG_CHANGE_PASSWORD_2,
+    /**/
+    VDM_LANG_DROP_SENSOR_ERROR,
+    VDM_LANG_CLEAR_ERROR_DROP_SENSOR,
+    /**/
+    VDM_LANG_YES_NO,
+    VDM_LANG_CONFIRM_RESET,
+    /**/
+    VDM_LANG_SETTING_WARMUP_TIME,
+    VDM_LANG_SETTING_WARMUP_CURRENT_SETTING,
+    VDM_LANG_SETTING_WARMUP_MODE,
+    VDM_LANG_SETTING_WARMUP_ACTIVE_TIME,
+    VDM_LANG_SETTING_WARMUP_NO_DATA,
+    VDM_LANG_SETTING_WARMUP_TEXT_TON,
+    VDM_LANG_SETTING_WARMUP_TEXT_TOFF,
+    VDM_LANG_DELETE_GLASS_WARMUP,
+    VDM_LANG_SETTING_WARMUP_REPEAT_BY_DATE,
+    VDM_LANG_SETTING_WARMUP_REPEAT_FOREVER,
+    VDM_LANG_SETTING_WARMUP_CUSTOM,
+    VDM_LANG_SETTING_WARMUP_REPEAT_HOUR,
+    VDM_LANG_SETTING_TEXT_FROM,
+    VDM_LANG_SETTING_TEXT_TO,
+    VDM_LANG_SETTING_NO_CHANGE,
+    VDM_LANG_SETTING_ON,
+    VDM_LANG_SETTING_OFF,
+    VDM_LANG_SETTING_ON_OFF,
+    VDM_LANG_SETTING_UV_TIME,
+    VDM_LANG_UV,
+    VDM_LANG_UV_ENTER_TIME,
+    VDM_LANG_RGB_ON_OFF,
+    VDM_LANG_ID_SAME_PASSWORD,
+    VDM_LANG_ID_UPDATING_FIRMWARE,
+    VDM_LANG_ID_RESTORE_FACTORY_FIRMWARE,
+    VDM_LANG_ID_MAX
+} vdm_language_id_t;
+
+/**
+ * @brief           Load current language settings from storage.
+ */
+void vdm_language_restore_from_storage(void);
+
+/**
+ * @brief           Set new language settings
+ */
+void vdm_language_set_language(vdm_language_t language);
+
+/**
+ * @brief           Get current language settings
+ * @retval          Language id @ref vdm_language_id_t
+ */
+vdm_language_t vdm_language_get_current_lang();
+
+
+/**
+ * @brief           Get text form language id
+ * @retval          Text
+ */
+const uint16_t* vdm_language_get_text(vdm_language_id_t language_id);
+
+/**
+ * \}
+ */
+
+#endif /* VDM_LANGUAGE_H */

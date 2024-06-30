@@ -52,13 +52,13 @@
     ------------End of FRAM -------------
 
 */
-/* The supported language */
-typedef enum
-{
-    VDM_LANG_VNI = 0x00,   /* Vietnamese */
-    VDM_LANG_ENGLISH = 0x01,   /* English */
-    VDM_LANG_MAX    /* The end of languages */
-} vdm_language_t;
+///* The supported language */
+//typedef enum
+//{
+//    VDM_LANG_VNI = 0x00,   /* Vietnamese */
+//    VDM_LANG_ENGLISH = 0x01,   /* English */
+//    VDM_LANG_MAX    /* The end of languages */
+//} vdm_language_t;
 typedef union
 {
     struct

@@ -3,6 +3,8 @@
 "idm\main.o"
 "idm\stm32f1xx_it.o"
 "idm\stm32f1xx_hal_msp.o"
+"idm\stm32f1xx_ll_sdmmc.o"
+"idm\stm32f1xx_hal_sd.o"
 "idm\stm32f1xx_hal_gpio_ex.o"
 "idm\stm32f1xx_hal_adc.o"
 "idm\stm32f1xx_hal_adc_ex.o"
@@ -18,9 +20,6 @@
 "idm\stm32f1xx_hal_exti.o"
 "idm\stm32f1xx_hal_rtc.o"
 "idm\stm32f1xx_hal_rtc_ex.o"
-"idm\stm32f1xx_ll_sdmmc.o"
-"idm\stm32f1xx_hal_sd.o"
-"idm\stm32f1xx_hal_spi.o"
 "idm\stm32f1xx_hal_tim.o"
 "idm\stm32f1xx_hal_tim_ex.o"
 "idm\stm32f1xx_hal_uart.o"
@@ -43,6 +42,8 @@
 "idm\gsm_drv.o"
 "idm\imd.o"
 "idm\user_gui.o"
+"idm\dht_sensor.o"
+"idm\crc_calculator.o"
 --strict --scatter "IDM\IDM.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

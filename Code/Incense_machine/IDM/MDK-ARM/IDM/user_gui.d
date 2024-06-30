@@ -28,9 +28,6 @@ idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h
-idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
-idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
-idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
@@ -39,4 +36,16 @@ idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
 idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+idm\user_gui.o: ..\Core\User_Driver\GLCD.h
+idm\user_gui.o: ..\Core\User_Driver\platform.h
+idm\user_gui.o: ..\Core\User_Driver\glcd_font.h
 idm\user_gui.o: ../Core/Inc/main.h
+idm\user_gui.o: ..\Core\User_Driver\GSM_app.h
+idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+idm\user_gui.o: ..\Core\User_Driver\GSM_drv.h
+idm\user_gui.o: ..\Core\User_Driver\RTC_time.h
+idm\user_gui.o: ..\Core\User_Driver\dht_sensor.h
+idm\user_gui.o: ..\Core\User_Driver\dht_sensor_conf.h
+idm\user_gui.o: ..\Core\User_Driver\delay.h
+idm\user_gui.o: ..\Core\User_Driver\IDM.h
+idm\user_gui.o: ..\Core\User_Driver\vdm_language.h
