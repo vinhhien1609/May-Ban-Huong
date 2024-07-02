@@ -227,9 +227,36 @@ void GLcd_DrawCharUni(const uint8_t *image, int32_t x, int32_t y, uint8_t w, uin
             {                                               /* Kiem tra tung bit trong byte, neu bang 1 thi chuyen mau diem hien thi */
                 GLcd_DrawPoint(x + i, y + j, color);
             }
+						else
+							GLcd_DrawPoint(x + i, y + j, BLACK);
         }
     }
 }
+/**
+ * @brief Ham ve mot ki tu tieng viet ra man h�nh(Unicode)<=> quet theo cot           
+ * 
+ * @param uint8_t* image -> Mang can hien thi 
+ * @param int32_t x -> Toa do x diem bat dau can hien thi   
+ * @param int32_t y -> Toa do y diem bat dau can hien thi 
+ * @param uint8_t w -> Do rong cua anh can hien thi
+ * @param uint8_t h -> Chieu cao cua anh can hien thi        
+ * @retval NONE  
+ */
+void GLcd_DrawCharDef(const uint8_t *image, int32_t x, int32_t y, uint8_t w, uint8_t h, int32_t color)
+{
+    for (uint16_t i = 0; i < h; i++) /* Quet den het do cao ki tu (cot) */
+    {
+			int nbyte = (w-1)/8 +1;
+        for (uint16_t j = 0; j < w; j++) /* Quet den het rong ki tu (hang) */
+        {
+            if (READBIT(*(image + i*nbyte + j/8), 7-(j % 8))) /* Lay byte dau tien ghep voi byte thu w trong trong mang cua ki tu */
+            {                                               /* Kiem tra tung bit trong byte, neu bang 1 thi chuyen mau diem hien thi */
+                GLcd_DrawPoint(x + j, y + i, color);
+            }
+        }
+    }
+}
+
 /**
  * @brief Ham ve mot chuoi ki tu ra man hinh           
  * 
@@ -272,7 +299,7 @@ void GLcd_DrawString(const char *str, int32_t x, int32_t y, int32_t color)
  * @param uint8_t h -> Chieu cao cua anh can hien thi        
  * @retval NONE  
  */
-void GLcd_DrawStringUni(const uint16_t *s, int32_t x, int32_t y, int32_t color)
+void GLcd_DrawStringUni(const char *s, int32_t x, int32_t y, int32_t color)
 {
     while (*s != 0) /* Quet den het ki tu */
     {
@@ -291,6 +318,39 @@ void GLcd_DrawStringUni(const uint16_t *s, int32_t x, int32_t y, int32_t color)
             s++;    /* Neu la ki tu dau cach */
             x += 3; /* Bo qua 3 cot */
         }
+    }
+}
+/**
+ * @brief Ham ve mot chuoi ki tu tieng viet ra man h�nh (Unicode)          
+ * 
+ * @param const uint16_t* s -> Mang can hien thi 
+ * @param int32_t x -> Toa do x diem bat dau can hien thi   
+ * @param int32_t y -> Toa do y diem bat dau can hien thi 
+ * @param uint8_t w -> Do rong cua anh can hien thi
+ * @param uint8_t h -> Chieu cao cua anh can hien thi        
+ * @retval NONE  
+ */
+void GLcd_DrawStringDef(const char *s, int32_t x, int32_t y, int32_t color)
+{
+	int32_t r=x, c=y;
+    while (*s != 0) /* Quet den het ki tu */
+    {
+			if(*s!='\n')
+			{
+				uint8_t char_pos = code_mapping_table[*s]; /* Tra ve vi tri bat dau cua ki tu trong man Vnfont */
+
+				/* Truyen byte thu 2 va byte thu w+1 cua ki tu vao ham ve ra man hinh */
+				GLcd_DrawCharDef(&(char_table[code_offset_table[char_pos]]), r, c, code_width_table[char_pos], heigh, color);
+				/* Lay do lon w cua ki tu la byte dau tien */
+				s++;                                  /* Toi ki tu tiep theo */
+				r += code_width_table[char_pos] + 1; /* Toa do x ki tu tiep theo tang theo do lon ki tu w */
+			}
+			else
+			{
+					s++;
+					c +=heigh +1;
+					r=0;
+			}
     }
 }
 
@@ -326,7 +386,6 @@ int32_t GLcd_MeasureString(const char *str)
 
     return px; /* Tra ket qua do lon chuoi sau khi het ki tu */
 }
-
 /**
  * @brief Ham kiem tra do lon cua chuoi ki tu (Voi ki tu tieng viet (Unicode)         
  * 
@@ -353,7 +412,6 @@ int32_t GLcd_MeasureStringUni(const uint16_t *str)
     }
     return px;
 }
-
 /**
  * @brief Toa do vi tri giua cua chuoi ki tu unicode     
  * 
@@ -560,6 +618,8 @@ void GLcd_DrawBitmap(const uint8_t *image, int32_t x, int32_t y)
             {
                 GLcd_DrawPoint(x + i, y + j, WHITE);
             }
+						else
+							GLcd_DrawPoint(x + i, y + j, BLACK);
         }
     }
 }

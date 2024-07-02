@@ -203,7 +203,6 @@ int main(void)
 		printf("NV11 Init Fail: %d\r\n",i8_nv11_init);
 	}
 
-//	HAL_Delay(500);
 	GSM_init();
 	IDM_init();
 	printf("Infinite loop\r\n");

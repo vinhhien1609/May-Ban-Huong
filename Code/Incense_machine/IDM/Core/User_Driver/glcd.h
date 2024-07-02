@@ -42,13 +42,16 @@ void GLcd_DrawPoint(int32_t x, int32_t y, int32_t color);
 void GLcd_DrawChar(char c, int32_t x, int32_t y, int32_t color);
 void GLcd_DrawCharUni(const uint8_t* image, int32_t x, int32_t y, uint8_t w, uint8_t h, int32_t color);
 void GLcd_DrawString(const char* str, int32_t x, int32_t y, int32_t color);
-void GLcd_DrawStringUni(const uint16_t* s, int32_t x1, int32_t y1, int32_t color);
+void GLcd_DrawStringUni(const char* s, int32_t x1, int32_t y1, int32_t color);
 void GLcd_DrawLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t color);
 void GLcd_DrawRect(int32_t x, int32_t y, int32_t width, int32_t height, int32_t color);
 void GLcd_DrawCircle(int32_t x, int32_t y, int32_t radius, int32_t color);
 void GLcd_FillRect(int32_t x, int32_t y, int32_t width, int32_t height, int32_t color);
 void GLcd_DrawImage(const uint8_t* img);
 void GLcd_DrawBitmap(const uint8_t *image, int32_t x, int32_t y);
+
+void GLcd_DrawStringDef(const char *s, int32_t x, int32_t y, int32_t color);
+void GLcd_DrawCharDef(const uint8_t *image, int32_t x, int32_t y, uint8_t w, uint8_t h, int32_t color);
 
 /* Get the length in pixel of a string with the current font */
 int32_t  GLcd_MeasureString(const char* str);

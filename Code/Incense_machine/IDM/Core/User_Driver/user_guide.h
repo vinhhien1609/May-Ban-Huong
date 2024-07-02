@@ -19,6 +19,7 @@
 //#include "stm32f10x.h"
 #include <time.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
 
@@ -36,6 +37,16 @@ typedef enum displayType{
 	TimeSetup
 } Display_Typedef;
 #endif
+
+
+//typedef enum
+//{
+//		VDM_LANG_XIN_KINH_CHAO,
+//		VDM_QUY_KHACH,
+//    VDM_LANG_ID_MAX
+//} vdm_language_id_t;
+
+
 
 /*********************************************************************************************************
       END FILE

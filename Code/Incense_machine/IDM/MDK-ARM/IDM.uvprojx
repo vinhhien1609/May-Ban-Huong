@@ -734,6 +734,11 @@
               <FileType>1</FileType>
               <FilePath>..\Core\User_Driver\vdm_language.c</FilePath>
             </File>
+            <File>
+              <FileName>images.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\User_Driver\images.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

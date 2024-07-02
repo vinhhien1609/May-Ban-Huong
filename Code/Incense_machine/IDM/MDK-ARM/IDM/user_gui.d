@@ -1,4 +1,6 @@
 idm\user_gui.o: ..\Core\User_Driver\user_gui.c
+idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 idm\user_gui.o: ../Core/Inc/stm32f1xx_hal_conf.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
@@ -34,14 +36,12 @@ idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 idm\user_gui.o: ..\Core\User_Driver\USER_GUIDE.h
 idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
 idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 idm\user_gui.o: ..\Core\User_Driver\GLCD.h
 idm\user_gui.o: ..\Core\User_Driver\platform.h
 idm\user_gui.o: ..\Core\User_Driver\glcd_font.h
 idm\user_gui.o: ../Core/Inc/main.h
 idm\user_gui.o: ..\Core\User_Driver\GSM_app.h
-idm\user_gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 idm\user_gui.o: ..\Core\User_Driver\GSM_drv.h
 idm\user_gui.o: ..\Core\User_Driver\RTC_time.h
 idm\user_gui.o: ..\Core\User_Driver\dht_sensor.h
@@ -49,3 +49,4 @@ idm\user_gui.o: ..\Core\User_Driver\dht_sensor_conf.h
 idm\user_gui.o: ..\Core\User_Driver\delay.h
 idm\user_gui.o: ..\Core\User_Driver\IDM.h
 idm\user_gui.o: ..\Core\User_Driver\vdm_language.h
+idm\user_gui.o: ..\Core\User_Driver\images.h

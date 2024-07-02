@@ -14,6 +14,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 //#include "stm32f10x.h"
+#include <string.h>
+#include <stdlib.h>
 #include "stm32f1xx_hal.h"
 //#include "stm32f1xx_hal_rtc.h"
 #include "USER_GUIDE.h"
@@ -23,13 +25,19 @@
 #include "dht_sensor.h"
 #include "IDM.h"
 #include "vdm_language.h"
+#include "images.h"
 #include "main.h"
 #define KEY_HOLE_TIME 20
 unsigned char key_map[16]= {'0','1','2','3','4','5','6','7','8','9','*','#'};
-unsigned char key_count=0, old_key=255, pressed_old_key=255, point=0;;
+unsigned char key_count=0, old_key=255, pressed_old_key=255, point=0, old_point=0;
+
+
 Display_Typedef current_display=Home, old_display=255;
 rtc_date_time_t TimeSetting;
 char str[30];
+
+
+typedef uint16_t char16_t;
 
 extern GSM_State GSM;
 extern uint8_t isSecond_display;
@@ -141,20 +149,27 @@ void Menu_draw(void)
 	{
 		old_display = current_display;
 		point =0;
+		old_point =0;
 		GLcd_ClearScreen(BLACK);
 		switch(current_display)
 		{
 			case Home:
 //				GLcd_SetFont(g_vnfont_8x15);
 				//sprintf(s, "NH\x1EACP M\x1EACT KH\x1EA8U");
-//				GLcd_DrawStringUni("NH\x1EACP M\x1EACT KH\x1EA8U", 0, 28, WHITE);
-			GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_PASSWORD_NOT_MATCH),0,0, WHITE);
+//				GLcd_DrawStringUni(VDM_LANG_XIN_KINH_CHAO, 25, 20, WHITE);
+//				GLcd_DrawStringUni(VDM_LANG_QUY_KHACH, 32, 38, WHITE);
+				GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);
+				
 				break;
 			case Password:
-				GLcd_DrawString("Press Pass", 18, 0, WHITE);				
+				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_PASSWORD),20, 20, WHITE);
+				GLcd_DrawString("------", 40, 40, WHITE);
 				break;
 			case Setup:
-				GLcd_DrawString("Setup", 18, 0, WHITE);				
+				GLcd_DrawBitmap(img_arrow_bmp, 0, 15);
+				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT),10, 10, WHITE);
+				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_SETTING),10, 25, WHITE);
+				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ERROR_INFO),10, 40, WHITE);
 				break;
 			case TimeSetup:
 				GLcd_DrawString("Time Setting", 18, 0, WHITE);
@@ -208,6 +223,28 @@ void Menu_draw(void)
 			case Password:
 				break;
 			case Setup:
+				if(key_pressed=='8')
+				{
+					point++;
+					if(point>9)	point =0;
+				}
+				if(key_pressed =='0')
+				{
+					if(point>0)	point--;
+					else	point =9;
+				}
+				if(old_point!= point)
+				{
+					if(point%3!=1)	GLcd_ClearScreen(BLACK);
+					GLcd_DrawBitmap(img_del_arrow_bmp, 0, (old_point%3)*15 + 15);
+					old_point =point;
+					GLcd_DrawBitmap(img_arrow_bmp, 0, (point%3)*15 + 15);
+					for(int n=0; n<3; n++)
+					{
+						if((point/3)*3 +n >9)	break;
+						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT+(point/3)*3 +n),10, 10 + n*15, WHITE);
+					}
+				}
 				break;
 			case TimeSetup:
 //				if(key_pressed=='#' && strlen(str)>0)

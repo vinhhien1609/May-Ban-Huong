@@ -44,6 +44,7 @@
 "idm\user_gui.o"
 "idm\dht_sensor.o"
 "idm\crc_calculator.o"
+"idm\vdm_language.o"
 --strict --scatter "IDM\IDM.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
