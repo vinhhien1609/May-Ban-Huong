@@ -27,14 +27,38 @@
 
 /* Private function prototypes -----------------------------------------------*/
 unsigned char scan_BT(void);
+void scan_switch(void);
 void Menu_draw(void);
 
 /* Private variables ---------------------------------------------------------*/
 typedef enum displayType{
-	Home = 0U,
-	Password,
-	Setup,
-	TimeSetup
+	DIS_Home = 0U,
+	DIS_Password,
+	DIS_Setup,
+	DIS_ACCEPT_DENO,
+	DIS_TimeSetup,
+	DIS_TOTAL_MONEY,
+		DIS_DAY,
+		DIS_MONTH,
+		DIS_YEAR,
+		DIS_TOTAL,
+	DIS_CELL_EACH_TIME,
+		
+	DIS_ERROR_INFO,
+		DIS_ERROR_MOTOR,
+		DIS_ERROR_PAYMENT,
+		DIS_ERROR_SENSOR,
+		DIS_DEL_ERROR_MOTOR,
+		DIS_DEL_ERROR_HW,
+		DIS_DEL_ERROR_SENSOR,
+	DIS_ONOFF_HUMIDITY,
+	DIS_HUMIDITY_SET,
+	
+	DIS_TIME_RUN,
+	DIS_NUMBER_CELL,
+	DIS_CELL_MORE,
+	DIS_DEL_ERROR,
+	TOTAL_DIS,
 } Display_Typedef;
 #endif
 

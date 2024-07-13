@@ -40,6 +40,8 @@
 #include "USER_GUIDE.h"
 #include "dht_sensor.h"
 #include "IDM.h"
+#include "flash.h"
+#include "vdm_app_gsm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,6 +52,9 @@ extern uint16_t AT_timeout;
 uint8_t isSecond =0, isSecond_display=0;
 DHT_HandleTypeDef DHT_21;
 extern uint32_t count;
+extern bool flag_readDHT12;
+uint32_t sram_ID=0;
+uint32_t time_buzz=0;
 
 /* USER CODE END PTD */
 
@@ -123,7 +128,7 @@ PUTCHAR_PROTOTYPE
   HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
   return ch;
 }
-
+int stt_DHT=0;
 /* USER CODE END 0 */
 
 /**
@@ -133,7 +138,7 @@ PUTCHAR_PROTOTYPE
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -172,11 +177,7 @@ int main(void)
 	HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_SET);
 	//END init DHT21
 	HAL_TIM_Base_Start_IT(&htim6);
-	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
-//	HAL_GPIO_WritePin(SWAP_MOTOR_GPIO_Port, SWAP_MOTOR_Pin, GPIO_PIN_SET);
-//	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_SET);
-	HAL_Delay(500);	
-	HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+	Buzz_On(500);
 //	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_RESET);
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
 	//LCD
@@ -204,6 +205,9 @@ int main(void)
 	}
 
 	GSM_init();
+	flash_init();
+	printf("Sram_STT: %d\r\n", Read_SRAM_STT());
+	printf("ID_SRAM: %u\r\n", Read_SRAM_ID());
 	IDM_init();
 	printf("Infinite loop\r\n");
   /* USER CODE END 2 */
@@ -212,7 +216,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 		HAL_GPIO_WritePin(SWAP_MOTOR_GPIO_Port, SWAP_MOTOR_Pin, GPIO_PIN_RESET);
 		GLcd_ClearScreen(BLACK);
-	
+//	
+//	for(int n=0; n<10; n++)
+//	{
+//		Write_Byte_Sram(n, n);
+//	}
   while (1)
   {
     /* USER CODE END WHILE */
@@ -229,10 +237,12 @@ int main(void)
 			if(GSM.CSQ>10)
 				TCP_connect();
 			currentTime = getRTC();
-			
+//			uint32_t size_of_frame = sizeof(m_door_close_frame);
+//			printf("size fram: %d\r\n", size_of_frame);
 			if(currentTime.second%10==0)
 			{
-				if(DHT_Sensor_Read(&DHT_21)!=READ_OK)
+				stt_DHT = DHT_Sensor_Read(&DHT_21);
+				if(stt_DHT!=READ_OK)
 				{
 					DHT_21.values.humidity =0;
 					DHT_21.values.temperature =0;
@@ -628,7 +638,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|Heater_Pin|MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|Heater_Pin|Flash_MOSI_Pin|Flash_SCK_Pin
+                          |MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(Flash_SS_GPIO_Port, Flash_SS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED3_Pin|LED2_Pin|LCD_CS_Pin|LCD_CLK_Pin
@@ -663,11 +677,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Flash_SS_Pin Flash_SCK_Pin Flash_MISO_Pin FLASH_MOSI_Pin */
-  GPIO_InitStruct.Pin = Flash_SS_Pin|Flash_SCK_Pin|Flash_MISO_Pin|FLASH_MOSI_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  /*Configure GPIO pins : Flash_MOSI_Pin Flash_SCK_Pin Flash_SS_Pin */
+  GPIO_InitStruct.Pin = Flash_MOSI_Pin|Flash_SCK_Pin|Flash_SS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Flash_MISO_Pin */
+  GPIO_InitStruct.Pin = Flash_MISO_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Flash_MISO_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Empty_Pin */
   GPIO_InitStruct.Pin = Empty_Pin;
@@ -767,12 +788,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == htim6.Instance)
 	{
 //		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
+		if(time_buzz)
+		{
+			time_buzz--;
+			if(time_buzz==1)
+				HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);				
+		}
+
 		if(count <= 0xFFFFF)
 			count ++;
 		if(AT_timeout <0xFFFF)
 			AT_timeout++;
-		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
-		
+//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
+		if(flag_readDHT12==false)
+				scan_switch();
 	}
 }
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
@@ -782,7 +811,6 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
   /* NOTE : This function Should not be modified, when the callback is needed,
             the HAL_RTCEx_RTCEventCallback could be implemented in the user file
    */
-//	HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
 			isSecond =1;
 	isSecond_display ++;
 	
@@ -801,7 +829,6 @@ void Error_Handler(void)
   /* User can add his own implementation to report the HAL error return state */
   printf("error\r\n");
 	__disable_irq();
-	
   while (1)
   {
   }

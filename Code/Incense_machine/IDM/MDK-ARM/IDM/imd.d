@@ -37,3 +37,4 @@ idm\imd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 idm\imd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 idm\imd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 idm\imd.o: ../Core/Inc/main.h
+idm\imd.o: ..\Core\User_Driver\flash.h

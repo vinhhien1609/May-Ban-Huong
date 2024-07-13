@@ -56,3 +56,5 @@ idm\main.o: ../Core/User_Driver/dht_sensor.h
 idm\main.o: ../Core/User_Driver/dht_sensor_conf.h
 idm\main.o: ../Core/User_Driver/delay.h
 idm\main.o: ../Core/User_Driver/IDM.h
+idm\main.o: ../Core/User_Driver/flash.h
+idm\main.o: ../Core/User_Driver/vdm_app_gsm.h

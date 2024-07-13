@@ -11,9 +11,11 @@
 
 #define MIN_DELAY_INTERVAL 2000 /**< minimum delay between reads */
 #define WAIT_SIGNAL_US 55
-#define TIMEOUT 255
 //#define MAX_WAIT_TIME_US 1000
-#define MAX_WAIT_TIME_US 5000
+#define MAX_WAIT_TIME_US 3000
+#define TIMEOUT MAX_WAIT_TIME_US+10
+long time_test=0;
+bool flag_readDHT12=false;
 /**
  * Reference: https://stackoverflow.com/a/60891394/5107192
  */
@@ -88,11 +90,11 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 //	}
 
 //	hdht->lastReadTime = currentTime;
-	
+
 	//set output
   gpio_init_structure.Pin   = DHT_PIN_conf;
   gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_OD;
-  gpio_init_structure.Pull  = GPIO_NOPULL;
+  gpio_init_structure.Pull  = GPIO_PULLUP;
   gpio_init_structure.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(DHT_GPIO_conf, &gpio_init_structure);
 	
@@ -101,12 +103,14 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 	}
 	HAL_GPIO_WritePin(DHT_GPIO_conf, DHT_PIN_conf, GPIO_PIN_SET);
 	_delay(4500);
+	printf("DHT21 READ\r\n");
+	flag_readDHT12=true;
 	HAL_GPIO_WritePin(DHT_GPIO_conf, DHT_PIN_conf, GPIO_PIN_RESET);
 	
 	switch (hdht->DHT_Type) {
 	case DHT22:
 	case DHT21:	//>1.1ms
-	_delay(5000);
+	_delay(5500);
 		break;
 	case DHT11:
 	default:		//20ms
@@ -118,6 +122,7 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 	{
 	    // End the start signal by setting data line high
 			HAL_GPIO_WritePin(DHT_GPIO_conf, DHT_PIN_conf, GPIO_PIN_SET);
+		//set input
 			gpio_init_structure.Pin   = DHT_PIN_conf;
 			gpio_init_structure.Mode  = GPIO_MODE_INPUT;
 			gpio_init_structure.Pull  = GPIO_NOPULL;
@@ -126,22 +131,25 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 			HAL_GPIO_Init(DHT_GPIO_conf, &gpio_init_structure);		
 
 	    // Delay a moment to let sensor pull data line low.
-//	    delay_us(WAIT_SIGNAL_US);
-			
+//	    _delay(WAIT_SIGNAL_US);
+	    if (waitForPulse(1) == TIMEOUT) {
+	      hdht->status = TIMEOUT_LOW;
+	      return hdht->status;
+	    }
+//		 printf("----\r\n");			
 	    // Now start reading the data line to get the value from the DHT sensor.
 
 	    // First expect a low signal for ~80 microseconds followed by a high signal
 	    // for ~80 microseconds again.
-
 	    if (waitForPulse(0) == TIMEOUT) {
 	      hdht->status = TIMEOUT_LOW;
 	      return hdht->status;
 	    }
+	//		printf("read ready LOW\r\n");
 	    if (waitForPulse(1) == TIMEOUT) {
 	      hdht->status = TIMEOUT_HIGH;
 	      return hdht->status;
 	    }
-
 	    // Now read the 40 bits sent by the sensor.  Each bit is sent as a 50
 	    // microsecond low pulse followed by a variable length high pulse.  If the
 	    // high pulse is ~28 microseconds then it's a 0 and if it's ~70 microseconds
@@ -155,7 +163,8 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 	      cycles[i + 1] = waitForPulse(1);
 	    }
 	  } // Timing critical code is now complete.
-
+		printf("read ready 80 bits\r\n");
+		flag_readDHT12 = false;
 	  // Inspect pulses and determine which ones are 0 (high state cycle count < low
 	  // state cycle count), or 1 (high state cycle count > low state cycle count).
 	  for (int i = 0; i < 40; ++i) {
@@ -175,14 +184,16 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 	    // cycle count so this must be a zero.  Nothing needs to be changed in the
 	    // stored data.
 	  }
-
+		
+		printf("DHT21>> REG %d %d %d %d %d\r\n", hdht->data[0], hdht->data[1], hdht->data[2], hdht->data[3], hdht->data[4]);
 	  uint8_t parity;
 	  parity = (hdht->data[0] + hdht->data[1] + hdht->data[2] + hdht->data[3]) & 0xFF;
 	  if(hdht->data[4]!=parity){
 		  hdht->status = CHECKSUM_FAILED;
+			printf("DHT21>> CHECKSUM_FAILED\r\n");
 		  return hdht->status;
 	  }
-
+		
 	  /*Evaluating the humidity and temperature*/
 
 //	  hdht->values.temperature = evalTemperature(hdht->data,countof(hdht->data),hdht->DHT_Type);
@@ -191,7 +202,7 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 		if(hdht->data[2] &0x80)
 			hdht->values.temperature*= -1;
 	  hdht->values.humidity= (float)(((uint16_t)hdht->data[0]) << 8 | hdht->data[1])*0.1;
-		
+		printf("DHT21>> HUM: %.02f\r\n", hdht->values.humidity);
 	  hdht->status = READ_OK;
 	  return hdht->status;
 }
@@ -263,17 +274,19 @@ float evalTemperature(uint8_t* data, uint8_t len, DHT_TypeDef type)
 uint32_t waitForPulse(uint8_t level){
 
 //	resetTick_us();
-	uint32_t count=0;
+	uint32_t count_wait=0;
 
 	while (HAL_GPIO_ReadPin(DHT_GPIO_conf, DHT_PIN_conf) == level) {
 //	    if (getTick_us() >= MAX_WAIT_TIME_US) {
-				if(count++ >=MAX_WAIT_TIME_US)	{
+//				time_test = count_wait;
+				if(count_wait++ >=MAX_WAIT_TIME_US)	{
+				printf("HDT21>> Timeout\r\n");
+				flag_readDHT12= false;
 	      return TIMEOUT; // Exceeded timeout, fail.
-
 	    }
 	}
 	//return getTick_us();
-	return count;
+	return count_wait;
 }
 
 

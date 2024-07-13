@@ -250,6 +250,13 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 						break;
 					case 8:
 						GSM.Connect4G =1;
+						sprintf(s, "AT+CIPSEND=1,\r\n");
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));		
+						HAL_Delay(500);
+						sprintf(s, "###|TPA9999999|CMD=|a|1&&&");
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+						HAL_Delay(500);
+						HAL_UART_Transmit_DMA(&huart3,"\x1A",1);
 						break;
 					}
 					return i;

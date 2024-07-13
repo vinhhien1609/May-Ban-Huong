@@ -18,9 +18,11 @@
 //#include "stm32f1xx_hal_rtc.c"
 #include "IDM.h"
 #include "main.h"
+#include "flash.h"
 IDM_PARA IDM;
-IDM_STT IDM_Status;
+IDM_HARDWARE IDM_Status;
 BUY_PARA buy;
+IDM_ERROR IDM_Errors;
 unsigned char havemoney=0, IDM_state=0, State=0xFF;
 
 /* Private define ------------------------------------------------------------*/
@@ -29,13 +31,15 @@ uint32_t count=0;
 void IDM_init(void)
 {
 //default	
-	IDM.Humidity = 0;
-	IDM.HumidityMAX = 90;
-	IDM.NumberBuyEmpty = 10;
-	IDM.NumberInsenseBuy = 8;
-	IDM.TimeConveyerRun = 30;
-	IDM.TimePUSHIsense = 2;
-	IDM.TotalInsenseBuy = 1000;
+//	IDM.Humidity = 0;
+//	IDM.HumidityMAX = 90;
+//	IDM.NumberBuyMore = 500;
+//	IDM.NumberInsenseBuy = 8;
+//	IDM.TimeConveyerRun = 30;
+//	IDM.TotalInsenseBuy = 1000;
+//	IDM.EnableHumidity =1;
+	Read_config();
+	IDM.TimeSwapIsense = 2;	
 }
 void Scan_IDM(void)
 {
@@ -47,11 +51,12 @@ void Scan_IDM(void)
 			{
 				count=0;
 				State = IDM_state;
-				IDM_Status.Motor_swap.isRun =1;				
+				IDM_Status.Motor_swap.isRun =1;
+				buy.StateBuy = CELL_WAIT;
 			}
 			else
 			{
-				if(count/1000 >=IDM.TimePUSHIsense)	// dao huong
+				if(count/1000 >=IDM.TimeSwapIsense)	// dao huong
 				{
 					IDM_Status.Motor_swap.isRun =0;
 					IDM_state =1;
@@ -65,6 +70,7 @@ void Scan_IDM(void)
 				State = IDM_state;
 				IDM_Status.Motor_conveyer.isRun =0;
 				IDM_Status.Motor_swap.isRun = 0;
+//				buy.StateBuy = CELL_WAIT;
 			}
 			else
 			{
@@ -82,6 +88,7 @@ void Scan_IDM(void)
 				State = IDM_state;
 				buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
 				IDM_Status.Motor_conveyer.isRun =1;
+				buy.StateBuy = CELLING;
 			}
 			else
 			{
@@ -104,21 +111,23 @@ void Scan_IDM(void)
 			}
 			else
 			{
-				if(count/1000>=IDM.TimePUSHIsense)
+				if(count/1000>=IDM.TimeSwapIsense)
 				{
 					IDM_Status.Motor_swap.isRun =0;
 				}
 				if(count/1000 >=IDM.TimeConveyerRun)
 				{
 					IDM_state =1;
+					buy.StateBuy = CELL_EMPTY_INSENCE;
 				}
 				if(buy.TotalIsenseDroped==0)
 				{
+					buy.StateBuy = CELL_SUCCESS;
 					IDM_state =4;
 				}
 			}
 			break;
-		case 4:
+		case 4:		//Ket thuc mua bán
 			if(State!=IDM_state)
 			{
 				count=0;
@@ -138,7 +147,7 @@ void Scan_IDM(void)
 	}
 
 	
-	if(IDM.Humidity >= IDM.HumidityMAX)
+	if(IDM.Humidity >= IDM.HumidityMAX && IDM.EnableHumidity>0)
 		IDM_Status.isHeater = true;
 	else
 		IDM_Status.isHeater = false;

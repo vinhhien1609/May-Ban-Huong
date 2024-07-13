@@ -50,3 +50,9 @@ idm\user_gui.o: ..\Core\User_Driver\delay.h
 idm\user_gui.o: ..\Core\User_Driver\IDM.h
 idm\user_gui.o: ..\Core\User_Driver\vdm_language.h
 idm\user_gui.o: ..\Core\User_Driver\images.h
+idm\user_gui.o: ..\Core\User_Driver\ssp_helpers.h
+idm\user_gui.o: ..\Core\User_Driver\SSPComs.h
+idm\user_gui.o: ..\Core\User_Driver\itl_types.h
+idm\user_gui.o: ..\Core\User_Driver\ssp_defines.h
+idm\user_gui.o: ..\Core\User_Driver\nv11.h
+idm\user_gui.o: ..\Core\User_Driver\flash.h

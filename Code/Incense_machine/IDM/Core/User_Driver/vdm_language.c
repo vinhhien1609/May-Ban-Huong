@@ -34,6 +34,29 @@ const char *m_lang_text[VDM_LANG_ID_MAX][VDM_LANG_MAX] =
 		{		"XÓA L\xA1I CELL", "NONE"},																				// XOA LOI
     {   "CH\x1E \x1\x1E HO\x1ET \x11\x1ENG",            "MODE"},      // Che do hoat dong
     {   "RESET PH\x8AN M\x91M",                    						 "RESTORE FIRMWARE"},
+		{		"THEO NG\xC0Y", "NONE"},
+		{		"THEO TH\xC1NG", "NONE"},
+		{		"THEO N\x8CM", "NONE"},
+		{		"T\x9ENG DOANH THU","NONE"},
+		{		"S\xA3 L\xAA\xA4NG","NONE"},		//so luong
+		{		"T\x9ENG TI\x91N","NONE"},			// tong tien
+		{		"TH\xD4NG TIN L\xA1I","NONE"},
+		{		"L\xA1I MOTOR","NONE"},
+		{		"L\xA1I THANH TO\xC1N","NONE"},
+		{   "L\xA1I C\x85M BI\x92N R\x9FI","NONE"},
+		{		"X\xD3\x41 L\xA1I MOTOR","NONE"},
+		{		"X\xD3\x41 L\xA1I PH\x8AN C\xA8NG","NONE"},
+		{   "X\xD3\x41 L\xA1I C\x85M BI\x92N","NONE"},
+		{		"B\x81T","NONE"},
+		{		"T\x89T","NONE"},
+		{		"C\xC0I \xAE\x80T \xAE\x98 \x83M","NONE"},	// cai dat do am
+		{		"TGIAN C\x8BP H\xAA\xA4NG","NONE"},
+		{		"KH\xD4NG C\xD3 L\xA1I","NO ERROR"},
+		{		"XONG", "DONE"},
+		{		"CH\x9B NH\x81N NHANG", "NONE"},
+		{		"XIN L\xA1I", "NONE"},
+		{		"\xAE\xC3 H\x92T NHANG", "NONE"},
+		{		"\xAE\xC3 NH\x81N:",	"NONE"}
 };
 
 static vdm_language_t m_current_language = VDM_LANG_VNI; /* Ngon ngu khai bao ban dau: Tieng Viet*/

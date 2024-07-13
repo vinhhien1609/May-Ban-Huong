@@ -32,8 +32,6 @@ static nv11_event_t m_last_n11_event = NV11_EVENT_NONE;
 static uint32_t m_lastest_note = 0; // Menh gia to tien gan nhat
 static uint8_t m_unit_type = 0;    // Loai dau doc tien
 
-static SSP6_SETUP_REQUEST_DATA m_setup_req;
-
 static int32_t m_denominations[9] = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
 
 //static void parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 * poll, bool lock);
@@ -49,6 +47,7 @@ static bool m_action_payout_fault = false;
 static uint32_t m_num_note_payout;
 static uint32_t m_last_num_note_payout;
 static uint32_t m_error_payout;
+SSP6_SETUP_REQUEST_DATA m_setup_req;
 
 __WEAK void display_payout_countdown(uint8_t value)
 {

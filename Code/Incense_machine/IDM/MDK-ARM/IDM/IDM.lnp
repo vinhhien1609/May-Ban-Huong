@@ -3,8 +3,6 @@
 "idm\main.o"
 "idm\stm32f1xx_it.o"
 "idm\stm32f1xx_hal_msp.o"
-"idm\stm32f1xx_ll_sdmmc.o"
-"idm\stm32f1xx_hal_sd.o"
 "idm\stm32f1xx_hal_gpio_ex.o"
 "idm\stm32f1xx_hal_adc.o"
 "idm\stm32f1xx_hal_adc_ex.o"
@@ -45,6 +43,8 @@
 "idm\dht_sensor.o"
 "idm\crc_calculator.o"
 "idm\vdm_language.o"
+"idm\flash.o"
+"idm\vdm_app_gsm.o"
 --strict --scatter "IDM\IDM.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

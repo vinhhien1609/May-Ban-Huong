@@ -103,6 +103,7 @@ enum channel_state
     ENABLED = 0x01
 };
 
+
 SSP_RESPONSE_ENUM ssp6_payout(SSP_COMMAND *sspC, const int32_t value, const char *cc, const char option);
 SSP_RESPONSE_ENUM ssp6_set_route(SSP_COMMAND *sspC, const int32_t value, const char *cc, const char route);
 SSP_RESPONSE_ENUM ssp6_sync(SSP_COMMAND *sspC);

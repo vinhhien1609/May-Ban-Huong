@@ -104,146 +104,146 @@ uint16_t vnfontFindPosition(uint16_t c)
 {
     switch (c)
     {
-    case 'A':    return 0; break;
-    case 'B':    return 15; break;
-    case 'C':    return 28; break;
-    case 'D':    return 41; break;
-    case 'E':    return 56; break;
-    case 'F':    return 67; break;
-    case 'G':    return 78; break;
-    case 'H':    return 91; break;
-    case 'I':    return 104; break;
-    case 'J':    return 109; break;
-    case 'K':    return 118; break;
-    case 'L':    return 131; break;
-    case 'M':    return 142; break;
-    case 'N':    return 159; break;
-    case 'O':    return 174; break;
-    case 'P':    return 189; break;
-    case 'Q':    return 202; break;
-    case 'R':    return 219; break;
-    case 'S':    return 232; break;
-    case 'T':    return 243; break;
-    case 'U':    return 256; break;
-    case 'V':    return 269; break;
-    case 'W':    return 284; break;
-    case 'X':    return 309; break;
-    case 'Y':    return 324; break;
-    case 'Z':    return 337; break;
-    case ','   : return 350; break;   /* , */
-    case 0x1EB6: return 355; break;   /* Ặ */
-		case 0x80	 : return 355; break;   /* Ặ */
-    case 0x1EAC: return 370; break;   /* Ậ */
-		case 0x81	 : return 370; break;   /* Ậ */
-    case 0x1EA0: return 385; break;   /* Ạ */
-		case 0x82: return 385; break;   /* Ạ */
-    case 0x1EA8: return 400; break;   /* Ẩ */
-		case 0x83	 : return 400; break;   /* Ẩ */
-    case 0x1EB2: return 415; break;   /* Ẳ */
-		case 0x84	 : return 415; break;   /* Ẳ */
-    case 0x1EA2: return 430; break;   /* Ả */
-		case 0x85	 : return 430; break;   /* Ả */
-    case 0x1EB4: return 445; break;   /* Ẵ */
-		case 0x86	 : return 445; break;   /* Ẵ */
-    case 0x1EAA: return 460; break;   /* Ẫ */
-		case 0x87	 : return 460; break;   /* Ẫ */
-    case 0x1EB0: return 475; break;   /* Ằ */
-		case 0x88: return 475; break;   /* Ằ */
-    case 0x1EAE: return 490; break;   /* Ắ */
-		case 0x89: return 490; break;   /* Ắ */
-    case 0x1EA6: return 505; break;   /* Ầ */
-		case 0x8A	 : return 505; break;   /* Ầ */
-    case 0x1EA4: return 520; break;   /* Ấ */
-		case 0x8B  : return 520; break;   /* Ấ */
-    case 0xC3  : return 535; break;   /* Ã */
-    case 0x102 : return 550; break;   /* Ă */
-		case 0x8C  : return 550; break;   /* Ă */
-    case 0xC2  : return 565; break;   /* Â */
-    case 0xC0  : return 580; break;   /* À */
-    case 0xC1  : return 595; break;   /* Á */
-    case 0x1EB8: return 610; break;   /* Ẹ */
-		case 0x8D  : return 610; break;   /* Ẹ */
-    case 0x1EC2: return 621; break;   /* Ể */
-		case 0x8E  : return 621; break;   /* Ể */
-    case 0x1EBA: return 632; break;   /* Ẻ */
-		case 0x8F  : return 632; break;   /* Ẻ */
-    case 0x1EC4: return 643; break;   /* Ễ */
-		case 0x90  : return 643; break;   /* Ễ */
-    case 0x1EC0: return 654; break;   /* Ề */
-		case 0x91  : return 654; break;   /* Ề */
-    case 0x1EBE: return 665; break;   /* Ế */
-		case 0x92  : return 665; break;   /* Ế */
-    case 0x1EBC: return 676; break;   /* Ẽ */
-		case 0x93  : return 676; break;   /* Ẽ */
-    case 0xCA  : return 687; break;   /* Ê */
-    case 0xC8	 : return 698; break;   /* È */
-    case 0xC9  :   return 709; break;   /* É */
-    case 0x1EC6: return 720; break;   /* Ệ */
-		case 0x94  : return 720; break;   /* Ệ */
-    case 0xCD  : return 731; break;   /* Í */
-    case 0xCC  : return 736; break;   /* Ì */
-    case 0x128 : return 741; break;   /* Ĩ */
-		case 0x95  : return 741; break;   /* Ĩ */
-    case 0x1EC8: return 750; break;   /* Ỉ */
-		case 0x96: return 750; break;   /* Ỉ */
-    case 0x1ECA: return 755; break;   /* Ị */
-		case 0x97: return 755; break;   /* Ị */
-    case 0x1ED8: return 760; break;   /* Ộ */
-		case 0x98: return 760; break;   /* Ộ */
-    case 0x1EDE: return 775; break;   /* Ở */
-		case 0x99: return 775; break;   /* Ở */
-    case 0x1EE0: return 790; break;   /* Ỡ */
-		case 0x9A: return 790; break;   /* Ỡ */
-    case 0x1EDC: return 805; break;   /* Ờ */
-		case 0x9B: return 805; break;   /* Ờ */
-    case 0x1EDA: return 820; break;   /* Ớ */
-		case 0x9C: return 820; break;   /* Ớ */
-    case 0x1ECC: return 835; break;   /* Ọ */
-		case 0x9D: return 835; break;   /* Ọ */
-    case 0x1ED4: return 850; break;   /* Ổ */
-		case 0x9E: return 850; break;   /* Ổ */
-    case 0x1A0:  return 865; break;   /* Ơ */
-		case 0x9F:  return 865; break;   /* Ơ */
-    case 0x1ECE: return 880; break;   /* Ỏ */
-		case 0xA0: return 880; break;   /* Ỏ */
-    case 0x1ED6: return 895; break;   /* Ỗ */
-		case 0xA1: return 895; break;   /* Ỗ */
-    case 0x1ED2: return 910; break;   /* Ồ */
-		case 0xA2: return 910; break;   /* Ồ */
-    case 0x1ED0: return 925; break;   /* Ố */
-		case 0xA3: return 925; break;   /* Ố */
-    case 0xD5:   return 940; break;   /* Õ */
-    case 0xD4:   return 955; break;   /* Ô */
-    case 0xD2:   return 970; break;   /* Ò */
-    case 0xD3:   return 985; break;   /* Ó */
-    case 0x1EE2: return 1000; break;   /* Ợ */
-		case 0xA4: return 1000; break;   /* Ợ */
-    case 0x1EEC: return 1015; break;   /* Ử */
-		case 0xA5: return 1015; break;   /* Ử */
-    case 0x1EEE: return 1034; break;   /* Ữ */
-		case 0xA6: return 1034; break;   /* Ữ */
-    case 0x1EEA: return 1053; break;   /* Ừ */
-		case 0xA7: return 1053; break;   /* Ừ */
-    case 0x1EE8: return 1072; break;   /* Ứ */
-		case 0xA8: return 1072; break;   /* Ứ */
-    case 0x1EE4: return 1091; break;   /* Ụ */
-		case 0xA9: return 1091; break;   /* Ụ */
-    case 0x1AF:  return 1104; break;   /* Ư */
-		case 0xAA:  return 1104; break;   /* Ư */
-    case 0x1EE6: return 1123; break;   /* Ủ */
-		case 0xAB: return 1123; break;   /* Ủ */
-    case 0x168:  return 1136; break;   /* Ũ */
-		case 0xAC:  return 1136; break;   /* Ũ */
-    case 0xD9:   return 1149; break;   /* Ù */
-    case 0xDA:   return 1162; break;   /* Ú */
-    case 0x1EF0: return 1175; break;   /* Ự */
-		case 0xAD: return 1175; break;   /* Ự */
-    case 0x110:  return 1194; break;   /* Đ */
-		case 0xAE:  return 1194; break;   /* Đ */
-    case '&':    return 1211; break;   /* & */
-    case ':':    return 1228; break;   /* : */
-    case '/':    return 1233; break;   /* / */
-    case '?':    return 1246; break;   /* ? */
+    case 'A':    return 0;
+    case 'B':    return 15;
+    case 'C':    return 28;
+    case 'D':    return 41;
+    case 'E':    return 56;
+    case 'F':    return 67;
+    case 'G':    return 78;
+    case 'H':    return 91;
+    case 'I':    return 104;
+    case 'J':    return 109;
+    case 'K':    return 118;
+    case 'L':    return 131;
+    case 'M':    return 142;
+    case 'N':    return 159;
+    case 'O':    return 174;
+    case 'P':    return 189;
+    case 'Q':    return 202;
+    case 'R':    return 219;
+    case 'S':    return 232;
+    case 'T':    return 243;
+    case 'U':    return 256;
+    case 'V':    return 269;
+    case 'W':    return 284;
+    case 'X':    return 309;
+    case 'Y':    return 324;
+    case 'Z':    return 337;
+    case ','   : return 350;   /* , */
+    case 0x1EB6: return 355;   /* Ặ */
+		case 0x80	 : return 355;   /* Ặ */
+    case 0x1EAC: return 370;   /* Ậ */
+		case 0x81	 : return 370;   /* Ậ */
+    case 0x1EA0: return 385;   /* Ạ */
+		case 0x82: return 385;   /* Ạ */
+    case 0x1EA8: return 400;   /* Ẩ */
+		case 0x83	 : return 400;   /* Ẩ */
+    case 0x1EB2: return 415;   /* Ẳ */
+		case 0x84	 : return 415;   /* Ẳ */
+    case 0x1EA2: return 430;   /* Ả */
+		case 0x85	 : return 430;   /* Ả */
+    case 0x1EB4: return 445;   /* Ẵ */
+		case 0x86	 : return 445;   /* Ẵ */
+    case 0x1EAA: return 460;   /* Ẫ */
+		case 0x87	 : return 460;   /* Ẫ */
+    case 0x1EB0: return 475;   /* Ằ */
+		case 0x88: return 475;   /* Ằ */
+    case 0x1EAE: return 490;   /* Ắ */
+		case 0x89: return 490;   /* Ắ */
+    case 0x1EA6: return 505;   /* Ầ */
+		case 0x8A	 : return 505;   /* Ầ */
+    case 0x1EA4: return 520;   /* Ấ */
+		case 0x8B  : return 520;   /* Ấ */
+    case 0xC3  : return 535;   /* Ã */
+    case 0x102 : return 550;   /* Ă */
+		case 0x8C  : return 550;   /* Ă */
+    case 0xC2  : return 565;   /* Â */
+    case 0xC0  : return 580;   /* À */
+    case 0xC1  : return 595;   /* Á */
+    case 0x1EB8: return 610;   /* Ẹ */
+		case 0x8D  : return 610;   /* Ẹ */
+    case 0x1EC2: return 621;   /* Ể */
+		case 0x8E  : return 621;   /* Ể */
+    case 0x1EBA: return 632;   /* Ẻ */
+		case 0x8F  : return 632;   /* Ẻ */
+    case 0x1EC4: return 643;   /* Ễ */
+		case 0x90  : return 643;   /* Ễ */
+    case 0x1EC0: return 654;   /* Ề */
+		case 0x91  : return 654;   /* Ề */
+    case 0x1EBE: return 665;   /* Ế */
+		case 0x92  : return 665;   /* Ế */
+    case 0x1EBC: return 676;   /* Ẽ */
+		case 0x93  : return 676;   /* Ẽ */
+    case 0xCA  : return 687;   /* Ê */
+    case 0xC8	 : return 698;   /* È */
+    case 0xC9  :   return 709;   /* É */
+    case 0x1EC6: return 720;   /* Ệ */
+		case 0x94  : return 720;   /* Ệ */
+    case 0xCD  : return 731;   /* Í */
+    case 0xCC  : return 736;   /* Ì */
+    case 0x128 : return 741;   /* Ĩ */
+		case 0x95  : return 741;   /* Ĩ */
+    case 0x1EC8: return 750;   /* Ỉ */
+		case 0x96: return 750;   /* Ỉ */
+    case 0x1ECA: return 755;   /* Ị */
+		case 0x97: return 755;   /* Ị */
+    case 0x1ED8: return 760;   /* Ộ */
+		case 0x98: return 760;   /* Ộ */
+    case 0x1EDE: return 775;   /* Ở */
+		case 0x99: return 775;   /* Ở */
+    case 0x1EE0: return 790;   /* Ỡ */
+		case 0x9A: return 790;   /* Ỡ */
+    case 0x1EDC: return 805;   /* Ờ */
+		case 0x9B: return 805;   /* Ờ */
+    case 0x1EDA: return 820;   /* Ớ */
+		case 0x9C: return 820;   /* Ớ */
+    case 0x1ECC: return 835;   /* Ọ */
+		case 0x9D: return 835;   /* Ọ */
+    case 0x1ED4: return 850;   /* Ổ */
+		case 0x9E: return 850;   /* Ổ */
+    case 0x1A0:  return 865;   /* Ơ */
+		case 0x9F:  return 865;   /* Ơ */
+    case 0x1ECE: return 880;   /* Ỏ */
+		case 0xA0: return 880;   /* Ỏ */
+    case 0x1ED6: return 895;   /* Ỗ */
+		case 0xA1: return 895;   /* Ỗ */
+    case 0x1ED2: return 910;   /* Ồ */
+		case 0xA2: return 910;   /* Ồ */
+    case 0x1ED0: return 925;   /* Ố */
+		case 0xA3: return 925;   /* Ố */
+    case 0xD5:   return 940;   /* Õ */
+    case 0xD4:   return 955;   /* Ô */
+    case 0xD2:   return 970;   /* Ò */
+    case 0xD3:   return 985;   /* Ó */
+    case 0x1EE2: return 1000;   /* Ợ */
+		case 0xA4: return 1000;   /* Ợ */
+    case 0x1EEC: return 1015;   /* Ử */
+		case 0xA5: return 1015;   /* Ử */
+    case 0x1EEE: return 1034;   /* Ữ */
+		case 0xA6: return 1034;   /* Ữ */
+    case 0x1EEA: return 1053;   /* Ừ */
+		case 0xA7: return 1053;   /* Ừ */
+    case 0x1EE8: return 1072;   /* Ứ */
+		case 0xA8: return 1072;   /* Ứ */
+    case 0x1EE4: return 1091;   /* Ụ */
+		case 0xA9: return 1091;   /* Ụ */
+    case 0x1AF:  return 1104;   /* Ư */
+		case 0xAA:  return 1104;   /* Ư */
+    case 0x1EE6: return 1123;   /* Ủ */
+		case 0xAB: return 1123;   /* Ủ */
+    case 0x168:  return 1136;   /* Ũ */
+		case 0xAC:  return 1136;   /* Ũ */
+    case 0xD9:   return 1149;   /* Ù */
+    case 0xDA:   return 1162;   /* Ú */
+    case 0x1EF0: return 1175;   /* Ự */
+		case 0xAD: return 1175;   /* Ự */
+    case 0x110:  return 1194;   /* Đ */
+		case 0xAE:  return 1194;   /* Đ */
+    case '&':    return 1211;   /* & */
+    case ':':    return 1228;   /* : */
+    case '/':    return 1233;   /* / */
+    case '?':    return 1246;   /* ? */
     }
     return 0;
 }

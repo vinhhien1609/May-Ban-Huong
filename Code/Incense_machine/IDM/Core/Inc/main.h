@@ -46,7 +46,8 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+extern uint32_t time_buzz;
+#define Buzz_On(x)	{time_buzz = x; HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);};
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -71,14 +72,14 @@ void Error_Handler(void);
 #define MCU_NV9_TX_GPIO_Port GPIOA
 #define MCU_NV9_RX_Pin GPIO_PIN_3
 #define MCU_NV9_RX_GPIO_Port GPIOA
-#define Flash_SS_Pin GPIO_PIN_4
-#define Flash_SS_GPIO_Port GPIOA
-#define Flash_SCK_Pin GPIO_PIN_5
-#define Flash_SCK_GPIO_Port GPIOA
-#define Flash_MISO_Pin GPIO_PIN_6
+#define Flash_MOSI_Pin GPIO_PIN_4
+#define Flash_MOSI_GPIO_Port GPIOA
+#define Flash_MISO_Pin GPIO_PIN_5
 #define Flash_MISO_GPIO_Port GPIOA
-#define FLASH_MOSI_Pin GPIO_PIN_7
-#define FLASH_MOSI_GPIO_Port GPIOA
+#define Flash_SCK_Pin GPIO_PIN_6
+#define Flash_SCK_GPIO_Port GPIOA
+#define Flash_SS_Pin GPIO_PIN_7
+#define Flash_SS_GPIO_Port GPIOA
 #define Empty_Pin GPIO_PIN_4
 #define Empty_GPIO_Port GPIOC
 #define Drop_Pin GPIO_PIN_5

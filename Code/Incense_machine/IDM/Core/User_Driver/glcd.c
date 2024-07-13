@@ -31,6 +31,9 @@ static void set_graphics_address(uint32_t r, uint32_t c);
 
 static glcd_pin_write_cb_t m_write_cb = 0;
 static glcd_protect_cb_t m_lock = 0;
+
+
+
 /**
  * @brief Ham cau hinh chan va khoi tao cho man h�nh LCD graphic 128x64
  * 
