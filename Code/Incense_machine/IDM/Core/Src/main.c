@@ -184,11 +184,16 @@ int main(void)
 	GLcd_Init(glcd_lcd_write_pin, 0);
 	GLcd_DrawString("Starting...", 0, 0, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
 	GLcd_Flush();
+//load config
+	flash_init();
+	printf("Sram_STT: %d\r\n", Read_SRAM_STT());
+	printf("ID_SRAM: %u\r\n", Read_SRAM_ID());
+	Read_config();
 //	test_nv11();
 	GLcd_DrawString("Init NV9...", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
 	GLcd_Flush();
 	ssp_serial_initialize();	
-  ITLSSP_Init();	
+  ITLSSP_Init();
 	int8_t i8_nv11_init = vdm_NV11_Init();
 	
 	if(i8_nv11_init == INIT_OK)
@@ -205,9 +210,6 @@ int main(void)
 	}
 
 	GSM_init();
-	flash_init();
-	printf("Sram_STT: %d\r\n", Read_SRAM_STT());
-	printf("ID_SRAM: %u\r\n", Read_SRAM_ID());
 	IDM_init();
 	printf("Infinite loop\r\n");
   /* USER CODE END 2 */
@@ -216,6 +218,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 		HAL_GPIO_WritePin(SWAP_MOTOR_GPIO_Port, SWAP_MOTOR_Pin, GPIO_PIN_RESET);
 		GLcd_ClearScreen(BLACK);
+//	vdm_device_config_load();
 //	
 //	for(int n=0; n<10; n++)
 //	{
@@ -654,7 +657,10 @@ static void MX_GPIO_Init(void)
                           |RELAY1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LCD_RESET_Pin|KEY_COL3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LCD_RESET_GPIO_Port, LCD_RESET_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(KEY_COL3_GPIO_Port, KEY_COL3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : BUZZER_Pin KEY_COL1_Pin KEY_COL2_Pin */
   GPIO_InitStruct.Pin = BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin;

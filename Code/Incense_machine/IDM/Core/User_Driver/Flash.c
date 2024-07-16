@@ -1,7 +1,7 @@
 #include "flash.h"
 #include "main.h"
 #include "IDM.h"
-
+#include "vdm_device_config.h"
 
 
 #define Read_SRAM	0x03
@@ -13,9 +13,13 @@
 
 #define Machine_Para_ADDR_BASE	0x00
 #define Buy_Para_ADDR_BASE	0x30
-#define Money_ADDR_BASE	0x500
+#define Device_config_ADDR_BASE	0x400
+#define Money_ADDR_BASE		0x5D0
+
 
 extern IDM_PARA IDM;
+
+extern vdm_device_config_t m_device_config;
 
 void Flash_write_pin(flash_pin_t pin, uint32_t output)
 {
@@ -261,12 +265,85 @@ void Read_config(void)
 	IDM.TotalInsenseBuy = temp[0] *256 + temp[1];
 	
 	addr++;
-	IDM.TimeSwapIsense = Read_Byte_Sram(addr);	
+	IDM.TimeSwapIsense = Read_Byte_Sram(addr);
+	read_device_config();
 }
+
+vdm_device_config_accept_cash_t accept_denominations;
+
+void save_device_config(void)
+{
+// Device_config_ADDR_BASE
+//	m_device_config.accept_cash_max = 0xFAFF;
+	for(int n=0; n<sizeof(m_device_config); n++)
+	{
+		Write_Byte_Sram(Device_config_ADDR_BASE + n, ((uint8_t *)&m_device_config)[n]);
+	}
+}
+void read_device_config(void)
+{
+// Device_config_ADDR_BASE	
+	for(int n=0; n<sizeof(m_device_config); n++)
+	{
+		((uint8_t *)&m_device_config)[n] = Read_Byte_Sram(Device_config_ADDR_BASE +n);
+	}
+	accept_denominations = m_device_config.accept_cash_max;
+}
+
+revenue_t get_revenue_day(uint8_t day, uint8_t month, uint8_t year)
+{
+	revenue_t money;
+	uint16_t addr = Money_ADDR_BASE + (day + month*31 + (year-2024)*372)*4;
+	for(int n=0; n<sizeof(money); n++)
+	((uint8_t *)&money)[n] = Read_Byte_Sram(addr + n);
+	return (money);
+}
+
+revenue_t get_revenue_month(uint8_t month, uint8_t year)
+{
+	revenue_t money, temp;
+	money.money =0;
+	money.number =0;
+	for(int n=0; n<31; n++)
+	{
+		temp = get_revenue_day(n+1, month, year);
+		money.money += temp.money;
+		money.number += temp.number;
+	}
+	return (money);
+}
+
+revenue_t get_revenue_year(uint8_t year)
+{
+	revenue_t money, temp;
+	money.money =0;
+	money.number =0;
+	for(int n=0; n<12; n++)
+	{
+		temp = get_revenue_month(n+1, year);
+		money.money += temp.money;
+		money.number += temp.number;
+	}
+	return (money);
+}
+
+void add_revenue_day(uint8_t day, uint8_t month, uint8_t year, revenue_t revenue_day)
+{
+	revenue_t money = get_revenue_day(day, month, year);
+	money.money += revenue_day.money;
+	money.number += revenue_day.number;
+	
+	uint16_t addr = Money_ADDR_BASE + (day + month*31 + (year-2024)*372)*4;
+	for(int n=0; n<sizeof(money); n++)
+	{
+		Write_Byte_Sram(addr + n, ((uint8_t *)&money)[n]);
+	}	
+}
+
 
 void flash_init(void)
 {
-	SRAM_writeSTT()	;
+	SRAM_writeSTT();
 }
 
 

@@ -229,7 +229,7 @@ typedef struct
     vdm_device_config_peripheral_uv_t uv;
     uint8_t qrm_supplier;
     vdm_device_config_motor_calibrate_t motor_calib;
-    uint8_t reserve[250]; // Reverse for feature use
+    uint8_t reserve[10]; // Reverse for feature use
 } __attribute__((packed)) vdm_device_config_t;
 
 typedef struct

@@ -1,3 +1,6 @@
 chưa có BAT RTC
 net BAT cần mix nguồn 3.3V tránh hết pin không hoạt động
 sai chân flash
+Ni R10, R11
+NI R27, D7
+change R30 = 10K

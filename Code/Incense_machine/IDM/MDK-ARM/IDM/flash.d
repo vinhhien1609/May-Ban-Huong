@@ -38,3 +38,4 @@ idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
 idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+idm\flash.o: ..\Core\User_Driver\vdm_device_config.h

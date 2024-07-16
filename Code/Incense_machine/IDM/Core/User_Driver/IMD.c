@@ -38,7 +38,6 @@ void IDM_init(void)
 //	IDM.TimeConveyerRun = 30;
 //	IDM.TotalInsenseBuy = 1000;
 //	IDM.EnableHumidity =1;
-	Read_config();
 	IDM.TimeSwapIsense = 2;	
 }
 void Scan_IDM(void)
@@ -163,6 +162,12 @@ void Scan_IDM(void)
 	
 	if(IDM_Status.Solenoid.isRun)	HAL_GPIO_WritePin(SOLENOID_GPIO_Port, SOLENOID_Pin, GPIO_PIN_SET);
 	else	HAL_GPIO_WritePin(SOLENOID_GPIO_Port, SOLENOID_Pin, GPIO_PIN_RESET);
+	
+	if(HAL_GPIO_ReadPin(DOOR_GPIO_Port, DOOR_Pin)==0)	IDM_Status.isDoorOpen = true;
+	else	IDM_Status.isDoorOpen = false;
+	
+		if(HAL_GPIO_ReadPin(Empty_GPIO_Port, Empty_Pin))	IDM_Status.isEmptyIsense = true;
+	else	IDM_Status.isEmptyIsense = false;
 	
 }
 

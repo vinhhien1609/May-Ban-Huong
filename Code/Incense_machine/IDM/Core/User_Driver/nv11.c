@@ -29,7 +29,7 @@ static SSP_COMMAND m_ssp_cmd;
 static bool m_nv11_initialized = false; // Trang thai hoan thanh viec cai dat
 static bool m_is_holding = false; // Trang thai giu (ngam) tien duoc xac lap hay khong
 static nv11_event_t m_last_n11_event = NV11_EVENT_NONE;
-static uint32_t m_lastest_note = 0; // Menh gia to tien gan nhat
+uint32_t m_lastest_note = 0; // Menh gia to tien gan nhat
 static uint8_t m_unit_type = 0;    // Loai dau doc tien
 
 static int32_t m_denominations[9] = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
@@ -48,6 +48,8 @@ static uint32_t m_num_note_payout;
 static uint32_t m_last_num_note_payout;
 static uint32_t m_error_payout;
 SSP6_SETUP_REQUEST_DATA m_setup_req;
+
+extern vdm_device_config_t m_device_config;
 
 __WEAK void display_payout_countdown(uint8_t value)
 {
@@ -442,6 +444,7 @@ bool NV11_Init(void)
     /* Neu UnitType = 0x03 -> Tuc la thiet bi dang ket noi la SMART Hopper*/
     if (m_setup_req.UnitType == 0x03)
     {
+			printf("--------------03type\r\n");
         /* SMART Hopper requires different inhibit commands */
         for (i = 0; i < m_setup_req.NumberOfChannels; i++)
         {
@@ -471,12 +474,12 @@ bool NV11_Init(void)
         //        }
 
         m_unit_type = m_setup_req.UnitType; /* Nhan chung loai dau doc tin vao m_unit_type */
-
+				
         /* Cai dat cho phep tat ca cac kenh tien te hoat dong (6 kenh) 
            Vd: Neu cho phep kenh 1 - 3, khoa kenh 4 - 16: data = 0x07,0x00 */
         vdm_device_config_lock_resource(portMAX_DELAY);
         uint32_t max_money_read = device_config->accept_cash_max;
-				max_money_read = 0xff;//add by duclq
+				max_money_read = 0xfA;//add by duclq
         vdm_device_config_unlock_resource();
         DEBUG_VERBOSE("[%s-%u] ssp6_set_inhibits %08X\r\n", __FUNCTION__, __LINE__, max_money_read);
         nv11_response = ssp6_set_inhibits(sspC, max_money_read, 0xFF);
@@ -1791,7 +1794,23 @@ int8_t vdm_NV11_Init(void)
 //			else printf("NV11 >> Set Inhibits done!\r\n");
 //			HAL_Delay(1000); printf("\r\n");
 		
-			nv11_response = ssp6_set_inhibits(sspC, 0xFF, 0xFF);
+		
+        /* Cai dat cho phep tat ca cac kenh tien te hoat dong (6 kenh) 
+           Vd: Neu cho phep kenh 1 - 3, khoa kenh 4 - 16: data = 0x07,0x00 */
+//        vdm_device_config_lock_resource(portMAX_DELAY);
+//        uint32_t max_money_read = device_config->accept_cash_max;
+//				max_money_read = 0xfA;//add by duclq
+//        vdm_device_config_unlock_resource();
+//        DEBUG_VERBOSE("[%s-%u] ssp6_set_inhibits %08X\r\n", __FUNCTION__, __LINE__, max_money_read);
+//        nv11_response = ssp6_set_inhibits(sspC, max_money_read, 0xFF);
+//        if (nv11_response != SSP_RESPONSE_OK)
+//        {
+//            DEBUG_ERROR("NV11 >> Inhibits Failed");
+//            return false;
+//        }		
+		
+			uint32_t max_money_read = device_config->accept_cash_max;
+			nv11_response = ssp6_set_inhibits(sspC, max_money_read, 0xFF);
 			if (nv11_response != SSP_RESPONSE_OK)
 			{
 				DEBUG_ERROR("NV11 >> Inhibits Failed");
@@ -1835,7 +1854,9 @@ static void vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
 				{
 					/* In len man hinh kenh tien vua doc duoc (1 -> 6)*/
 					DEBUG_INFO("NV11 >> Note Read %d %s\r\n", poll->events[i].data1, poll->events[i].cc);
+					m_lastest_note += m_setup_req.ChannelData[poll->events[i].data1-1].value;
 					printf("Menh gia tien: %d %s \r\n",m_setup_req.ChannelData[poll->events[i].data1-1].value, m_setup_req.ChannelData[poll->events[i].data1-1].cc);
+					
 				}
 				poll_ret = poll->events[i].data1;
 				break;

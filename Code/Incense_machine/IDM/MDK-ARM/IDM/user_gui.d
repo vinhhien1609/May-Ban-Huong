@@ -56,3 +56,4 @@ idm\user_gui.o: ..\Core\User_Driver\itl_types.h
 idm\user_gui.o: ..\Core\User_Driver\ssp_defines.h
 idm\user_gui.o: ..\Core\User_Driver\nv11.h
 idm\user_gui.o: ..\Core\User_Driver\flash.h
+idm\user_gui.o: ..\Core\User_Driver\vdm_device_config.h
