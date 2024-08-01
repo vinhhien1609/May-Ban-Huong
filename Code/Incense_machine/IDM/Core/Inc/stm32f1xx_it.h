@@ -66,6 +66,7 @@ void EXTI9_5_IRQHandler(void);
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
 void USART3_IRQHandler(void);
+void SDIO_IRQHandler(void);
 void TIM6_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 

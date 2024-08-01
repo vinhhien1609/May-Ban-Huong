@@ -8,9 +8,16 @@
 #include "vdm_fw.h"
 #include "crc_calculator.h"
 #include "RTC_time.h"
+#include "sys_ctx.h"
+#include "vdm_device_config.h"
+#include "nv11.h"
+#include "IDM.h"
+#include "app_debug.h"
+#include "GSM_APP.h"
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #define SET_MESSAGE_TIME(message, time) \
     {                                   \
@@ -22,6 +29,20 @@
         message.sec = time.second;      \
     }
 
+		
+static vdm_app_gsm_start_frame_t m_start_frame =
+{
+		.header = "###",
+		.cmd_str = "CMD=",
+		.cmd = VDM_APP_GSM_MSG_ID_REBOOT,
+		.split_0 = '|',
+		.split_1 = '|',
+		.split_2 = '|',
+		.split_3 = '|',
+		.split_4 = '|',
+		.TS			 = '1',
+		.end = "&&&",
+};
 static vdm_app_gsm_door_open_frame_t m_door_open_frame =
     {
         .header = "###",
@@ -147,6 +168,11 @@ static vdm_app_gsm_qr_sell_fail_frame_t m_qrm_sale_error_frame =
 };
 
 static uint8_t m_device_id[10];
+
+static void send_frame(vdm_app_gsm_server_type_t server_type, uint8_t cmd, uint8_t *data, uint32_t length)
+{
+	TCP_send(data, length);
+}
 
 //static void send_frame(vdm_app_gsm_server_type_t server_type, uint8_t cmd, uint8_t *data, uint32_t length)
 //{
@@ -308,138 +334,138 @@ static uint8_t m_device_id[10];
 //    }
 //}
 
-//void vdm_app_gsm_send_door_frame(bool door_close)
-//{
-//#if 1
-//    rtc_date_time_t time;
-//    get_time(&time);
+void vdm_app_gsm_send_door_frame(bool door_close)
+{
+#if 1
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    if (door_close == false)
-//    {
-//        uint32_t size_of_frame = sizeof(vdm_app_gsm_door_open_frame_t);
+    if (door_close == false)
+    {
+        uint32_t size_of_frame = sizeof(vdm_app_gsm_door_open_frame_t);
 
-//        // Insert timestamp to message
-//        SET_MESSAGE_TIME(m_door_open_frame, time);
+        // Insert timestamp to message
+        SET_MESSAGE_TIME(m_door_open_frame, time);
 
-//        /* Calculate crc */
-//        uint32_t crc_size = offsetof(vdm_app_gsm_door_open_frame_t, crc) - offsetof(vdm_app_gsm_door_open_frame_t, split_0);
-//        m_door_open_frame.crc = crc_calculator_xmodem((uint8_t *)&m_door_open_frame.split_0,
-//                                                      crc_size);
+        /* Calculate crc */
+        uint32_t crc_size = offsetof(vdm_app_gsm_door_open_frame_t, crc) - offsetof(vdm_app_gsm_door_open_frame_t, split_0);
+        m_door_open_frame.crc = crc_calculator_xmodem((uint8_t *)&m_door_open_frame.split_0,
+                                                      crc_size);
 
-//        /* This is not an critical frame, store in FRAM */
-//        send_frame(VDM_APP_GSM_MAIN_SERVER,
-//                   m_door_open_frame.cmd,
-//                   (uint8_t *)&m_door_open_frame,
-//                   size_of_frame);
-//    }
-//    else
-//    {
-//        uint32_t size_of_frame = sizeof(vdm_app_gsm_door_close_frame_t);
-//        sys_ctx_t *ctx = sys_ctx();
-//        vdm_device_config_t *device_config = vdm_get_device_config();
+        /* This is not an critical frame, store in FRAM */
+        send_frame(VDM_APP_GSM_MAIN_SERVER,
+                   m_door_open_frame.cmd,
+                   (uint8_t *)&m_door_open_frame,
+                   size_of_frame);
+    }
+    else
+    {
+        uint32_t size_of_frame = sizeof(vdm_app_gsm_door_close_frame_t);
+        sys_ctx_t *ctx = sys_ctx();
+        vdm_device_config_t *device_config = vdm_get_device_config();
 
-//        /* Led & Temperature & Drop sensor config */
+        /* Led & Temperature & Drop sensor config */
 
-//        m_door_close_frame.led = device_config->peripheral.feature_enable.name.led_enable
-//                                     ? VDM_APP_GSM_LED_ON
-//                                     : VDM_APP_GSM_LED_OFF;
-//        m_door_close_frame.temperature = device_config->peripheral.temperature;
-//        m_door_close_frame.drop_sensor = device_config->peripheral.feature_enable.name.drop_sensor_enable
-//                                             ? VDM_APP_GSM_DROP_SENSOR_IS_ON
-//                                             : VDM_APP_GSM_DROP_SENSOR_IS_OFF;
+        m_door_close_frame.led = device_config->peripheral.feature_enable.name.led_enable
+                                     ? VDM_APP_GSM_LED_ON
+                                     : VDM_APP_GSM_LED_OFF;
+        m_door_close_frame.temperature = device_config->peripheral.temperature;
+        m_door_close_frame.drop_sensor = device_config->peripheral.feature_enable.name.drop_sensor_enable
+                                             ? VDM_APP_GSM_DROP_SENSOR_IS_ON
+                                             : VDM_APP_GSM_DROP_SENSOR_IS_OFF;
 
-//        /* Item price */
-//        for (uint32_t i = 0; i < sizeof(m_door_close_frame.item_price); i++)
-//        {
-//            //	    	m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i+1)/1000;
-//            m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i) / 1000;
-//        }
+        /* Item price */
+        for (uint32_t i = 0; i < sizeof(m_door_close_frame.item_price); i++)
+        {
+            //	    	m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i+1)/1000;
+            m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i) / 1000;
+        }
 
-//        /* Number of item per rack */
-//        for (uint32_t i = 0; i < sizeof(m_door_close_frame.nb_of_items_rack); i++)
-//        {
-//            //	    	m_door_close_frame.nb_of_items_rack[i] = vdm_device_config_get_item_remain(i+1);
-//            m_door_close_frame.nb_of_items_rack[i] = vdm_device_config_get_item_remain(i);
-//        }
+        /* Number of item per rack */
+        for (uint32_t i = 0; i < sizeof(m_door_close_frame.nb_of_items_rack); i++)
+        {
+            //	    	m_door_close_frame.nb_of_items_rack[i] = vdm_device_config_get_item_remain(i+1);
+            m_door_close_frame.nb_of_items_rack[i] = vdm_device_config_get_item_remain(i);
+        }
 
-//        // NV11
-//        // Clear all return money
-//        memset(m_door_close_frame.money_payback, 0, sizeof(m_door_close_frame.money_payback));
+        // NV11
+        // Clear all return money
+        memset(m_door_close_frame.money_payback, 0, sizeof(m_door_close_frame.money_payback));
 
-//        if (NV11_GetLatestEvent(true) != NV11_ERROR)
-//        {
-//            /* Neu la dau doc NV11, byte dia chi 27 se chua so to tien duoc luu tru trong Floatnote = tong so tien/ menh gia */
-//            /* byte |  0  |  1   |   2  |   3   |   4   |   5   |   6   |    7   |    8  | */
-//            /* Note | 1000| 2000 | 5000 | 10000 | 20000 | 50000 | 100000| 200000 | 500000 | */
-//            uint8_t note_number = 0;
-//            if (NV11_GetUnitType(true) == NV_TYPE_NV11)
-//            {
-//                /* Tinh so to tien tren FloatNote (tra lai) luu vao byte dia chi 27 */
-//                note_number = NV11_GetTotalCashInNoteFloat(true) / NV11_GetDenominationForChange(true);
-//                switch (NV11_GetDenominationForChange(true))
-//                {
-//                case 1000:
-//                    m_door_close_frame.money_payback[0] = note_number;
-//                    break;
-//                case 2000:
-//                    m_door_close_frame.money_payback[1] = note_number;
-//                    break;
-//                case 5000:
-//                    m_door_close_frame.money_payback[2] = note_number;
-//                    break;
-//                case 10000:
-//                    m_door_close_frame.money_payback[3] = note_number;
-//                    break;
-//                case 20000:
-//                    m_door_close_frame.money_payback[4] = note_number;
-//                    break;
-//                case 50000:
-//                    m_door_close_frame.money_payback[5] = note_number;
-//                    break;
-//                case 100000:
-//                    m_door_close_frame.money_payback[6] = note_number;
-//                    break;
-//                case 200000:
-//                    m_door_close_frame.money_payback[7] = note_number;
-//                    break;
-//                case 500000:
-//                    m_door_close_frame.money_payback[8] = note_number;
-//                    break;
+        if (NV11_GetLatestEvent(true) != NV11_ERROR)
+        {
+            /* Neu la dau doc NV11, byte dia chi 27 se chua so to tien duoc luu tru trong Floatnote = tong so tien/ menh gia */
+            /* byte |  0  |  1   |   2  |   3   |   4   |   5   |   6   |    7   |    8  | */
+            /* Note | 1000| 2000 | 5000 | 10000 | 20000 | 50000 | 100000| 200000 | 500000 | */
+            uint8_t note_number = 0;
+            if (NV11_GetUnitType(true) == NV_TYPE_NV11)
+            {
+                /* Tinh so to tien tren FloatNote (tra lai) luu vao byte dia chi 27 */
+                note_number = NV11_GetTotalCashInNoteFloat(true) / NV11_GetDenominationForChange(true);
+                switch (NV11_GetDenominationForChange(true))
+                {
+                case 1000:
+                    m_door_close_frame.money_payback[0] = note_number;
+                    break;
+                case 2000:
+                    m_door_close_frame.money_payback[1] = note_number;
+                    break;
+                case 5000:
+                    m_door_close_frame.money_payback[2] = note_number;
+                    break;
+                case 10000:
+                    m_door_close_frame.money_payback[3] = note_number;
+                    break;
+                case 20000:
+                    m_door_close_frame.money_payback[4] = note_number;
+                    break;
+                case 50000:
+                    m_door_close_frame.money_payback[5] = note_number;
+                    break;
+                case 100000:
+                    m_door_close_frame.money_payback[6] = note_number;
+                    break;
+                case 200000:
+                    m_door_close_frame.money_payback[7] = note_number;
+                    break;
+                case 500000:
+                    m_door_close_frame.money_payback[8] = note_number;
+                    break;
 
-//                default:
-//                    break;
-//                }
-//            }
-//            /* Neu la dau doc NV200, byte tu 25 - 33 se luu tru so to tien tung menh gia trong Floatnote */
-//            else if (NV11_GetUnitType(true) == NV_TYPE_NV200)
-//            {
-//                for (uint32_t channel_index = 0; channel_index < 9; channel_index++)
-//                {
-//                    m_door_close_frame.money_payback[channel_index] = NV11_GetStoredNoteByChannel(channel_index); /* The number of change notes */
-//                }
-//            }
-//        }
-//        else
-//        {
-//            DEBUG_WARN("[%s] Last nv11 event is error\r\n", __FUNCTION__);
-//        }
+                default:
+                    break;
+                }
+            }
+            /* Neu la dau doc NV200, byte tu 25 - 33 se luu tru so to tien tung menh gia trong Floatnote */
+            else if (NV11_GetUnitType(true) == NV_TYPE_NV200)
+            {
+                for (uint32_t channel_index = 0; channel_index < 9; channel_index++)
+                {
+                    m_door_close_frame.money_payback[channel_index] = NV11_GetStoredNoteByChannel(channel_index); /* The number of change notes */
+                }
+            }
+        }
+        else
+        {
+            DEBUG_WARN("[%s] Last nv11 event is error\r\n", __FUNCTION__);
+        }
 
-//        // Current date time
-//        SET_MESSAGE_TIME(m_door_close_frame, time);
+        // Current date time
+        SET_MESSAGE_TIME(m_door_close_frame, time);
 
-//        /* Calculate crc */
-//        uint32_t crc_size = offsetof(vdm_app_gsm_door_close_frame_t, crc) - offsetof(vdm_app_gsm_door_close_frame_t, split_0);
-//        m_door_close_frame.crc = crc_calculator_xmodem((uint8_t *)&m_door_close_frame.split_0,
-//                                                       crc_size);
+        /* Calculate crc */
+        uint32_t crc_size = offsetof(vdm_app_gsm_door_close_frame_t, crc) - offsetof(vdm_app_gsm_door_close_frame_t, split_0);
+        m_door_close_frame.crc = crc_calculator_xmodem((uint8_t *)&m_door_close_frame.split_0,
+                                                       crc_size);
 
-//        /* This is not an critical frame, store in FRAM */
-//        send_frame(VDM_APP_GSM_MAIN_SERVER,
-//                   m_door_close_frame.cmd,
-//                   (uint8_t *)&m_door_close_frame,
-//                   size_of_frame);
-//    }
-//#endif
-//}
+        /* This is not an critical frame, store in FRAM */
+        send_frame(VDM_APP_GSM_MAIN_SERVER,
+                   m_door_close_frame.cmd,
+                   (uint8_t *)&m_door_close_frame,
+                   size_of_frame);
+    }
+#endif
+}
 
 //void vdm_app_gsm_send_motor_clear_all_error_frame(void) // Send Motor Resume Frame
 //{
@@ -486,28 +512,28 @@ static uint8_t m_device_id[10];
 // * @param   NONE
 // * @retval  NONE
 // */
-//void vdm_app_gsm_send_rtc_resume_frame()
-//{
-//    rtc_date_time_t time;
-//    get_time(&time);
+void vdm_app_gsm_send_rtc_resume_frame()
+{
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    m_error_frame.id = VDM_APP_GSM_ID_RTC;
-//    m_error_frame.error_status = VDM_APP_GSM_FIXED_ERROR;
+    m_error_frame.id = VDM_APP_GSM_ID_RTC;
+    m_error_frame.error_status = VDM_APP_GSM_FIXED_ERROR;
 
-//    // Insert timestamp to message
-//    SET_MESSAGE_TIME(m_error_frame, time);
+    // Insert timestamp to message
+    SET_MESSAGE_TIME(m_error_frame, time);
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_notify_error_frame_t, crc) - offsetof(vdm_app_gsm_notify_error_frame_t, split_0);
+    uint32_t crc_size = offsetof(vdm_app_gsm_notify_error_frame_t, crc) - offsetof(vdm_app_gsm_notify_error_frame_t, split_0);
 
-//    m_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_error_frame.split_0,
-//                                              crc_size);
+    m_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_error_frame.split_0,
+                                              crc_size);
 
-//    /* Luu du lieu vao ROM */
-//    send_frame(VDM_APP_GSM_MAIN_SERVER,
-//               m_error_frame.cmd,
-//               (uint8_t *)&m_error_frame,
-//               sizeof(m_error_frame));
-//}
+    /* Luu du lieu vao ROM */
+    send_frame(VDM_APP_GSM_MAIN_SERVER,
+               m_error_frame.cmd,
+               (uint8_t *)&m_error_frame,
+               sizeof(m_error_frame));
+}
 
 ///**
 // * @brief   Ham tao frame bao sua xong EEPROM va luu tru du lieu RAM
@@ -539,77 +565,77 @@ static uint8_t m_device_id[10];
 // * @param   NONE
 // * @retval  NONE
 // */
-//void vdm_app_gsm_send_sdcard_frame(bool error)
-//{
-//    rtc_date_time_t time;
-//    get_time(&time);
+void vdm_app_gsm_send_sdcard_frame(bool error)
+{
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    // Insert timestamp to message
-//    m_error_frame.id = VDM_APP_GSM_ID_SDCARD;
-//    m_error_frame.error_status = error ? VDM_APP_GSM_NOT_FIXED_ERROR : VDM_APP_GSM_FIXED_ERROR;
+    // Insert timestamp to message
+    m_error_frame.id = VDM_APP_GSM_ID_SDCARD;
+    m_error_frame.error_status = error ? VDM_APP_GSM_NOT_FIXED_ERROR : VDM_APP_GSM_FIXED_ERROR;
 
-//    SET_MESSAGE_TIME(m_error_frame, time);
+    SET_MESSAGE_TIME(m_error_frame, time);
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_notify_error_frame_t, crc) - offsetof(vdm_app_gsm_notify_error_frame_t, split_0);
-//    m_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_error_frame.split_0,
-//                                              crc_size);
+    uint32_t crc_size = offsetof(vdm_app_gsm_notify_error_frame_t, crc) - offsetof(vdm_app_gsm_notify_error_frame_t, split_0);
+    m_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_error_frame.split_0,
+                                              crc_size);
 
-//    /* Luu du lieu vao RAM */
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_error_frame.cmd, (uint8_t *)&m_error_frame, sizeof(m_error_frame));
-//}
+    /* Luu du lieu vao RAM */
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_error_frame.cmd, (uint8_t *)&m_error_frame, sizeof(m_error_frame));
+}
 
-//static vdm_app_gsm_server_confirm_cb_t m_confirm_cb = NULL;
+static vdm_app_gsm_server_confirm_cb_t m_confirm_cb = NULL;
 //void vdm_app_gsm_on_register_confirm_callback(vdm_app_gsm_server_confirm_cb_t callback)
 //{
 //    m_confirm_cb = callback;
 //}
 
-//bool process_confirm_msg(char *data)
-//{
-//    vdm_app_server_confirm_frame_t *confirm_msg = (vdm_app_server_confirm_frame_t *)data;
-//    uint32_t crc_size = offsetof(vdm_app_server_confirm_frame_t, crc) - offsetof(vdm_app_server_confirm_frame_t, split_0);
-//    uint16_t crc = crc_calculator_xmodem((uint8_t *)&confirm_msg->split_0,
-//                                         crc_size);
-//    // Swap CRC
-//    uint16_t tmp = crc & 0xFF;
-//    tmp <<= 8;
-//    tmp |= crc >> 8;
-//    crc = tmp;
-//    bool retval = false;
-//    if (crc == confirm_msg->crc)
-//    {
-//        // TODO check more argument, due to me laziness, i dont check it
-//        if (confirm_msg->cmd == VDM_APP_GSM_SERVER_CONFIRM_SUCCESS)
-//        {
-//            DEBUG_VERBOSE("Server confirmed on %04u:%02u:%02u %02u:%02u:%02u\r\n",
-//                          confirm_msg->year + 2000,
-//                          confirm_msg->month,
-//                          confirm_msg->day,
-//                          confirm_msg->hour,
-//                          confirm_msg->minutes,
-//                          confirm_msg->sec);
-//            if (m_confirm_cb)
-//            {
-//                m_confirm_cb(confirm_msg, sizeof(vdm_app_server_confirm_frame_t));
-//            }
-//            retval = true;
-//        }
-//        else if (confirm_msg->cmd == VDM_APP_GSM_SERVER_CONFIRM_FAILED)
-//        {
-//            DEBUG_WARN("Wrong message, maybe machine send wrong data to server\r\n");
-//            retval = true;
-//        }
-//        else
-//        {
-//            DEBUG_WARN("Unhandled confirm id %u\r\n", confirm_msg->cmd);
-//        }
-//    }
-//    else
-//    {
-//        DEBUG_WARN("confirm msg wrong crc %04X-%04X\r\n", confirm_msg->crc, crc);
-//    }
-//    return retval;
-//}
+bool process_confirm_msg(char *data)
+{
+    vdm_app_server_confirm_frame_t *confirm_msg = (vdm_app_server_confirm_frame_t *)data;
+    uint32_t crc_size = offsetof(vdm_app_server_confirm_frame_t, crc) - offsetof(vdm_app_server_confirm_frame_t, split_0);
+    uint16_t crc = crc_calculator_xmodem((uint8_t *)&confirm_msg->split_0,
+                                         crc_size);
+    // Swap CRC
+    uint16_t tmp = crc & 0xFF;
+    tmp <<= 8;
+    tmp |= crc >> 8;
+    crc = tmp;
+    bool retval = false;
+    if (crc == confirm_msg->crc)
+    {
+        // TODO check more argument, due to me laziness, i dont check it
+        if (confirm_msg->cmd == VDM_APP_GSM_SERVER_CONFIRM_SUCCESS)
+        {
+            DEBUG_VERBOSE("Server confirmed on %04u:%02u:%02u %02u:%02u:%02u\r\n",
+                          confirm_msg->year + 2000,
+                          confirm_msg->month,
+                          confirm_msg->day,
+                          confirm_msg->hour,
+                          confirm_msg->minutes,
+                          confirm_msg->sec);
+            if (m_confirm_cb)
+            {
+                m_confirm_cb(confirm_msg, sizeof(vdm_app_server_confirm_frame_t));
+            }
+            retval = true;
+        }
+        else if (confirm_msg->cmd == VDM_APP_GSM_SERVER_CONFIRM_FAILED)
+        {
+            DEBUG_WARN("Wrong message, maybe machine send wrong data to server\r\n");
+            retval = true;
+        }
+        else
+        {
+            DEBUG_WARN("Unhandled confirm id %u\r\n", confirm_msg->cmd);
+        }
+    }
+    else
+    {
+        DEBUG_WARN("confirm msg wrong crc %04X-%04X\r\n", confirm_msg->crc, crc);
+    }
+    return retval;
+}
 
 //bool process_ota(char *data)
 //{
@@ -783,59 +809,72 @@ static uint8_t m_device_id[10];
 //    }
 //}
 
-//void vdm_app_gsm_set_device_id(uint8_t *device_id)
-//{
-//    memcpy(m_device_id, "TPA", 3);
-//    for (uint32_t i = 0; i < 7; i++)
-//    {
-//        m_device_id[3 + i] = device_id[i] + '0';
-//    }
 
-//    memcpy(m_error_frame.machine_id, m_device_id, 10);
-//    memcpy(m_door_close_frame.machine_id, m_device_id, 10);
-//    memcpy(m_door_open_frame.machine_id, m_device_id, 10);
-//    memcpy(m_paid_out_item_frame.machine_id, m_device_id, 10);
-//    memcpy(m_heartbeat_frame.machine_id, m_device_id, 10);
-//    memcpy(m_released_item_frame.machine_id, m_device_id, 10);
-//    memcpy(m_selling_error_frame.machine_id, m_device_id, 10);
-//}
 
-//void vdm_app_gsm_send_selling_error_frame(uint8_t received_cash, uint8_t error_slot_number)
-//{
-//    rtc_date_time_t time;
-//    get_time(&time);
+void vdm_app_gsm_set_device_id(uint8_t *device_id)
+{
+    memcpy(m_device_id, "TPA", 3);
+    for (uint32_t i = 0; i < 7; i++)
+    {
+        m_device_id[3 + i] = device_id[i] + '0';
+    }
 
-//    m_selling_error_frame.input_cash = received_cash;
-//    m_selling_error_frame.slot_error_number = error_slot_number;
+    memcpy(m_error_frame.machine_id, m_device_id, 10);
+    memcpy(m_door_close_frame.machine_id, m_device_id, 10);
+    memcpy(m_door_open_frame.machine_id, m_device_id, 10);
+    memcpy(m_paid_out_item_frame.machine_id, m_device_id, 10);
+    memcpy(m_heartbeat_frame.machine_id, m_device_id, 10);
+    memcpy(m_released_item_frame.machine_id, m_device_id, 10);
+    memcpy(m_selling_error_frame.machine_id, m_device_id, 10);
+		memcpy(m_start_frame.machine_id, m_device_id, 10);
+		printf("IDM>> ID Machine: %s\r\n",m_device_id);
+}
 
-//    // Insert timestamp to message
-//    SET_MESSAGE_TIME(m_selling_error_frame, time);
+void vdm_app_gsm_send_start_frame(void)
+{
+    uint32_t crc_size = offsetof(vdm_app_gsm_start_frame_t, crc) - offsetof(vdm_app_gsm_start_frame_t, split_0);
+    m_start_frame.crc = crc_calculator_xmodem((uint8_t *)&m_start_frame.split_0,
+                                                      crc_size);
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_selling_error_frame_t, crc) - offsetof(vdm_app_gsm_selling_error_frame_t, split_0);
-//    m_selling_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_selling_error_frame.split_0,
-//                                                      crc_size);
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_start_frame.cmd, (uint8_t *)&m_start_frame, sizeof(m_start_frame));
+}
 
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_selling_error_frame.cmd, (uint8_t *)&m_selling_error_frame, sizeof(m_selling_error_frame));
-//}
+void vdm_app_gsm_send_selling_error_frame(uint8_t received_cash, uint8_t error_slot_number)
+{
+    rtc_date_time_t time;
+    get_time(&time);
 
-//void vdm_app_gsm_send_released_item_frame(uint8_t received_cash, uint8_t slot_number)
-//{
-//    DEBUG_INFO("Send release frame\r\n");
-//    rtc_date_time_t time;
-//    get_time(&time);
+    m_selling_error_frame.input_cash = received_cash;
+    m_selling_error_frame.slot_error_number = error_slot_number;
 
-//    m_released_item_frame.input_cash = received_cash;
-//    m_released_item_frame.slot_number = slot_number;
+    // Insert timestamp to message
+    SET_MESSAGE_TIME(m_selling_error_frame, time);
 
-//    // Insert timestamp to message
-//    SET_MESSAGE_TIME(m_released_item_frame, time);
+    uint32_t crc_size = offsetof(vdm_app_gsm_selling_error_frame_t, crc) - offsetof(vdm_app_gsm_selling_error_frame_t, split_0);
+    m_selling_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_selling_error_frame.split_0,
+                                                      crc_size);
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_released_item_frame_t, crc) - offsetof(vdm_app_gsm_released_item_frame_t, split_0);
-//    m_released_item_frame.crc = crc_calculator_xmodem((uint8_t *)&m_released_item_frame.split_0,
-//                                                      crc_size);
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_selling_error_frame.cmd, (uint8_t *)&m_selling_error_frame, sizeof(m_selling_error_frame));
+}
 
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_released_item_frame.cmd, (uint8_t *)&m_released_item_frame, sizeof(m_released_item_frame));
-//}
+void vdm_app_gsm_send_released_item_frame(uint8_t received_cash, uint8_t slot_number)
+{
+    DEBUG_INFO("Send release frame\r\n");
+    rtc_date_time_t time;
+    get_time(&time);
+
+    m_released_item_frame.input_cash = received_cash;
+    m_released_item_frame.slot_number = slot_number;
+
+    // Insert timestamp to message
+    SET_MESSAGE_TIME(m_released_item_frame, time);
+
+    uint32_t crc_size = offsetof(vdm_app_gsm_released_item_frame_t, crc) - offsetof(vdm_app_gsm_released_item_frame_t, split_0);
+    m_released_item_frame.crc = crc_calculator_xmodem((uint8_t *)&m_released_item_frame.split_0,
+                                                      crc_size);
+
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_released_item_frame.cmd, (uint8_t *)&m_released_item_frame, sizeof(m_released_item_frame));
+}
 
 //void vdm_app_gsm_send_paid_out_item_frame(uint8_t paid_out)
 //{
@@ -855,181 +894,184 @@ static uint8_t m_device_id[10];
 //    send_frame(VDM_APP_GSM_MAIN_SERVER, m_paid_out_item_frame.cmd, (uint8_t *)&m_paid_out_item_frame, sizeof(m_paid_out_item_frame));
 //}
 
-//void vdm_app_gsm_send_heartbeat()
-//{
-//#if 1
-//    rtc_date_time_t time;
-//    get_time(&time);
 
-//    bool nv11_error = (NV11_GetLatestEvent(true) == NV11_ERROR) ? 1 : 0;
+extern IDM_HARDWARE IDM_Status;
+extern float Humidity, Temperature;
+void vdm_app_gsm_send_heartbeat()
+{
+#if 1
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    m_heartbeat_frame.door = vdm_drv_io_get_value()->name.door_open ? VDM_APP_GSM_DOOR_OPEN : VDM_APP_GSM_DOOR_CLOSE;
-//    m_heartbeat_frame.temp = (int8_t)vdm_drv_io_adc_get_result()->temp;
-//    m_heartbeat_frame.nv11_error = nv11_error ? VDM_APP_GSM_ERROR : VDM_APP_GSM_OK;
-//    memset(m_heartbeat_frame.cash_info, 0, 9); // If nv11 error  =>> Set all cash value to zero
-//    if (nv11_error == false)                   // NV11 ok, get all value
-//    {
-//        /* Neu dau doc la NV11 -> Chi co 1 menh gia tra lai */
-//        /* byte |  25 |  26  |  27  |   28  |   29  |  30   |   31  |   32   |    33  | */
-//        /* Note | 1000| 2000 | 5000 | 10000 | 20000 | 50000 | 100000| 200000 | 500000 |*/
-//        if (NV11_GetUnitType(true) == NV_TYPE_NV11)
-//        {
-//            /* Tinh so to tien tren FloatNote (tra lai) luu vao byte dia chi 27 */
-//            uint8_t note_number = NV11_GetAvailableChange(true) / NV11_GetDenominationForChange(true);
-//            switch (NV11_GetDenominationForChange(true))
-//            {
-//            case 1000:
-//                m_heartbeat_frame.cash_info[0] = note_number;
-//                break;
-//            case 2000:
-//                m_heartbeat_frame.cash_info[1] = note_number;
-//                break;
-//            case 5000:
-//                m_heartbeat_frame.cash_info[2] = note_number;
-//                break;
-//            case 10000:
-//                m_heartbeat_frame.cash_info[3] = note_number;
-//                break;
-//            case 20000:
-//                m_heartbeat_frame.cash_info[4] = note_number;
-//                break;
-//            case 50000:
-//                m_heartbeat_frame.cash_info[5] = note_number;
-//                break;
-//            case 100000:
-//                m_heartbeat_frame.cash_info[6] = note_number;
-//                break;
-//            case 200000:
-//                m_heartbeat_frame.cash_info[7] = note_number;
-//                break;
-//            case 500000:
-//                m_heartbeat_frame.cash_info[8] = note_number;
-//                break;
-//            default:
-//                break;
-//            }
-//        }
-//        /* Neu dau doc la NV200 -> Co nhieu menh gia tra lai */
-//        else if (NV11_GetUnitType(true) == NV_TYPE_NV200)
-//        {
-//            /* Tinh so to tien cua moi menh gia tren FloatNote (tra lai) luu vao dia chi tu 25 ~ 33 */
-//            for (uint32_t channel = 0; channel < 9; channel++)
-//            {
-//                m_heartbeat_frame.cash_info[channel] = NV11_GetStoredNoteByChannel(channel); /* The number of change notes */
-//            }
-//        }
-//    }
+    bool nv11_error = (NV11_GetLatestEvent(true) == NV11_ERROR) ? 1 : 0;
 
-//    /* So hang hoa hien tai tren tung khay */
-//    for (uint32_t i = 0; i < 60; i++)
-//    {
-//        /* Lay so luong hang tren tung khay luu vao (60 khay)*/
-//        m_heartbeat_frame.item_remain[i] = vdm_device_config_get_item_remain(i);
-//    }
+    m_heartbeat_frame.door = IDM_Status.isDoorOpen ? VDM_APP_GSM_DOOR_OPEN : VDM_APP_GSM_DOOR_CLOSE;
+    m_heartbeat_frame.temp = (int8_t)Temperature;
+    m_heartbeat_frame.nv11_error = nv11_error ? VDM_APP_GSM_ERROR : VDM_APP_GSM_OK;
+    memset(m_heartbeat_frame.cash_info, 0, 9); // If nv11 error  =>> Set all cash value to zero
+    if (nv11_error == false)                   // NV11 ok, get all value
+    {
+        /* Neu dau doc la NV11 -> Chi co 1 menh gia tra lai */
+        /* byte |  25 |  26  |  27  |   28  |   29  |  30   |   31  |   32   |    33  | */
+        /* Note | 1000| 2000 | 5000 | 10000 | 20000 | 50000 | 100000| 200000 | 500000 |*/
+        if (NV11_GetUnitType(true) == NV_TYPE_NV11)
+        {
+            /* Tinh so to tien tren FloatNote (tra lai) luu vao byte dia chi 27 */
+            uint8_t note_number = NV11_GetAvailableChange(true) / NV11_GetDenominationForChange(true);
+            switch (NV11_GetDenominationForChange(true))
+            {
+            case 1000:
+                m_heartbeat_frame.cash_info[0] = note_number;
+                break;
+            case 2000:
+                m_heartbeat_frame.cash_info[1] = note_number;
+                break;
+            case 5000:
+                m_heartbeat_frame.cash_info[2] = note_number;
+                break;
+            case 10000:
+                m_heartbeat_frame.cash_info[3] = note_number;
+                break;
+            case 20000:
+                m_heartbeat_frame.cash_info[4] = note_number;
+                break;
+            case 50000:
+                m_heartbeat_frame.cash_info[5] = note_number;
+                break;
+            case 100000:
+                m_heartbeat_frame.cash_info[6] = note_number;
+                break;
+            case 200000:
+                m_heartbeat_frame.cash_info[7] = note_number;
+                break;
+            case 500000:
+                m_heartbeat_frame.cash_info[8] = note_number;
+                break;
+            default:
+                break;
+            }
+        }
+        /* Neu dau doc la NV200 -> Co nhieu menh gia tra lai */
+        else if (NV11_GetUnitType(true) == NV_TYPE_NV200)
+        {
+            /* Tinh so to tien cua moi menh gia tren FloatNote (tra lai) luu vao dia chi tu 25 ~ 33 */
+            for (uint32_t channel = 0; channel < 9; channel++)
+            {
+                m_heartbeat_frame.cash_info[channel] = NV11_GetStoredNoteByChannel(channel); /* The number of change notes */
+            }
+        }
+    }
 
-//    // Insert timestamp to message
-//    SET_MESSAGE_TIME(m_heartbeat_frame, time);
+    /* So hang hoa hien tai tren tung khay */
+    for (uint32_t i = 0; i < 60; i++)
+    {
+        /* Lay so luong hang tren tung khay luu vao (60 khay)*/
+        m_heartbeat_frame.item_remain[i] = vdm_device_config_get_item_remain(i);
+    }
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_heartbeat_frame_t, crc) - offsetof(vdm_app_gsm_heartbeat_frame_t, split_0);
-//    uint16_t tmp_crc = crc_calculator_xmodem((uint8_t *)&m_heartbeat_frame.split_0,
-//                                             crc_size);
+    // Insert timestamp to message
+    SET_MESSAGE_TIME(m_heartbeat_frame, time);
 
-//    // Expected crc = = 0x9D62 =>> but due to memory organization, m_heartbeat_frame struct has crc = 0x629D
-//    // =>> We need to swap crc low and high byte
-//    m_heartbeat_frame.crc = (tmp_crc & 0xFF) << 8;
-//    m_heartbeat_frame.crc |= tmp_crc >> 8;
+    uint32_t crc_size = offsetof(vdm_app_gsm_heartbeat_frame_t, crc) - offsetof(vdm_app_gsm_heartbeat_frame_t, split_0);
+    uint16_t tmp_crc = crc_calculator_xmodem((uint8_t *)&m_heartbeat_frame.split_0,
+                                             crc_size);
 
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_heartbeat_frame.cmd, (uint8_t *)&m_heartbeat_frame, sizeof(m_heartbeat_frame));
-//#else
-//    rtc_date_time_t time;
-//    get_time(&time);
+    // Expected crc = = 0x9D62 =>> but due to memory organization, m_heartbeat_frame struct has crc = 0x629D
+    // =>> We need to swap crc low and high byte
+    m_heartbeat_frame.crc = (tmp_crc & 0xFF) << 8;
+    m_heartbeat_frame.crc |= tmp_crc >> 8;
 
-//    bool nv11_error = (NV11_GetLatestEvent(true) == NV11_ERROR) ? 1 : 0;
-//    memcpy(m_heartbeat_frame.machine_id, "TPA0123456", 10);
-//    m_heartbeat_frame.door = 0x31;
-//    m_heartbeat_frame.temp = 27;
-//    m_heartbeat_frame.nv11_error = 0x30;
-//    memset(m_heartbeat_frame.cash_info, 0, 9); // If nv11 error  =>> Set all cash value to zero
-//    if (0)                                     // NV11 ok, get all value
-//    {
-//        /* Neu dau doc la NV11 -> Chi co 1 menh gia tra lai */
-//        /* byte |  25 |  26  |  27  |   28  |   29  |  30   |   31  |   32   |    33  | */
-//        /* Note | 1000| 2000 | 5000 | 10000 | 20000 | 50000 | 100000| 200000 | 500000 |*/
-//        if (NV11_GetUnitType(true) == NV_TYPE_NV11)
-//        {
-//            /* Tinh so to tien tren FloatNote (tra lai) luu vao byte dia chi 27 */
-//            uint8_t note_number = NV11_GetAvailableChange(true) / NV11_GetDenominationForChange(true);
-//            switch (NV11_GetDenominationForChange(true))
-//            {
-//            case 1000:
-//                m_heartbeat_frame.cash_info[0] = note_number;
-//                break;
-//            case 2000:
-//                m_heartbeat_frame.cash_info[1] = note_number;
-//                break;
-//            case 5000:
-//                m_heartbeat_frame.cash_info[2] = note_number;
-//                break;
-//            case 10000:
-//                m_heartbeat_frame.cash_info[3] = note_number;
-//                break;
-//            case 20000:
-//                m_heartbeat_frame.cash_info[4] = note_number;
-//                break;
-//            case 50000:
-//                m_heartbeat_frame.cash_info[5] = note_number;
-//                break;
-//            case 100000:
-//                m_heartbeat_frame.cash_info[6] = note_number;
-//                break;
-//            case 200000:
-//                m_heartbeat_frame.cash_info[7] = note_number;
-//                break;
-//            case 500000:
-//                m_heartbeat_frame.cash_info[8] = note_number;
-//                break;
-//            default:
-//                break;
-//            }
-//        }
-//        /* Neu dau doc la NV200 -> Co nhieu menh gia tra lai */
-//        else if (NV11_GetUnitType(true) == NV_TYPE_NV200)
-//        {
-//            /* Tinh so to tien cua moi menh gia tren FloatNote (tra lai) luu vao dia chi tu 25 ~ 33 */
-//            for (uint32_t channel = 0; channel < 9; channel++)
-//            {
-//                m_heartbeat_frame.cash_info[channel] = NV11_GetStoredNoteByChannel(channel); /* The number of change notes */
-//            }
-//        }
-//    }
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_heartbeat_frame.cmd, (uint8_t *)&m_heartbeat_frame, sizeof(m_heartbeat_frame));
+#else
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    /* So hang hoa hien tai tren tung khay */
-//    for (uint32_t i = 0; i < 60; i++)
-//    {
-//        /* Lay so luong hang tren tung khay luu vao (60 khay)*/
-//        m_heartbeat_frame.item_remain[i] = 0;
-//    }
+    bool nv11_error = (NV11_GetLatestEvent(true) == NV11_ERROR) ? 1 : 0;
+    memcpy(m_heartbeat_frame.machine_id, "TPA0123456", 10);
+    m_heartbeat_frame.door = 0x31;
+    m_heartbeat_frame.temp = 27;
+    m_heartbeat_frame.nv11_error = 0x30;
+    memset(m_heartbeat_frame.cash_info, 0, 9); // If nv11 error  =>> Set all cash value to zero
+    if (0)                                     // NV11 ok, get all value
+    {
+        /* Neu dau doc la NV11 -> Chi co 1 menh gia tra lai */
+        /* byte |  25 |  26  |  27  |   28  |   29  |  30   |   31  |   32   |    33  | */
+        /* Note | 1000| 2000 | 5000 | 10000 | 20000 | 50000 | 100000| 200000 | 500000 |*/
+        if (NV11_GetUnitType(true) == NV_TYPE_NV11)
+        {
+            /* Tinh so to tien tren FloatNote (tra lai) luu vao byte dia chi 27 */
+            uint8_t note_number = NV11_GetAvailableChange(true) / NV11_GetDenominationForChange(true);
+            switch (NV11_GetDenominationForChange(true))
+            {
+            case 1000:
+                m_heartbeat_frame.cash_info[0] = note_number;
+                break;
+            case 2000:
+                m_heartbeat_frame.cash_info[1] = note_number;
+                break;
+            case 5000:
+                m_heartbeat_frame.cash_info[2] = note_number;
+                break;
+            case 10000:
+                m_heartbeat_frame.cash_info[3] = note_number;
+                break;
+            case 20000:
+                m_heartbeat_frame.cash_info[4] = note_number;
+                break;
+            case 50000:
+                m_heartbeat_frame.cash_info[5] = note_number;
+                break;
+            case 100000:
+                m_heartbeat_frame.cash_info[6] = note_number;
+                break;
+            case 200000:
+                m_heartbeat_frame.cash_info[7] = note_number;
+                break;
+            case 500000:
+                m_heartbeat_frame.cash_info[8] = note_number;
+                break;
+            default:
+                break;
+            }
+        }
+        /* Neu dau doc la NV200 -> Co nhieu menh gia tra lai */
+        else if (NV11_GetUnitType(true) == NV_TYPE_NV200)
+        {
+            /* Tinh so to tien cua moi menh gia tren FloatNote (tra lai) luu vao dia chi tu 25 ~ 33 */
+            for (uint32_t channel = 0; channel < 9; channel++)
+            {
+                m_heartbeat_frame.cash_info[channel] = NV11_GetStoredNoteByChannel(channel); /* The number of change notes */
+            }
+        }
+    }
 
-//    // Insert timestamp to message
-//    m_heartbeat_frame.year = 21;
-//    m_heartbeat_frame.month = 9;
-//    m_heartbeat_frame.day = 22;
-//    m_heartbeat_frame.hour = 17;
-//    m_heartbeat_frame.minutes = 30;
-//    m_heartbeat_frame.sec = 15;
+    /* So hang hoa hien tai tren tung khay */
+    for (uint32_t i = 0; i < 60; i++)
+    {
+        /* Lay so luong hang tren tung khay luu vao (60 khay)*/
+        m_heartbeat_frame.item_remain[i] = 0;
+    }
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_heartbeat_frame_t, crc) - offsetof(vdm_app_gsm_heartbeat_frame_t, split_0);
-//    uint16_t tmp_crc = crc_calculator_xmodem((uint8_t *)&m_heartbeat_frame.split_0,
-//                                             crc_size);
+    // Insert timestamp to message
+    m_heartbeat_frame.year = 21;
+    m_heartbeat_frame.month = 9;
+    m_heartbeat_frame.day = 22;
+    m_heartbeat_frame.hour = 17;
+    m_heartbeat_frame.minutes = 30;
+    m_heartbeat_frame.sec = 15;
 
-//    // Expected crc = = 0x9D62 =>> but due to memory organization, m_heartbeat_frame struct has crc = 0x629D
-//    // =>> We need to swap crc low and high byte
-//    m_heartbeat_frame.crc = (tmp_crc & 0xFF) << 8;
-//    m_heartbeat_frame.crc |= tmp_crc >> 8;
+    uint32_t crc_size = offsetof(vdm_app_gsm_heartbeat_frame_t, crc) - offsetof(vdm_app_gsm_heartbeat_frame_t, split_0);
+    uint16_t tmp_crc = crc_calculator_xmodem((uint8_t *)&m_heartbeat_frame.split_0,
+                                             crc_size);
 
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_heartbeat_frame.cmd, (uint8_t *)&m_heartbeat_frame, sizeof(m_heartbeat_frame));
-//#endif
-//}
+    // Expected crc = = 0x9D62 =>> but due to memory organization, m_heartbeat_frame struct has crc = 0x629D
+    // =>> We need to swap crc low and high byte
+    m_heartbeat_frame.crc = (tmp_crc & 0xFF) << 8;
+    m_heartbeat_frame.crc |= tmp_crc >> 8;
+
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_heartbeat_frame.cmd, (uint8_t *)&m_heartbeat_frame, sizeof(m_heartbeat_frame));
+#endif
+}
 
 //void vdm_app_gsm_send_qrm_error_frame(void)
 //{

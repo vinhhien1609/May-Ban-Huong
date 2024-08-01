@@ -34,7 +34,13 @@ idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h
 idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h
+idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\gsm_app.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 idm\gsm_app.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+idm\gsm_app.o: ..\Core\User_Driver\RTC_time.h
+idm\gsm_app.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
+idm\gsm_app.o: ..\Core\User_Driver\vdm_device_config.h

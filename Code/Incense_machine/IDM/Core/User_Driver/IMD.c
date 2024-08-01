@@ -19,30 +19,55 @@
 #include "IDM.h"
 #include "main.h"
 #include "flash.h"
+#include "nv11.h"
 IDM_PARA IDM;
 IDM_HARDWARE IDM_Status;
 BUY_PARA buy;
 IDM_ERROR IDM_Errors;
+LED Led1, Led2, Led3;
+float Humidity, Temperature;
 unsigned char havemoney=0, IDM_state=0, State=0xFF;
 
 /* Private define ------------------------------------------------------------*/
 uint32_t count=0;
-//#define RTCClockOutput_Enable  /* RTC Clock/64 is output on tamper pin(PC.13) */  
+//#define RTCClockOutput_Enable  /* RTC Clock/64 is output on tamper pin(PC.13) */
+
+void Led_init(LED *led, uint16_t time_On, uint16_t time_Cycle, unsigned int time_Active)
+{
+	led->counter =0;
+	led->timeActive = time_Active;
+	led->timeCycle = time_Cycle;
+	led->timeOn = time_On;
+	led->enable = true;
+}
+
 void IDM_init(void)
 {
-//default	
-//	IDM.Humidity = 0;
-//	IDM.HumidityMAX = 90;
-//	IDM.NumberBuyMore = 500;
-//	IDM.NumberInsenseBuy = 8;
-//	IDM.TimeConveyerRun = 30;
-//	IDM.TotalInsenseBuy = 1000;
-//	IDM.EnableHumidity =1;
-	IDM.TimeSwapIsense = 2;	
+	Read_config();
+	Led_init(&Led1, 250, 500, 2000);
+	Led_init(&Led2, 250, 500, 3000);
+	Led_init(&Led3, 250, 500, 4000);
 }
 void Scan_IDM(void)
 {
-
+	uint16_t timeConveyerRun[3] ={10, 10, 20};
+	if(IDM.currentTotalInsenseBuy==0)
+		IDM_state = 5;
+	if((IDM.currentNumberBuyMore==0 || IDM.currentRetryCellEmpty==0) && buy.StateBuy != EMPTY_INSENCE)
+	{
+		buy.StateBuy = EMPTY_INSENCE;
+		IDM_state =6;
+		NV11_Disable(true);
+	}
+//	if(buy.StateBuy == EMPTY_INSENCE && IDM_Status.isEmptyIsenseSW ==false)
+//	{
+//		buy.StateBuy = CELL_WAIT;
+//		IDM_state = 1;
+//		IDM.currentNumberBuyMore = IDM.NumberBuyMore;
+//		IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
+//		Write_config();
+//	}
+	
 	switch (IDM_state)
 	{
 		case 0:		//start Machine
@@ -52,10 +77,12 @@ void Scan_IDM(void)
 				State = IDM_state;
 				IDM_Status.Motor_swap.isRun =1;
 				buy.StateBuy = CELL_WAIT;
+				printf("CELL>> %d\r\n", IDM_state);
+				NV11_Disable(true);
 			}
 			else
 			{
-				if(count/1000 >=IDM.TimeSwapIsense)	// dao huong
+				if(count/1000 >=IDM.TimeSWAPRun)	// dao huong	TimeSwapIsense
 				{
 					IDM_Status.Motor_swap.isRun =0;
 					IDM_state =1;
@@ -69,7 +96,11 @@ void Scan_IDM(void)
 				State = IDM_state;
 				IDM_Status.Motor_conveyer.isRun =0;
 				IDM_Status.Motor_swap.isRun = 0;
+				IDM_Status.Solenoid.isRun=0;
 //				buy.StateBuy = CELL_WAIT;
+				printf("CELL>> %d\r\n", IDM_state);
+				nv11_enable(true);
+				Led_init(&Led1,0,10,2000);
 			}
 			else
 			{
@@ -77,27 +108,36 @@ void Scan_IDM(void)
 				{
 					havemoney =0;
 					IDM_state = 2;
+					count=MAXTimeDropRespone-10;
+					buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
+					buy.numberRetry =0;		// time retry when conveyer no out insense
+					buy.StateBuy = CELLING;
+					Led_init(&Led1,10,10,200000);
+					printf("CELL>> %d\r\n", IDM_state);					
+					NV11_Disable(true);
 				}
 			}
 			break;
-		case 2:		// Buying
+		case 2:		// Buying conveyer run
 			if(State!=IDM_state)
 			{
-				count=MAXTimeDropRespone-10;
 				State = IDM_state;
-				buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
 				IDM_Status.Motor_conveyer.isRun =1;
-				buy.StateBuy = CELLING;
+				IDM_Status.Motor_swap.isRun =0;
+				Led_init(&Led2,0,10,2000);
+				Led_init(&Led3,0,10,2000);
+				count =0;
 			}
 			else
 			{
-				if(count/1000 >=IDM.TimeConveyerRun)
+				if(count/1000 >=timeConveyerRun[buy.numberRetry])
 				{
 					IDM_state =3;
 				}
 				if(buy.TotalIsenseDroped==0)
 				{
 					IDM_state =4;
+					buy.StateBuy = CELL_SUCCESS;
 				}
 			}				
 			break;
@@ -105,19 +145,28 @@ void Scan_IDM(void)
 			if(State!=IDM_state)
 			{
 				count=0;
-				IDM_Status.Motor_swap.isRun =1;		// dao huong
 				State = IDM_state;
-			}
-			else
-			{
-				if(count/1000>=IDM.TimeSwapIsense)
+				if(buy.numberRetry<3)
 				{
-					IDM_Status.Motor_swap.isRun =0;
+					buy.numberRetry ++;
+					IDM_Status.Motor_swap.isRun =1;		// dao huong
+					IDM_Status.Motor_conveyer.isRun =0;
 				}
-				if(count/1000 >=IDM.TimeConveyerRun)
+				else
 				{
 					IDM_state =1;
 					buy.StateBuy = CELL_EMPTY_INSENCE;
+				  sync_number_celled(IDM.NumberInsenseBuy - buy.TotalIsenseDroped);		// so que da nha ra
+					printf("IDM>> EMPTY INSENCE AND WILL RETRY TIME: %d\r\n",IDM.currentRetryCellEmpty);
+					printf("IDM>> CYCLE CELL INSENCE: %d\r\n",IDM.currentTotalInsenseBuy);
+					Led_init(&Led3,125,250,30000);
+				}
+			}
+			else
+			{
+				if(count>=1500)		//1.5s
+				{
+					IDM_state =2;
 				}
 				if(buy.TotalIsenseDroped==0)
 				{
@@ -126,27 +175,51 @@ void Scan_IDM(void)
 				}
 			}
 			break;
-		case 4:		//Ket thuc mua bán
+
+		case 4:		//CELL_SUCCESS
 			if(State!=IDM_state)
 			{
 				count=0;
 				IDM_Status.Motor_conveyer.isRun =0;
 				IDM_Status.Solenoid.isRun=1;
 				State = IDM_state;
+				printf("CELL>> %d\r\n", IDM_state);
+				IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
+				sync_number_celled(IDM.NumberInsenseBuy);
+			  printf("IDM>> CYCLE CELL INSENCE: %d\r\n",IDM.currentTotalInsenseBuy);				
 			}
 			else
 			{
-				if(count/1000 >=1)
+				if(count/1000 >=2)
 				{
 					IDM_Status.Solenoid.isRun=0;
 					IDM_state =1;
+					Led_init(&Led2,100,100,30000);
 				}
 			}
 			break;
+		case 5:		// Chu ky dao huong
+			if(State!=IDM_state)
+			{
+				State = IDM_state;				
+				count=0;
+				IDM_Status.Motor_swap.isRun =1;
+				printf("CELL>> %d\r\n", IDM_state);
+				NV11_Disable(true);
+			}
+			else
+			{
+				if(count/1000 >=IDM.TimeSWAPRun)
+				{
+					IDM_state =1;		// wait cell
+					IDM.currentTotalInsenseBuy = IDM.TotalInsenseCycleSwapBuy;
+					Write_config();
+				}				
+			}
+			break;
 	}
-
 	
-	if(IDM.Humidity >= IDM.HumidityMAX && IDM.EnableHumidity>0)
+	if(Humidity >= IDM.HumidityMAX && IDM.EnableHumidity>0)
 		IDM_Status.isHeater = true;
 	else
 		IDM_Status.isHeater = false;
@@ -166,8 +239,8 @@ void Scan_IDM(void)
 	if(HAL_GPIO_ReadPin(DOOR_GPIO_Port, DOOR_Pin)==0)	IDM_Status.isDoorOpen = true;
 	else	IDM_Status.isDoorOpen = false;
 	
-		if(HAL_GPIO_ReadPin(Empty_GPIO_Port, Empty_Pin))	IDM_Status.isEmptyIsense = true;
-	else	IDM_Status.isEmptyIsense = false;
+		if(HAL_GPIO_ReadPin(Empty_GPIO_Port, Empty_Pin))	IDM_Status.isEmptyIsenseSW = false;
+	else	IDM_Status.isEmptyIsenseSW = true;
 	
 }
 

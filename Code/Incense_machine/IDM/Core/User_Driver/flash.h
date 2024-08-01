@@ -30,5 +30,6 @@ void add_revenue_day(uint8_t day, uint8_t month, uint8_t year, revenue_t revenue
 revenue_t get_revenue_day(uint8_t day, uint8_t month, uint8_t year);
 revenue_t get_revenue_month(uint8_t month, uint8_t year);
 revenue_t get_revenue_year(uint8_t year);
+void sync_number_celled(uint16_t number_cell);
 
 #endif	/* flash_DRIVER_H */

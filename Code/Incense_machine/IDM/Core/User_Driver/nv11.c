@@ -21,32 +21,32 @@
 #include "peripheral.h"
 #endif /* NV11_AUDIO_ENABLE */
 
-#define portMAX_DELAY   ( uint32_t ) 0xffffffffUL
-//#define NV11_LOCK(timeout) (xSemaphoreTake(m_lock_nv11, timeout))//author:cmt_by_duclq
-//#define NV11_UNLOCK() xSemaphoreGive(m_lock_nv11)//author:cmt_by_duclq
 
-static SSP_COMMAND m_ssp_cmd;
-static bool m_nv11_initialized = false; // Trang thai hoan thanh viec cai dat
-static bool m_is_holding = false; // Trang thai giu (ngam) tien duoc xac lap hay khong
-static nv11_event_t m_last_n11_event = NV11_EVENT_NONE;
+//#define NV11_LOCK(timeout) (xSemaphoreTake(m_lock_nv11, timeout))
+//#define NV11_UNLOCK() xSemaphoreGive(m_lock_nv11)
+
+SSP_COMMAND m_ssp_cmd;
+bool m_nv11_initialized = false; // Trang thai hoan thanh viec cai dat
+bool m_is_holding = false; // Trang thai giu (ngam) tien duoc xac lap hay khong
+nv11_event_t m_last_n11_event = NV11_EVENT_NONE;
 uint32_t m_lastest_note = 0; // Menh gia to tien gan nhat
-static uint8_t m_unit_type = 0;    // Loai dau doc tien
+uint8_t m_unit_type = 0;    // Loai dau doc tien
 
-static int32_t m_denominations[9] = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
+int32_t m_denominations[9] = {1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
 
 //static void parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 * poll, bool lock);
 
-static uint32_t m_channel[10]; // Menh gia tien trong tu kenh tien te
-static uint8_t m_channel_num = 0;
-static uint32_t m_stored_notes[10];  // Tong so tien cua tung menh gia trong FloatNote -> NV200
-static bool m_refund_channels[10];   // Kenh tien te cho phep tra lai -> voi NV200
-static uint32_t m_refund_note = 0;   // Kenh tien te cho phep tra lai -> voi NV11
-static uint16_t m_count_init_payout_fail = 0; // Dem so lan init dau doc tien bi fail (init khi khoi dong may)
-static bool m_init_payout_fault = false;
-static bool m_action_payout_fault = false;
-static uint32_t m_num_note_payout;
-static uint32_t m_last_num_note_payout;
-static uint32_t m_error_payout;
+uint32_t m_channel[10]; // Menh gia tien trong tu kenh tien te
+uint8_t m_channel_num = 0;
+uint32_t m_stored_notes[10];  // Tong so tien cua tung menh gia trong FloatNote -> NV200
+bool m_refund_channels[10];   // Kenh tien te cho phep tra lai -> voi NV200
+uint32_t m_refund_note = 0;   // Kenh tien te cho phep tra lai -> voi NV11
+uint16_t m_count_init_payout_fail = 0; // Dem so lan init dau doc tien bi fail (init khi khoi dong may)
+bool m_init_payout_fault = false;
+bool m_action_payout_fault = false;
+uint32_t m_num_note_payout;
+uint32_t m_last_num_note_payout;
+uint32_t m_error_payout;
 SSP6_SETUP_REQUEST_DATA m_setup_req;
 
 extern vdm_device_config_t m_device_config;
@@ -355,291 +355,291 @@ static void parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
  */
 bool NV11_Init(void)
 {
-//	nv11_init_mutex();//author:cmt_by_duclq
-    ssp_serial_flush();
-    SSP_RESPONSE_ENUM nv11_response;
+////	nv11_init_mutex();//author:cmt_by_duclq
+//    ssp_serial_flush();
+//    SSP_RESPONSE_ENUM nv11_response;
 
-    vdm_device_config_t *device_config = vdm_get_device_config();
-    memset(&m_ssp_cmd, 0, sizeof(m_ssp_cmd));
-    SSP_COMMAND *sspC = &m_ssp_cmd;
-    uint32_t i = 0;
-    sspC->PortNumber = 1;
-    sspC->SSPAddress = 0;
-    sspC->Timeout = 300;
-    sspC->EncryptionStatus = NO_ENCRYPTION;
-    sspC->RetryLevel = 3;
-    sspC->BaudRate = 9600;
+//    vdm_device_config_t *device_config = vdm_get_device_config();
+//    memset(&m_ssp_cmd, 0, sizeof(m_ssp_cmd));
+//    SSP_COMMAND *sspC = &m_ssp_cmd;
+//    uint32_t i = 0;
+//    sspC->PortNumber = 1;
+//    sspC->SSPAddress = 0;
+//    sspC->Timeout = 300;
+//    sspC->EncryptionStatus = NO_ENCRYPTION;
+//    sspC->RetryLevel = 3;
+//    sspC->BaudRate = 9600;
 
-    for (i = 0; i < 10; i++)
-    {
-        m_refund_channels[i] = false; /* Xoa toan bo du lieu trong refundChannel */
-    }
+//    for (i = 0; i < 10; i++)
+//    {
+//        m_refund_channels[i] = false; /* Xoa toan bo du lieu trong refundChannel */
+//    }
 
-    /* Kiem tra su co mat cua NV11 (dau NV11 co duoc ket noi voi MCU khong) */
-    DEBUG_INFO("NV11 >> Getting information from Note Validator...\r\n");
-    /* Ham kiem tra dong bo tra ket qua = 0xF0 -> Tim thay thiet bi */
-    nv11_response = ssp6_sync(sspC);
-    DEBUG_INFO("NV11 >> response: %u\r\n",nv11_response);		//hiendv
-//    nv11_response = 0xF0;			//hiendv
-    if (nv11_response != SSP_RESPONSE_OK)
-    {
-        DEBUG_ERROR("NV11 >> NO VALIDATOR FOUND\r\n");
-        return false;
-    }
-    DEBUG_INFO("NV11 >> Validator Found\r\n");
-		HAL_Delay(1000); printf("\r\n");
-		
-    /* Ham cai dat khoa ma hoa (Encryption key) mac dinh -> Ket qua phan hoi ve phai = 0xF0 (cai dat ok) */
-    nv11_response = ssp6_setup_encryption(sspC, (unsigned long long)0x123456701234567LL);
-    if (nv11_response != SSP_RESPONSE_OK)
-    {
-        DEBUG_ERROR("NV11 >> Encryption Failed %d\r\n", nv11_response);
-        return false;
-    }
-    else
-    {
-        DEBUG_INFO("NV11 >> Encryption Setup\r\n");
-    }
-		HAL_Delay(1000); printf("\r\n");
-		
-    /* Ham kiem tra Version cua SSP co phai V6 -> Ham tra ve xac nhan la V6 = 0xF0 */
-    nv11_response = ssp6_host_protocol(sspC, 0x06);
-    if (nv11_response != SSP_RESPONSE_OK)
-    {
-        DEBUG_ERROR("NV11 >> Host Protocol Failed %d\r\n", nv11_response);
-        return false;
-    }
-		HAL_Delay(1000); printf("\r\n");
+//    /* Kiem tra su co mat cua NV11 (dau NV11 co duoc ket noi voi MCU khong) */
+//    DEBUG_INFO("NV11 >> Getting information from Note Validator...\r\n");
+//    /* Ham kiem tra dong bo tra ket qua = 0xF0 -> Tim thay thiet bi */
+//    nv11_response = ssp6_sync(sspC);
+//    DEBUG_INFO("NV11 >> response: %u\r\n",nv11_response);		//hiendv
+////    nv11_response = 0xF0;			//hiendv
+//    if (nv11_response != SSP_RESPONSE_OK)
+//    {
+//        DEBUG_ERROR("NV11 >> NO VALIDATOR FOUND\r\n");
+//        return false;
+//    }
+//    DEBUG_INFO("NV11 >> Validator Found\r\n");
+//		HAL_Delay(1000); printf("\r\n");
+//		
+//    /* Ham cai dat khoa ma hoa (Encryption key) mac dinh -> Ket qua phan hoi ve phai = 0xF0 (cai dat ok) */
+//    nv11_response = ssp6_setup_encryption(sspC, (unsigned long long)0x123456701234567LL);
+//    if (nv11_response != SSP_RESPONSE_OK)
+//    {
+//        DEBUG_ERROR("NV11 >> Encryption Failed %d\r\n", nv11_response);
+//        return false;
+//    }
+//    else
+//    {
+//        DEBUG_INFO("NV11 >> Encryption Setup\r\n");
+//    }
+//		HAL_Delay(1000); printf("\r\n");
+//		
+//    /* Ham kiem tra Version cua SSP co phai V6 -> Ham tra ve xac nhan la V6 = 0xF0 */
+//    nv11_response = ssp6_host_protocol(sspC, 0x06);
+//    if (nv11_response != SSP_RESPONSE_OK)
+//    {
+//        DEBUG_ERROR("NV11 >> Host Protocol Failed %d\r\n", nv11_response);
+//        return false;
+//    }
+//		HAL_Delay(1000); printf("\r\n");
 
-    /* Ham thu thap toan bo cac gia tri cai dat trong thiet bi (bao gom UnitType =0x07 (NV11), Firmwareversion (03760), Numberofchannel (6) , 
-       channeldata = Menh gia tien trong kenh, RealValueMultifier = 100, ProtocolVersion = 6*/
-    nv11_response = ssp6_setup_request(sspC, &m_setup_req);
-    if (nv11_response != SSP_RESPONSE_OK)
-    {
-        DEBUG_ERROR("NV11 >> Setup Request Failed %d\r\n", nv11_response);
-        return false;
-    }
-		HAL_Delay(1000); printf("\r\n");
-		
-    /* In ra man hinh debug Vision cua phan mem, va kenh tien te */
-    DEBUG_INFO("NV11 >> Firmware: %s\r\n", m_setup_req.FirmwareVersion);
-    DEBUG_INFO("NV11 >> Channels:\r\n");
-    m_channel_num = m_setup_req.NumberOfChannels;
-    /* In ra man hinh menh gia tien cua tung kenh tien te: 1 = 1.000, 2 = 2.000, 3 = 5.000, 4 = 10.000, 5 = 20.000, 6 = 50.000*/
-    for (i = 0; i < m_setup_req.NumberOfChannels; i++)
-    {
-        m_channel[i] = m_setup_req.ChannelData[i].value;
-        DEBUG_INFO("NV11 >> channel %d: %d %s\r\n", i + 1, m_setup_req.ChannelData[i].value, m_setup_req.ChannelData[i].cc);
-    }
-		HAL_Delay(1000); printf("\r\n");
-    /* Cho phep dau doc tien hoat dong -> Ket qua ok = 0xF0 */
-    nv11_response = ssp6_enable(sspC);
-    if (nv11_response != SSP_RESPONSE_OK)
-    {
-        DEBUG_ERROR("NV11 >> Enable Failed %d\r\n", nv11_response);
-        return false;
-    }
-		HAL_Delay(1000); printf("\r\n");
-		
-    /* Neu UnitType = 0x03 -> Tuc la thiet bi dang ket noi la SMART Hopper*/
-    if (m_setup_req.UnitType == 0x03)
-    {
-			printf("--------------03type\r\n");
-        /* SMART Hopper requires different inhibit commands */
-        for (i = 0; i < m_setup_req.NumberOfChannels; i++)
-        {
-            /* Ham cai dat cac kenh tien te duoc phep tra lai */
-            ssp6_set_coinmech_inhibits(sspC, m_setup_req.ChannelData[i].value, m_setup_req.ChannelData[i].cc, ENABLED);
+//    /* Ham thu thap toan bo cac gia tri cai dat trong thiet bi (bao gom UnitType =0x07 (NV11), Firmwareversion (03760), Numberofchannel (6) , 
+//       channeldata = Menh gia tien trong kenh, RealValueMultifier = 100, ProtocolVersion = 6*/
+//    nv11_response = ssp6_setup_request(sspC, &m_setup_req);
+//    if (nv11_response != SSP_RESPONSE_OK)
+//    {
+//        DEBUG_ERROR("NV11 >> Setup Request Failed %d\r\n", nv11_response);
+//        return false;
+//    }
+//		HAL_Delay(1000); printf("\r\n");
+//		
+//    /* In ra man hinh debug Vision cua phan mem, va kenh tien te */
+//    DEBUG_INFO("NV11 >> Firmware: %s\r\n", m_setup_req.FirmwareVersion);
+//    DEBUG_INFO("NV11 >> Channels:\r\n");
+//    m_channel_num = m_setup_req.NumberOfChannels;
+//    /* In ra man hinh menh gia tien cua tung kenh tien te: 1 = 1.000, 2 = 2.000, 3 = 5.000, 4 = 10.000, 5 = 20.000, 6 = 50.000*/
+//    for (i = 0; i < m_setup_req.NumberOfChannels; i++)
+//    {
+//        m_channel[i] = m_setup_req.ChannelData[i].value;
+//        DEBUG_INFO("NV11 >> channel %d: %d %s\r\n", i + 1, m_setup_req.ChannelData[i].value, m_setup_req.ChannelData[i].cc);
+//    }
+//		HAL_Delay(1000); printf("\r\n");
+//    /* Cho phep dau doc tien hoat dong -> Ket qua ok = 0xF0 */
+//    nv11_response = ssp6_enable(sspC);
+//    if (nv11_response != SSP_RESPONSE_OK)
+//    {
+//        DEBUG_ERROR("NV11 >> Enable Failed %d\r\n", nv11_response);
+//        return false;
+//    }
+//		HAL_Delay(1000); printf("\r\n");
+//		
+//    /* Neu UnitType = 0x03 -> Tuc la thiet bi dang ket noi la SMART Hopper*/
+//    if (m_setup_req.UnitType == 0x03)
+//    {
+//			printf("--------------03type\r\n");
+//        /* SMART Hopper requires different inhibit commands */
+//        for (i = 0; i < m_setup_req.NumberOfChannels; i++)
+//        {
+//            /* Ham cai dat cac kenh tien te duoc phep tra lai */
+//            ssp6_set_coinmech_inhibits(sspC, m_setup_req.ChannelData[i].value, m_setup_req.ChannelData[i].cc, ENABLED);
 
-        }
-    }
-    /* Neu la cac loai dau doc tien khac */
-    else
-    {
-        /* 0x06 -> dau doc SMART Payout, 0x07 -> dau doc NV11*/
-        //        if (m_setup_req.UnitType == 0x06 || m_setup_req.UnitType == 0x07)
-        //        {
-        //            /* Cho phep kich hoat tra lai tien -> ket qua ok = 0xF0 */
-        //            if (ssp6_enable_payout(sspC, m_setup_req.UnitType) != SSP_RESPONSE_OK)
-        //            {
-        //                DEBUG_INFO("NV11 >> Enable payout Failed");
-        //                m_count_init_payout_fail++;
-        //                if(m_count_init_payout_fail == 5)
-        //                {
-        //                  m_unit_type = m_setup_req.UnitType;
-        //                  m_nv11_initialized = 1;
-        //                }
-        //                return false;
-        //            }
-        //        }
+//        }
+//    }
+//    /* Neu la cac loai dau doc tien khac */
+//    else
+//    {
+//        /* 0x06 -> dau doc SMART Payout, 0x07 -> dau doc NV11*/
+//        //        if (m_setup_req.UnitType == 0x06 || m_setup_req.UnitType == 0x07)
+//        //        {
+//        //            /* Cho phep kich hoat tra lai tien -> ket qua ok = 0xF0 */
+//        //            if (ssp6_enable_payout(sspC, m_setup_req.UnitType) != SSP_RESPONSE_OK)
+//        //            {
+//        //                DEBUG_INFO("NV11 >> Enable payout Failed");
+//        //                m_count_init_payout_fail++;
+//        //                if(m_count_init_payout_fail == 5)
+//        //                {
+//        //                  m_unit_type = m_setup_req.UnitType;
+//        //                  m_nv11_initialized = 1;
+//        //                }
+//        //                return false;
+//        //            }
+//        //        }
 
-        m_unit_type = m_setup_req.UnitType; /* Nhan chung loai dau doc tin vao m_unit_type */
-				
-        /* Cai dat cho phep tat ca cac kenh tien te hoat dong (6 kenh) 
-           Vd: Neu cho phep kenh 1 - 3, khoa kenh 4 - 16: data = 0x07,0x00 */
-        vdm_device_config_lock_resource(portMAX_DELAY);
-        uint32_t max_money_read = device_config->accept_cash_max;
-				max_money_read = 0xfA;//add by duclq
-        vdm_device_config_unlock_resource();
-        DEBUG_VERBOSE("[%s-%u] ssp6_set_inhibits %08X\r\n", __FUNCTION__, __LINE__, max_money_read);
-        nv11_response = ssp6_set_inhibits(sspC, max_money_read, 0xFF);
-        if (nv11_response != SSP_RESPONSE_OK)
-        {
-            DEBUG_ERROR("NV11 >> Inhibits Failed");
-            return false;
-        }
-        /* Neu dau doc tien la loai NV11 */
-        if (m_unit_type == NV_TYPE_NV11)
-        {
-            /* In ra man hinh chung loai dau doc NV11 */
-            DEBUG_INFO("NV11 >> Unit Type: NV11\r\n");
-            /* Lay so to tien chua trong FloatNote (dau tra lai) hien thi len man hinh */
-            int32_t stored_notes = ssp6_get_stored_notes(&m_ssp_cmd);
-            DEBUG_INFO("NV11 >> Stored Notes: %d\r\n", stored_notes);
+//        m_unit_type = m_setup_req.UnitType; /* Nhan chung loai dau doc tin vao m_unit_type */
+//				
+//        /* Cai dat cho phep tat ca cac kenh tien te hoat dong (6 kenh) 
+//           Vd: Neu cho phep kenh 1 - 3, khoa kenh 4 - 16: data = 0x07,0x00 */
+//        vdm_device_config_lock_resource(portMAX_DELAY);
+//        uint32_t max_money_read = device_config->accept_cash_max;
+//				max_money_read = 0xfA;//add by duclq
+//        vdm_device_config_unlock_resource();
+//        DEBUG_VERBOSE("[%s-%u] ssp6_set_inhibits %08X\r\n", __FUNCTION__, __LINE__, max_money_read);
+//        nv11_response = ssp6_set_inhibits(sspC, max_money_read, 0xFF);
+//        if (nv11_response != SSP_RESPONSE_OK)
+//        {
+//            DEBUG_ERROR("NV11 >> Inhibits Failed");
+//            return false;
+//        }
+//        /* Neu dau doc tien la loai NV11 */
+//        if (m_unit_type == NV_TYPE_NV11)
+//        {
+//            /* In ra man hinh chung loai dau doc NV11 */
+//            DEBUG_INFO("NV11 >> Unit Type: NV11\r\n");
+//            /* Lay so to tien chua trong FloatNote (dau tra lai) hien thi len man hinh */
+//            int32_t stored_notes = ssp6_get_stored_notes(&m_ssp_cmd);
+//            DEBUG_INFO("NV11 >> Stored Notes: %d\r\n", stored_notes);
 
-            m_last_num_note_payout = stored_notes;
-            m_num_note_payout = stored_notes;
+//            m_last_num_note_payout = stored_notes;
+//            m_num_note_payout = stored_notes;
 
-            /* xoa loi payout note */
-            m_error_payout = 0;
+//            /* xoa loi payout note */
+//            m_error_payout = 0;
 
-            vdm_device_config_lock_resource(portMAX_DELAY);
-            //vdm_device_config_sync_error_to_fram();//cmt_by_duclq
-            device_config->sensor_error.name.payout = m_error_payout;
-            vdm_device_config_unlock_resource();
-        }
-        /* Neu dau doc tien la NV200 */
-        else if (m_unit_type == NV_TYPE_NV200)
-        {
-            /* In ra man hinh chung loai dau doc Smart Payout */
-            DEBUG_INFO("NV11 >> Unit Type: Smart Payout\r\n");
-            DEBUG_INFO("NV11 >> Stored Notes:\r\n");
-            /* Lay so to tien cua tung loai tien te cai dat trong FloatNote (dau tra lai), hien thi ra man hinh */
-            for (int32_t channel_index = 0; channel_index < m_channel_num; channel_index++)
-            {
-                m_stored_notes[channel_index] = ssp6_check_note_level(&m_ssp_cmd, m_channel[channel_index]);
-                DEBUG_INFO("%d: %d\r\n", m_channel[channel_index], m_stored_notes[channel_index]);
-            }
-        }
-        /* Neu dau doc la NV9 (khong co dau tra lai tien)*/
-        else if (m_unit_type == NV_TYPE_NV9)
-        {
-            /* In ra man hinh chung loai dau doc NV9 */
-            DEBUG_INFO("NV11 >> Unit Type: NV9\r\n");
-            vdm_device_config_lock_resource(portMAX_DELAY);
-            //vdm_device_config_sync_error_to_fram();//cmt_by_duclq
-            device_config->peripheral.feature_enable.name.refund_enable = 0;
-            //            Perh_RefundOff();
-            vdm_device_config_unlock_resource();
-        }
-        /* Neu la cac loai dau doc khac */
-        else
-        {
-            /* In ra man hinh khong nhan dang duoc dau doc */
-            DEBUG_INFO("NV11 >> Unit Type: UNKNOWN\r\n");
-            return false;
-        }
-        /* Neu dau doc tien la loai NV11 */
-        if (m_unit_type == NV_TYPE_NV11)
-        {
-            for (int32_t channel_index = 0; channel_index < m_channel_num; channel_index++)
-            {
-                /* Lay kenh tien te cho phep tra lai cai dat trong ROM */
-                vdm_device_config_lock_resource(portMAX_DELAY);
+//            vdm_device_config_lock_resource(portMAX_DELAY);
+//            //vdm_device_config_sync_error_to_fram();//cmt_by_duclq
+//            device_config->sensor_error.name.payout = m_error_payout;
+//            vdm_device_config_unlock_resource();
+//        }
+//        /* Neu dau doc tien la NV200 */
+//        else if (m_unit_type == NV_TYPE_NV200)
+//        {
+//            /* In ra man hinh chung loai dau doc Smart Payout */
+//            DEBUG_INFO("NV11 >> Unit Type: Smart Payout\r\n");
+//            DEBUG_INFO("NV11 >> Stored Notes:\r\n");
+//            /* Lay so to tien cua tung loai tien te cai dat trong FloatNote (dau tra lai), hien thi ra man hinh */
+//            for (int32_t channel_index = 0; channel_index < m_channel_num; channel_index++)
+//            {
+//                m_stored_notes[channel_index] = ssp6_check_note_level(&m_ssp_cmd, m_channel[channel_index]);
+//                DEBUG_INFO("%d: %d\r\n", m_channel[channel_index], m_stored_notes[channel_index]);
+//            }
+//        }
+//        /* Neu dau doc la NV9 (khong co dau tra lai tien)*/
+//        else if (m_unit_type == NV_TYPE_NV9)
+//        {
+//            /* In ra man hinh chung loai dau doc NV9 */
+//            DEBUG_INFO("NV11 >> Unit Type: NV9\r\n");
+//            vdm_device_config_lock_resource(portMAX_DELAY);
+//            //vdm_device_config_sync_error_to_fram();//cmt_by_duclq
+//            device_config->peripheral.feature_enable.name.refund_enable = 0;
+//            //            Perh_RefundOff();
+//            vdm_device_config_unlock_resource();
+//        }
+//        /* Neu la cac loai dau doc khac */
+//        else
+//        {
+//            /* In ra man hinh khong nhan dang duoc dau doc */
+//            DEBUG_INFO("NV11 >> Unit Type: UNKNOWN\r\n");
+//            return false;
+//        }
+//        /* Neu dau doc tien la loai NV11 */
+//        if (m_unit_type == NV_TYPE_NV11)
+//        {
+//            for (int32_t channel_index = 0; channel_index < m_channel_num; channel_index++)
+//            {
+//                /* Lay kenh tien te cho phep tra lai cai dat trong ROM */
+//                vdm_device_config_lock_resource(portMAX_DELAY);
 
-                if (VDM_DEVICE_CONFIG_REFUND_CHANNEL_ENABLE(device_config, channel_index))
-                {
-                    vdm_device_config_unlock_resource();
-                    /* Cai dat menh gia tien te luu tru tren FloatNote de tra lai */
-                    if (NV11_SetDenominationForChange(m_channel[channel_index], false))
-                    {
-                        return false;
-                    }
-                    m_refund_note = m_channel[channel_index]; /* Lay gia tri kenh tien te vao m_refund_note */
-                    DEBUG_INFO("Refund note %u\r\n", m_refund_note);
-                    break;
-                }
-                else
-                {
-                    vdm_device_config_unlock_resource();
-                }
+//                if (VDM_DEVICE_CONFIG_REFUND_CHANNEL_ENABLE(device_config, channel_index))
+//                {
+//                    vdm_device_config_unlock_resource();
+//                    /* Cai dat menh gia tien te luu tru tren FloatNote de tra lai */
+//                    if (NV11_SetDenominationForChange(m_channel[channel_index], false))
+//                    {
+//                        return false;
+//                    }
+//                    m_refund_note = m_channel[channel_index]; /* Lay gia tri kenh tien te vao m_refund_note */
+//                    DEBUG_INFO("Refund note %u\r\n", m_refund_note);
+//                    break;
+//                }
+//                else
+//                {
+//                    vdm_device_config_unlock_resource();
+//                }
 
-                if (channel_index > 7)
-                {
-                    break;
-                }
-            }
+//                if (channel_index > 7)
+//                {
+//                    break;
+//                }
+//            }
 
-            /* 0x06 -> dau doc SMART Payout, 0x07 -> dau doc NV11 cho phep de dua tien len tren */
-            if (m_setup_req.UnitType == 0x06 || m_setup_req.UnitType == 0x07)
-            {
-                /* Cho phep kich hoat tra lai tien -> ket qua ok = 0xF0 */
-                if (ssp6_enable_payout(sspC, m_setup_req.UnitType) != SSP_RESPONSE_OK)
-                {
-                    DEBUG_ERROR("NV11 >> Enable payout Failed\r\n");
-                    m_count_init_payout_fail++;
-                    DEBUG_INFO("NV11 >> Payout init %d times\r\n", m_count_init_payout_fail);
+//            /* 0x06 -> dau doc SMART Payout, 0x07 -> dau doc NV11 cho phep de dua tien len tren */
+//            if (m_setup_req.UnitType == 0x06 || m_setup_req.UnitType == 0x07)
+//            {
+//                /* Cho phep kich hoat tra lai tien -> ket qua ok = 0xF0 */
+//                if (ssp6_enable_payout(sspC, m_setup_req.UnitType) != SSP_RESPONSE_OK)
+//                {
+//                    DEBUG_ERROR("NV11 >> Enable payout Failed\r\n");
+//                    m_count_init_payout_fail++;
+//                    DEBUG_INFO("NV11 >> Payout init %d times\r\n", m_count_init_payout_fail);
 
-                    // if (m_count_init_payout_fail == 13)
-                    // {
-                    //     m_count_init_payout_fail = 0;
-                    //     m_unit_type = m_setup_req.UnitType;
-                    //     m_nv11_initialized = 1;
-                    //     NV11_ClearLatestEvent(false);
-                    //     NV11_DisplayOn();
-                    //     m_init_payout_fault = true;
-                    //     DEBUG_ERROR("Init payout fault\r\n");
-                    //     return true;
-                    // }
-                    return false;
-                }
-                else
-                {
-                    m_count_init_payout_fail = 0;
-                    m_unit_type = m_setup_req.UnitType;
-                    m_nv11_initialized = 1;
-                    NV11_ClearLatestEvent(false);
-                    NV11_DisplayOn();
-                    DEBUG_INFO("NV11 enable payout success\r\n");
-                    return true;
-                }
-            }
-        }
+//                    // if (m_count_init_payout_fail == 13)
+//                    // {
+//                    //     m_count_init_payout_fail = 0;
+//                    //     m_unit_type = m_setup_req.UnitType;
+//                    //     m_nv11_initialized = 1;
+//                    //     NV11_ClearLatestEvent(false);
+//                    //     NV11_DisplayOn();
+//                    //     m_init_payout_fault = true;
+//                    //     DEBUG_ERROR("Init payout fault\r\n");
+//                    //     return true;
+//                    // }
+//                    return false;
+//                }
+//                else
+//                {
+//                    m_count_init_payout_fail = 0;
+//                    m_unit_type = m_setup_req.UnitType;
+//                    m_nv11_initialized = true;
+//                    NV11_ClearLatestEvent(false);
+//                    NV11_DisplayOn();
+//                    DEBUG_INFO("NV11 enable payout success\r\n");
+//                    return true;
+//                }
+//            }
+//        }
 
-        /* Neu dau doc tien la loai NV200 */
-        else if (m_unit_type == NV_TYPE_NV200)
-        {
-            for (int32_t channel_index = 0; channel_index < m_channel_num; channel_index++)
-            {
-                vdm_device_config_lock_resource(portMAX_DELAY);
+//        /* Neu dau doc tien la loai NV200 */
+//        else if (m_unit_type == NV_TYPE_NV200)
+//        {
+//            for (int32_t channel_index = 0; channel_index < m_channel_num; channel_index++)
+//            {
+//                vdm_device_config_lock_resource(portMAX_DELAY);
 
-                /* Lay cac kenh tien te cho phep tra lai cai dat trong ROM */
-                if (VDM_DEVICE_CONFIG_REFUND_CHANNEL_ENABLE(device_config, channel_index))
-                {
-                    vdm_device_config_unlock_resource();
-                    /* Cai dat menh gia tien te luu tru tren FloatNote de tra lai */
-                    if (NV11_SetDenominationForChange(m_channel[channel_index], false))
-                    {
-                        return false;
-                    }
-                    m_refund_channels[channel_index] = true;
-                }
-                else
-                {
-                    vdm_device_config_unlock_resource();
-                }
+//                /* Lay cac kenh tien te cho phep tra lai cai dat trong ROM */
+//                if (VDM_DEVICE_CONFIG_REFUND_CHANNEL_ENABLE(device_config, channel_index))
+//                {
+//                    vdm_device_config_unlock_resource();
+//                    /* Cai dat menh gia tien te luu tru tren FloatNote de tra lai */
+//                    if (NV11_SetDenominationForChange(m_channel[channel_index], false))
+//                    {
+//                        return false;
+//                    }
+//                    m_refund_channels[channel_index] = true;
+//                }
+//                else
+//                {
+//                    vdm_device_config_unlock_resource();
+//                }
 
-                if (channel_index > 7)
-                {
-                    break;
-                }
-            }
-        }
-    }
+//                if (channel_index > 7)
+//                {
+//                    break;
+//                }
+//            }
+//        }
+//    }
 
-    m_nv11_initialized = true; /* Xac nhan cai dat da hoan thanh */
+//    m_nv11_initialized = true; /* Xac nhan cai dat da hoan thanh */
 
-    NV11_DisplayOn(); /* Cho phep dau doc hien thi khung vien */
+//    NV11_DisplayOn(); /* Cho phep dau doc hien thi khung vien */
 
     return true; /* Bao trang thai da cai dat xong */
 }
@@ -723,7 +723,8 @@ int32_t NV11_Disable(bool lock)
     if (!m_nv11_initialized)
     {
         retval = 1;
-        goto end;
+				DEBUG_WARN("NV11 >> m_nv11_initialized\r\n");
+        return retval;
     }
 
     SSP_COMMAND *sspC = &m_ssp_cmd;
@@ -744,7 +745,7 @@ int32_t NV11_Disable(bool lock)
         //author:cmt_by_duclq//NV11_UNLOCK();
     }
 
-end:
+//end:
     return retval;
 }
 /**
@@ -1711,7 +1712,7 @@ int8_t vdm_NV11_Init(void)
 {
     ssp_serial_flush();
     SSP_RESPONSE_ENUM nv11_response;
-
+		m_nv11_initialized = false;
     vdm_device_config_t *device_config = vdm_get_device_config();
     memset(&m_ssp_cmd, 0, sizeof(m_ssp_cmd));
     SSP_COMMAND *sspC = &m_ssp_cmd;
@@ -1830,7 +1831,7 @@ int8_t vdm_NV11_Init(void)
 		else printf("NV11 >> Enable Successfully\r\n");
 		HAL_Delay(1000); printf("\r\n");
 		
-    NV11_DisplayOn();
+//    NV11_DisplayOn();
 		return INIT_OK;
 }
 
@@ -1854,7 +1855,7 @@ static void vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
 				{
 					/* In len man hinh kenh tien vua doc duoc (1 -> 6)*/
 					DEBUG_INFO("NV11 >> Note Read %d %s\r\n", poll->events[i].data1, poll->events[i].cc);
-					m_lastest_note += m_setup_req.ChannelData[poll->events[i].data1-1].value;
+					m_lastest_note = m_setup_req.ChannelData[poll->events[i].data1-1].value;
 					printf("Menh gia tien: %d %s \r\n",m_setup_req.ChannelData[poll->events[i].data1-1].value, m_setup_req.ChannelData[poll->events[i].data1-1].cc);
 					
 				}
@@ -2043,6 +2044,8 @@ static void vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
 				break;
         }
     }
+	NV11_DisplayOn(); /* Cho phep dau doc hien thi khung vien */
+	m_nv11_initialized = true;
 }
 
 int8_t vdm_NV11_Process(uint32_t poll_time)
@@ -2062,6 +2065,7 @@ int8_t vdm_NV11_Process(uint32_t poll_time)
 				{
 						// If the poll timed out, then give up
 						DEBUG_ERROR("NV11 >> SSP Poll Timeout\r\n"); /* Bao len man hinh debug */
+					m_nv11_initialized = false;
 					return ERR_POLL_TIMEOUT;
 				}
 				else
@@ -2089,7 +2093,7 @@ int8_t vdm_NV11_Process(uint32_t poll_time)
 			/* Thuc hien ham doc cac su kien trong NV11, neu phan hoi ve la 0xF0 -> phan tich cac su kien */
 			else
 			{
-				printf("parse_poll:\r\n");
+//				printf("parse_poll:\r\n");
 				vdm_parse_poll(&m_ssp_cmd, &m_poll, false); /* Thuc hien phan tich cac su kien NV11 */
 			}
 	}

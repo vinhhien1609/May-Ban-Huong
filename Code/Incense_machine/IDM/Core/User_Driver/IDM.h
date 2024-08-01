@@ -29,7 +29,16 @@ typedef enum
 		CELL_WAIT,
     CELL_EMPTY_INSENCE,
 		CELLING,
+		EMPTY_INSENCE,
 } idm_state_cell_t;
+
+typedef struct {
+	 bool enable;
+	 unsigned int timeOn;	//ms
+	 unsigned int timeCycle;
+	 unsigned int timeActive;		//ms
+	 unsigned int counter;
+} LED;
 
 typedef struct {
 	 bool isRun;
@@ -53,24 +62,30 @@ typedef struct {
 	bool isHeater;
 	bool isDoorOpen;
 	bool isIsenseDrop;
-	bool isEmptyIsense;
+	bool isEmptyIsenseSW;
 	char LedState;
 } IDM_HARDWARE;
 
 typedef struct {
-	unsigned char NumberInsenseBuy;		// so que moi lan ban 1-100
-	unsigned char TimeConveyerRun;	// thoi gian conveyer quay 1-100s
-	unsigned int TotalInsenseBuy;					// tong so que cos the ban 1-1000
-	unsigned int NumberBuyMore;		// so luong ban khi bao Empty 1-1000
-	unsigned char TimeSwapIsense;		// time push huong	s
-	float Humidity;
+	unsigned short int header;		// id off para	
+	unsigned char NumberInsenseBuy;		// so que moi lan ban 1-100	(N_2)
+	unsigned char TimeSWAPRun;	// thoi gian swap quay 0-100s (N_1)
+	unsigned short int TotalInsenseCycleSwapBuy;					// so luong que da ban can quay swap motor 1-1000		(N_3)
+	unsigned short int NumberBuyMore;		// so luong ban khi bao Empty 1-1000	(N_4)
+	unsigned char TimeDependIsense;		// bo qua
+	unsigned char TimeTimeout;		// so lan retry k du huong
 	unsigned char EnableHumidity;
 	unsigned char HumidityMAX;	// gia tr? cai dat do am
-} IDM_PARA;
+	unsigned short int currentNumberBuyMore;		// so luong ban khi bao Empty 1-1000
+	unsigned short int currentTotalInsenseBuy;					// swap motor in when total =0;
+	unsigned char retryCellEmpty;		// so lan ban khi huong khong ra
+	unsigned char currentRetryCellEmpty;
+} __attribute__((packed)) IDM_PARA;
 
 typedef struct {
 	unsigned int Money;
 	unsigned int TotalIsenseDroped;
+	unsigned char numberRetry;
 	idm_state_cell_t	StateBuy;
 } BUY_PARA;
 

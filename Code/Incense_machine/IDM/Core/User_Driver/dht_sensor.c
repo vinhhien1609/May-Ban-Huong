@@ -202,7 +202,7 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 		if(hdht->data[2] &0x80)
 			hdht->values.temperature*= -1;
 	  hdht->values.humidity= (float)(((uint16_t)hdht->data[0]) << 8 | hdht->data[1])*0.1;
-		printf("DHT21>> HUM: %.02f\r\n", hdht->values.humidity);
+		printf("DHT21>> HUM: %d\r\n", (int)hdht->values.humidity);
 	  hdht->status = READ_OK;
 	  return hdht->status;
 }

@@ -1,0 +1,11 @@
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/stm32_adafruit_lcd.c
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/stm32_adafruit_lcd.h
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../Components/st7735/st7735.h
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../Components/st7735/../Common/lcd.h
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../../../Utilities/Fonts/fonts.h
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../../../Utilities/Fonts/font24.c
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../../../Utilities/Fonts/font20.c
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../../../Utilities/Fonts/font16.c
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../../../Utilities/Fonts/font12.c
+stm32f103rb_nucleo\stm32_adafruit_lcd.o: ../../../../../Drivers/BSP/Adafruit_Shield/../../../Utilities/Fonts/font8.c

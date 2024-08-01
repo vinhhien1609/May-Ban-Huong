@@ -12,7 +12,9 @@
 
 unsigned char checkGPSCommand(void);		//check all in commandList	added in 05/07/2010
 void GSM_init(void);
+void TCP_reconnect(void);
 void TCP_connect(void);
+void TCP_send(uint8_t *data, uint32_t length);
 
 
 

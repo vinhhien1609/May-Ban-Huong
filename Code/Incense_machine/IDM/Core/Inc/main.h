@@ -115,10 +115,6 @@ void Error_Handler(void);
 #define GSM_RX_GPIO_Port GPIOB
 #define LCD_CS_Pin GPIO_PIN_12
 #define LCD_CS_GPIO_Port GPIOB
-#define LCD_CLK_Pin GPIO_PIN_13
-#define LCD_CLK_GPIO_Port GPIOB
-#define LCD_DATA_Pin GPIO_PIN_15
-#define LCD_DATA_GPIO_Port GPIOB
 #define LCD_RESET_Pin GPIO_PIN_8
 #define LCD_RESET_GPIO_Port GPIOD
 #define LCD_INT_Pin GPIO_PIN_9

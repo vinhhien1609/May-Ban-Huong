@@ -5,6 +5,7 @@
 #include "platform.h"
 #include "glcd_font.h"
 #include "main.h"
+#define LCD_MONO
 
 /* LCD Dimension */
 #define GLCD_WIDTH      128
@@ -20,6 +21,8 @@ typedef enum
 	GLCD_LCD_PIN_CS,
 	GLCD_LCD_PIN_CLK,
 	GLCD_LCD_PIN_DATA,
+	GLCD_LCD_PIN_RESET,
+	GLCD_LCD_PIN_DOUT,
 } glcd_lcd_pin_t;
 
 
@@ -53,6 +56,11 @@ void GLcd_DrawBitmap(const uint8_t *image, int32_t x, int32_t y);
 void GLcd_DrawStringDef(const char *s, int32_t x, int32_t y, int32_t color);
 void GLcd_DrawCharDef(const uint8_t *image, int32_t x, int32_t y, uint8_t w, uint8_t h, int32_t color);
 
+void Display_ON(void);
+
+//Cor de fundo com 65k colors
+void LCD_background(uint16_t color);
+
 /* Get the length in pixel of a string with the current font */
 int32_t  GLcd_MeasureString(const char* str);
 int32_t  GLcd_MeasureStringUni(const uint16_t* str);
@@ -80,5 +88,8 @@ void glcd_lock(uint32_t ms);
  * @brief           Unlock GLCD driver
  */
 void glcd_unlock(void);
+
+void test_lcd(void);
+
 
 #endif /* GLCD_H */

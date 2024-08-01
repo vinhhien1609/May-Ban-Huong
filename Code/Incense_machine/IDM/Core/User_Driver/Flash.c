@@ -3,6 +3,7 @@
 #include "IDM.h"
 #include "vdm_device_config.h"
 
+extern IDM_HARDWARE IDM_Status;
 
 #define Read_SRAM	0x03
 #define Write_SRAM	0x02
@@ -12,9 +13,12 @@
 #define WRSR		0x01
 
 #define Machine_Para_ADDR_BASE	0x00
-#define Buy_Para_ADDR_BASE	0x30
-#define Device_config_ADDR_BASE	0x400
+//#define Buy_Para_ADDR_BASE	0x30
+#define Device_config_ADDR_BASE	0x30
 #define Money_ADDR_BASE		0x5D0
+
+#define IDM_FLASH_HEADER	0x2323
+#define TECHNICAL_FLASH_HEADER	0x1609
 
 
 extern IDM_PARA IDM;
@@ -205,68 +209,37 @@ uint8_t Read_SRAM_STT(void)
 
 void Write_config(void)
 {
-	uint16_t addr = Machine_Para_ADDR_BASE;
-	uint8_t temp;
-	Buzz_On(100);
-	Write_Byte_Sram(addr, IDM.EnableHumidity);
-	
-	addr++;
-	Write_Byte_Sram(addr, IDM.HumidityMAX);
-	
-	addr++;	
-	temp = IDM.NumberBuyMore/256;
-	Write_Byte_Sram(addr, temp);
-	addr++;
-	temp = IDM.NumberBuyMore%256;
-	Write_Byte_Sram(addr, temp);
-	
-	addr++;
-	Write_Byte_Sram(addr, IDM.NumberInsenseBuy);
-	
-	addr++;
-	Write_Byte_Sram(addr, IDM.TimeConveyerRun);
-	
-	addr++;
-	temp = IDM.TotalInsenseBuy/256;
-	Write_Byte_Sram(addr, temp);
-	addr++;
-	temp = IDM.TotalInsenseBuy%256;
-	Write_Byte_Sram(addr, temp);
-	
-	addr++;
-	Write_Byte_Sram(addr, IDM.TimeSwapIsense);
+	printf("FLASH>> write: %d(B) at %d",sizeof(IDM_PARA), Machine_Para_ADDR_BASE);
+	for(int n=0; n<sizeof(IDM_PARA); n++)
+	{
+		Write_Byte_Sram(Machine_Para_ADDR_BASE + n, ((uint8_t *)&IDM)[n]);
+	}
 }
 void Read_config(void)
 {
-	uint16_t addr = Machine_Para_ADDR_BASE;
-	uint8_t temp[2];
-	
-	IDM.EnableHumidity =	Read_Byte_Sram(addr);
-	
-	addr++;
-	IDM.HumidityMAX = Read_Byte_Sram(addr);
-	
-	addr++;
-	temp[0] = Read_Byte_Sram(addr);
-	addr++;
-	temp[1] = Read_Byte_Sram(addr);
-	IDM.NumberBuyMore = temp[0] *256 + temp[1];
-	
-	addr++;
-	IDM.NumberInsenseBuy = Read_Byte_Sram(addr);
-	
-	addr++;
-	IDM.TimeConveyerRun = Read_Byte_Sram(addr);
-
-	addr++;
-	temp[0] = Read_Byte_Sram(addr);
-	addr++;
-	temp[1] = Read_Byte_Sram(addr);
-	IDM.TotalInsenseBuy = temp[0] *256 + temp[1];
-	
-	addr++;
-	IDM.TimeSwapIsense = Read_Byte_Sram(addr);
-	read_device_config();
+	for(int n=0; n<sizeof(IDM_PARA); n++)
+	{
+		((uint8_t *)&IDM)[n] = Read_Byte_Sram(Machine_Para_ADDR_BASE +n);
+	}
+	if(IDM.header != IDM_FLASH_HEADER)	// never set
+	{
+		// set default
+		printf("IDM>> SET DEFAULT PARA\r\n");
+		IDM.EnableHumidity = false;
+		IDM.HumidityMAX = 30;
+		IDM.header = IDM_FLASH_HEADER;
+		IDM.NumberBuyMore =1000;
+		IDM.NumberInsenseBuy =8;
+		IDM.retryCellEmpty = 3;
+		IDM.TimeSWAPRun = 20;
+//		IDM.TimeDependIsense = 2;
+		IDM.TimeTimeout = 2;
+		IDM.TotalInsenseCycleSwapBuy = 1000;
+		IDM.currentNumberBuyMore = IDM.NumberBuyMore;
+		IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
+		IDM.currentTotalInsenseBuy = IDM.TotalInsenseCycleSwapBuy;
+		Write_config();
+	}	
 }
 
 vdm_device_config_accept_cash_t accept_denominations;
@@ -275,19 +248,27 @@ void save_device_config(void)
 {
 // Device_config_ADDR_BASE
 //	m_device_config.accept_cash_max = 0xFAFF;
-	for(int n=0; n<sizeof(m_device_config); n++)
+	printf("FLASH>> write: %d(B) at %d",sizeof(vdm_device_config_t), Device_config_ADDR_BASE);
+	for(int n=0; n<sizeof(vdm_device_config_t); n++)
 	{
 		Write_Byte_Sram(Device_config_ADDR_BASE + n, ((uint8_t *)&m_device_config)[n]);
 	}
+
 }
 void read_device_config(void)
 {
 // Device_config_ADDR_BASE	
-	for(int n=0; n<sizeof(m_device_config); n++)
+	for(int n=0; n<sizeof(vdm_device_config_t); n++)
 	{
 		((uint8_t *)&m_device_config)[n] = Read_Byte_Sram(Device_config_ADDR_BASE +n);
 	}
-	accept_denominations = m_device_config.accept_cash_max;
+	if(m_device_config.header_valid != TECHNICAL_FLASH_HEADER)
+	{
+		m_device_config.header_valid = TECHNICAL_FLASH_HEADER;
+		m_device_config.server.addr = VDM_DEVICE_CONFIG_DEFAULT_SERVER_ADDR;
+		m_device_config.server.port = VDM_DEVICE_CONFIG_DEFAULT_SERVER_PORT;
+	}
+	save_device_config();
 }
 
 revenue_t get_revenue_day(uint8_t day, uint8_t month, uint8_t year)
@@ -340,6 +321,23 @@ void add_revenue_day(uint8_t day, uint8_t month, uint8_t year, revenue_t revenue
 	}	
 }
 
+void sync_number_celled(uint16_t number_cell)
+{
+	if(IDM.currentTotalInsenseBuy <number_cell)	IDM.currentTotalInsenseBuy =0;
+	else	IDM.currentTotalInsenseBuy -= number_cell;
+	
+	if(IDM_Status.isEmptyIsenseSW)
+	{
+		if(IDM.currentNumberBuyMore < number_cell)	IDM.currentNumberBuyMore =0;
+		else	IDM.currentNumberBuyMore -=number_cell;
+	}
+	else
+		IDM.currentNumberBuyMore = IDM.NumberBuyMore;
+	
+	if(number_cell < IDM.NumberInsenseBuy)
+		if(IDM.currentRetryCellEmpty)	IDM.currentRetryCellEmpty --;
+	Write_config();
+}
 
 void flash_init(void)
 {

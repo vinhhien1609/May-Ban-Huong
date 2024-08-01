@@ -1,8 +1,12 @@
 #include "GSM_APP.h"
 #include "main.h"
+#include "RTC_time.h"
+#include "vdm_device_config.h"
 
-#define MaxCommand_GSM	9	//added 05/07/2010
+#define MAX_TIMEOUT_4G	200	//second
+#define MaxCommand_GSM	10	//added 05/07/2010
 #define MaxCommand_GSMLength	26	//added 05/07/2010
+
 unsigned char commandGSMList[MaxCommand_GSM][MaxCommand_GSMLength]={
 												 	/*0*/	"+CPIN: READY",
 														 		"+CSQ: ",
@@ -13,15 +17,18 @@ unsigned char commandGSMList[MaxCommand_GSM][MaxCommand_GSMLength]={
 																"Network is already opened",
 																"+IPCLOSE:",
 																"+CIPOPEN:",
+																"CMD=|v|",
 															  };	//added 05/07/2010
 
 //uint8_t queueUART2[];	//receiver queue
 uint16_t topQueue, bottomQueue;
-uint16_t AT_timeout=0;
+uint16_t AT_timeout=0, Port=0, count_timeout=0;
 uint8_t GSM_buffer[MAX_QUEUE], TCP_step=0, current_TCP_step=255, AT_respone=0;
 extern UART_HandleTypeDef huart3;
 extern GSM_State GSM;
-char s[50];
+extern	rtc_date_time_t currentTime;
+extern vdm_device_config_t m_device_config;
+char s[50], ip_server[16];
 //------------------------------------- for GSM module
 
 void GSM_init(void)
@@ -33,8 +40,13 @@ void GSM_init(void)
 	GSM.CSQ =0;
 	GSM.repone =0;
 	GSM.SimReady =255;
-	GSM_UART_init();	
+	GSM_UART_init();
 	GSM_On();
+	sprintf(ip_server,"%d.%d.%d.%d", (m_device_config.server.addr>>24)&0xFF, (m_device_config.server.addr>>16)&0xFF,
+																	(m_device_config.server.addr>>8)&0xFF, m_device_config.server.addr&0xFF);
+	Port = m_device_config.server.port;
+	
+	printf("GSM>> ServerIP: %s\r\nPort: %d", ip_server, Port);
 }
 uint16_t queueLengthGSM(void)
 {
@@ -52,8 +64,34 @@ char readGSM_Buff(void)
 	return temp;
 }
 
+
+
+void TCP_send(uint8_t *data, uint32_t length)
+{
+	if(GSM.Connect4G)
+	{
+						sprintf(s, "AT+CIPSEND=1,\r\n");
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));		
+						HAL_Delay(500);
+//						sprintf(s, "###|TPA9999999|CMD=|a|1&&&");
+						HAL_UART_Transmit_DMA(&huart3,data,length);
+						HAL_Delay(500);
+						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)"\x1A",1);
+	}
+}
+
+void TCP_reconnect(void)
+{
+	TCP_step =0;
+}
+
 void TCP_connect(void)
 {
+	if(count_timeout > MAX_TIMEOUT_4G)
+	{
+		TCP_reconnect();
+		count_timeout =0;
+	}
 	switch(TCP_step)
 	{
 		case 0:
@@ -147,7 +185,8 @@ void TCP_connect(void)
 				current_TCP_step = TCP_step;
 				AT_respone =AT_SENDING;
 				AT_timeout =0;
-				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"203.171.20.62\",9201\r\n");
+				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"%s\",%d\r\n", ip_server, Port);
+//				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"14.231.219.132\",9201\r\n");
 				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
 			}
 			else
@@ -161,7 +200,7 @@ void TCP_connect(void)
 						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
 					}						
 			}
-			break;			
+			break;
 	}
 }	
  
@@ -208,7 +247,6 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 							HAL_UART_Transmit_DMA(&huart3,"AT+AUTOCSQ=1,0\r\n",17);
 						break;
 							
-							
 							//GGA
 					case	1:	// position data (including position, velocity and time).
 						if(queueLengthGSM()<2)
@@ -250,14 +288,35 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 						break;
 					case 8:
 						GSM.Connect4G =1;
-						sprintf(s, "AT+CIPSEND=1,\r\n");
-						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));		
-						HAL_Delay(500);
-						sprintf(s, "###|TPA9999999|CMD=|a|1&&&");
-						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-						HAL_Delay(500);
-						HAL_UART_Transmit_DMA(&huart3,"\x1A",1);
+
+						count_timeout =0;
 						break;
+					case 9:		// server FB
+						count_timeout =0;
+						if(queueLengthGSM()<6)
+						{
+								topQueue=bandau;
+								return 255;
+						}
+						for(n=0; n<6; n++)		// 6 byte time yy/mm/dd/hh/mm/ss
+						{
+							buffer[n] = readGSM_Buff();
+						}
+						rtc_date_time_t s_time;
+						s_time.year = 2000+ buffer[0];
+						s_time.month = buffer[1];
+						s_time.day = buffer[2];
+						s_time.hour = buffer[3];
+						s_time.minute = buffer[4];
+						s_time.second = buffer[5];
+						if(currentTime.hour !=s_time.hour || currentTime.minute !=s_time.minute || currentTime.year !=s_time.year\
+							|| currentTime.month !=s_time.month || currentTime.day !=s_time.day)
+						{
+							setRTC(s_time);
+							printf("GSM>> Server time sync: %02X %02X %02X %02X %02X %02X\r\n", buffer[0], buffer[1], buffer[2], buffer[3],\
+							buffer[4], buffer[5]);
+						}
+						break;					
 					}
 					return i;
 				}//end if

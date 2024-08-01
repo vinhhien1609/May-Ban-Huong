@@ -33,6 +33,8 @@
 #define ERR_UNKNOWN -4
 #define POLL_RESET -5
 
+#define portMAX_DELAY   ( uint32_t ) 0xffffffffUL
+
 typedef enum
 {
     NV11_EVENT_NONE,

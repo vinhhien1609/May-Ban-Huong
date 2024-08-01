@@ -30,7 +30,8 @@ const char *m_lang_text[VDM_LANG_ID_MAX][VDM_LANG_MAX] =
 		{		"M\x94NH GIÁ CH\x8BP NH\x81N", "NONE"},														// menh gia chap nhan
 		{		"TGIAN C\x8BP H\xAA\x9FNG", "NONE"},															// TG CAP HUONG
 		{		"S\xA3 H\xAA\x9FNG BÁN", "NONE"},																	// SO HUONG BÁN
-		{		"S\xA3 H\xAA\x9FNG BTHÊM", "NONE"},																// SO HUONG BÁN THEM	
+		{		"S\xA3 H\xAA\x9FNG BTHÊM", "NONE"},																// SO HUONG BÁN THEM
+		{		"S\xA3 L\x8AN B\xC1N L\xA1I","NONE"},									// So LAN BAN THEM KHI HET
 		{		"XÓA L\xA1I CELL", "NONE"},																				// XOA LOI
     {   "CH\x1E \x1\x1E HO\x1ET \x11\x1ENG",            "MODE"},      // Che do hoat dong
     {   "RESET PH\x8AN M\x91M",                    						 "RESTORE FIRMWARE"},
@@ -56,7 +57,13 @@ const char *m_lang_text[VDM_LANG_ID_MAX][VDM_LANG_MAX] =
 		{		"CH\x9B NH\x81N NHANG", "NONE"},
 		{		"XIN L\xA1I", "NONE"},
 		{		"\xAE\xC3 H\x92T NHANG", "NONE"},
-		{		"\xAE\xC3 NH\x81N:",	"NONE"}
+		{		"M\x9BI NH\x81N NHANG","NONE"},
+		{		"C\x85M \x9FN Q\xDAY KH\xC1\x43H","NONE"},
+		{		"\xAE\xC3 NH\x81N:",	"NONE"},
+		{		"\xAE\xC3 XONG",	"DONE"},
+		{		"T\x82M NG\xAANG PH\xA9\x43 V\xA9", "DO NOT SERVICE"},
+		{		"ID M\xC1Y", "ID MACHINE"},
+		{		"IP SERVER", "SERVER IP"},
 };
 
 static vdm_language_t m_current_language = VDM_LANG_VNI; /* Ngon ngu khai bao ban dau: Tieng Viet*/

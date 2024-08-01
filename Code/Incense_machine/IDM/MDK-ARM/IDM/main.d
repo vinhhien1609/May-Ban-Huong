@@ -29,9 +29,20 @@ idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h
 idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h
+idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+idm\main.o: ../FATFS/App/fatfs.h
+idm\main.o: ../Middlewares/Third_Party/FatFs/src/ff.h
+idm\main.o: ../Middlewares/Third_Party/FatFs/src/integer.h
+idm\main.o: ../FATFS/Target/ffconf.h
+idm\main.o: ../FATFS/Target/bsp_driver_sd.h
+idm\main.o: ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h
+idm\main.o: ../Middlewares/Third_Party/FatFs/src/diskio.h
+idm\main.o: ../Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.h
 idm\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 idm\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 idm\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
@@ -58,3 +69,5 @@ idm\main.o: ../Core/User_Driver/delay.h
 idm\main.o: ../Core/User_Driver/IDM.h
 idm\main.o: ../Core/User_Driver/flash.h
 idm\main.o: ../Core/User_Driver/vdm_app_gsm.h
+idm\main.o: ../Core/User_Driver/vdm_fw.h
+idm\main.o: ../Core/User_Driver/vdm_device_config.h

@@ -1,0 +1,11 @@
+idm\spi_msd_driver.o: ..\Core\User_Driver\SPI_SD_Card\SPI_MSD_Driver.c
+idm\spi_msd_driver.o: ..\Core\User_Driver\SPI_SD_Card\SPI_MSD_Driver.h
+idm\spi_msd_driver.o: C:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
+idm\spi_msd_driver.o: .\RTE\_IDM\RTE_Components.h
+idm\spi_msd_driver.o: ../Drivers/CMSIS/Include/core_cm3.h
+idm\spi_msd_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+idm\spi_msd_driver.o: ../Drivers/CMSIS/Include/cmsis_version.h
+idm\spi_msd_driver.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+idm\spi_msd_driver.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+idm\spi_msd_driver.o: C:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\system_stm32f10x.h
+idm\spi_msd_driver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

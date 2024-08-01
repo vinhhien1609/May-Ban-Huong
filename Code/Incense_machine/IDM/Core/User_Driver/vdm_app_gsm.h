@@ -81,6 +81,25 @@
     }
  *
  **/
+ 
+ typedef struct
+{
+    char header[3];      // = "###"
+    char split_0;        // = '|'
+    char machine_id[10]; // = "TPA0123456"
+    char split_1;        // = '|'
+    char cmd_str[4];     // = "CMD="
+    char split_2;        // = '|'
+    uint8_t cmd;
+    uint8_t split_3; // symbol '|'
+    /* Data */
+    uint8_t TS;
+    /* End of data */
+    uint8_t split_4; // symbol '|'
+    uint16_t crc;
+    char end[3]; // = "&&&"
+} __attribute__((packed)) vdm_app_gsm_start_frame_t;
+ 
 typedef struct
 {
     char header[3];      // = "###"
@@ -414,6 +433,13 @@ void vdm_app_gsm_on_register_confirm_callback(vdm_app_gsm_server_confirm_cb_t ca
 void vdm_app_gsm_initialize(void);
 
 // bool vdm_app_gsm_insert_buffer(vdm_app_gsm_frame_t *buffer, uint32_t timeout_ms);
+
+/**
+ * @brief		Send start frame to server
+ * @param[in]	NULL
+ * 						   
+ */
+void vdm_app_gsm_send_start_frame(void);
 
 /**
  * @brief		Send door frame to server

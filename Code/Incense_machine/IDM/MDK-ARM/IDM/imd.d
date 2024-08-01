@@ -28,6 +28,9 @@ idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h
 idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h
+idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\imd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
@@ -38,3 +41,4 @@ idm\imd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 idm\imd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 idm\imd.o: ../Core/Inc/main.h
 idm\imd.o: ..\Core\User_Driver\flash.h
+idm\imd.o: ..\Core\User_Driver\nv11.h

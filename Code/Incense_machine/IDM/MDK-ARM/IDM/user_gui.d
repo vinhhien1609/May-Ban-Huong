@@ -30,6 +30,9 @@ idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h
+idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
+idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\user_gui.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
@@ -57,3 +60,4 @@ idm\user_gui.o: ..\Core\User_Driver\ssp_defines.h
 idm\user_gui.o: ..\Core\User_Driver\nv11.h
 idm\user_gui.o: ..\Core\User_Driver\flash.h
 idm\user_gui.o: ..\Core\User_Driver\vdm_device_config.h
+idm\user_gui.o: ..\Core\User_Driver\vdm_app_gsm.h
