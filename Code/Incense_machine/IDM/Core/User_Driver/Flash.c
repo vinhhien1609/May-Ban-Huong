@@ -264,6 +264,7 @@ void read_device_config(void)
 	}
 	if(m_device_config.header_valid != TECHNICAL_FLASH_HEADER)
 	{
+		printf("IDM>> SET DEFAULT TECHNICAL PARA\r\n");
 		m_device_config.header_valid = TECHNICAL_FLASH_HEADER;
 		m_device_config.server.addr = VDM_DEVICE_CONFIG_DEFAULT_SERVER_ADDR;
 		m_device_config.server.port = VDM_DEVICE_CONFIG_DEFAULT_SERVER_PORT;

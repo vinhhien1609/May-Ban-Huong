@@ -94,6 +94,7 @@ typedef struct {
 /* Private function prototypes -----------------------------------------------*/
 void IDM_init(void);
 void Scan_IDM(void);
+void check_stopService(void);
 
 /* Private variables ---------------------------------------------------------*/
 

@@ -471,11 +471,12 @@ void Menu_draw(void)
 			case DIS_DEL_CELL_ERROR:
 				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DELETE_ERROR_CELL),10, 10, WHITE);
 				IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
-				buy.StateBuy = CELL_WAIT;
-				IDM_state = 1;
 				Write_config();
+				buy.StateBuy = CELL_WAIT;
+//				IDM_state = 1;
 				Buzz_On(100);
-				printf ("Retry: %d/%d\r\n Buy_state: %d\r\n", IDM.currentRetryCellEmpty, IDM.retryCellEmpty, buy.StateBuy);
+				printf("Retry: %d/%d\r\n Buy_state: %d\r\n", IDM.currentRetryCellEmpty, IDM.retryCellEmpty, buy.StateBuy);
+				HAL_Delay(1);
 				break;
 			default:
 				current_display = DIS_Home;
@@ -516,11 +517,11 @@ void Menu_draw(void)
 				if(isSecond_display)
 				{
 					
-					if(buy.StateBuy==CELLING)
-					{
-						sprintf(s,"%2d ", buy.TotalIsenseDroped);
-						GLcd_DrawString(s, 10, 30, WHITE);						
-					}
+//					if(buy.StateBuy==CELLING)
+//					{
+//						sprintf(s,"%2d ", buy.TotalIsenseDroped);
+//						GLcd_DrawString(s, 10, 30, WHITE);						
+//					}
 					
 					isSecond_display =0;
 					if(show_time<3)	show_time ++;

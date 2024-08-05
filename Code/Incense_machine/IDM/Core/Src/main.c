@@ -88,6 +88,7 @@ SD_HandleTypeDef hsd;
 
 SPI_HandleTypeDef hspi2;
 
+TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart1;
@@ -119,6 +120,7 @@ static void MX_USART3_UART_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_SDIO_SD_Init(void);
+static void MX_TIM3_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -188,6 +190,7 @@ int main(void)
   MX_SPI2_Init();
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
+  MX_TIM3_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -203,6 +206,7 @@ int main(void)
 	HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_SET);
 	//END init DHT21
 	HAL_TIM_Base_Start_IT(&htim6);
+	HAL_TIM_Base_Start_IT(&htim3);
 	Buzz_On(500);
 //	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_RESET);
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
@@ -255,6 +259,7 @@ int main(void)
 		printf("NV11 Init Fail: %d\r\n",i8_nv11_init);
 	}
 
+	NV11_Disable(true);
 	GSM_init();
 	printf("Infinite loop\r\n");
   /* USER CODE END 2 */
@@ -447,22 +452,36 @@ static void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T8_TRGO;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.NbrOfConversion = 2;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
     Error_Handler();
   }
+
+  /** Enable or disable the remapping of ADC1_ETRGREG:
+  * ADC1 External Event regular conversion is connected to TIM8 TRG0
+  */
+  __HAL_AFIO_REMAP_ADC1_ETRGREG_ENABLE();
 
   /** Configure Regular Channel
   */
   sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Rank = ADC_REGULAR_RANK_2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -622,6 +641,51 @@ static void MX_SPI2_Init(void)
   /* USER CODE BEGIN SPI2_Init 2 */
 #endif
   /* USER CODE END SPI2_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 4;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 16000;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
 
 }
 
@@ -928,9 +992,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(htim);
+	if(htim->Instance == htim3.Instance)			//1ms
+	{
+//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);		
+	}		
 	if(htim->Instance == htim6.Instance)			//1ms
 	{
-//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
+//	HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_SET);
 		if(time_buzz)
 		{
 			time_buzz--;
@@ -942,7 +1010,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			count ++;
 		if(AT_timeout <0xFFFF)
 			AT_timeout++;
-//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
 		if(flag_readDHT12==false)
 				scan_switch();
 //Led scan
@@ -978,7 +1045,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				Led3.enable =false;
 				HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
 			}			
-		}		
+		}
+//		HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
 	}
 }
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)

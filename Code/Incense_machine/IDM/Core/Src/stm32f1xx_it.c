@@ -55,8 +55,10 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern ADC_HandleTypeDef hadc1;
 extern RTC_HandleTypeDef hrtc;
 extern SD_HandleTypeDef hsd;
+extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim6;
 extern DMA_HandleTypeDef hdma_usart1_rx;
 extern DMA_HandleTypeDef hdma_usart1_tx;
@@ -308,6 +310,20 @@ void DMA1_Channel7_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles ADC1 and ADC2 global interrupts.
+  */
+void ADC1_2_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_2_IRQn 0 */
+
+  /* USER CODE END ADC1_2_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_2_IRQn 1 */
+
+  /* USER CODE END ADC1_2_IRQn 1 */
+}
+
+/**
   * @brief This function handles EXTI line[9:5] interrupts.
   */
 void EXTI9_5_IRQHandler(void)
@@ -319,6 +335,20 @@ void EXTI9_5_IRQHandler(void)
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
   /* USER CODE END EXTI9_5_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM3 global interrupt.
+  */
+void TIM3_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM3_IRQn 0 */
+
+  /* USER CODE END TIM3_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim3);
+  /* USER CODE BEGIN TIM3_IRQn 1 */
+
+  /* USER CODE END TIM3_IRQn 1 */
 }
 
 /**
