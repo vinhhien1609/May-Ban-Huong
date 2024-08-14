@@ -29,7 +29,8 @@ typedef enum
 		CELL_WAIT,
     CELL_EMPTY_INSENCE,
 		CELLING,
-		EMPTY_INSENCE,
+		STOP_SERVICE,
+		DONATE,
 } idm_state_cell_t;
 
 typedef struct {

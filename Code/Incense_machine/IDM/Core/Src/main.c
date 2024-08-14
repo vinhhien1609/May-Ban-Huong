@@ -275,7 +275,7 @@ int main(void)
 //		Write_Byte_Sram(n, n);
 //	}
 	int res;
-	uint8_t nv11_timeout_count=0;
+	uint8_t nv11_timeout_count=0;//, GSM_connect_timeout=0;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -318,6 +318,11 @@ int main(void)
 			count_timeout ++;
 			if(GSM.CSQ>10)
 				TCP_connect();
+//			GSM_connect_timeout ++;
+//			if(GSM_connect_timeout>60)
+//			{
+//				GSM_init();
+//			}
 			currentTime = getRTC();
 //			uint32_t size_of_frame = sizeof(m_door_close_frame);
 //			printf("size fram: %d\r\n", size_of_frame);
@@ -1014,11 +1019,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 				scan_switch();
 //Led scan
 		if(Led1.enable)
-		{
+		{			
 			if((Led1.counter %Led1.timeCycle) < Led1.timeOn)	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
 			else	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
 			Led1.counter ++;
-			if(Led1.counter > Led1.timeActive)
+			if(Led1.counter >= Led1.timeActive)
 			{
 				Led1.enable =false;
 				HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
@@ -1029,7 +1034,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			if((Led2.counter %Led2.timeCycle) < Led2.timeOn)	HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
 			else	HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
 			Led2.counter++;
-			if(Led2.counter > Led2.timeActive)
+			if(Led2.counter >= Led2.timeActive)
 			{	
 				Led2.enable =false;
 				HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
@@ -1039,8 +1044,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			if((Led3.counter %Led3.timeCycle) < Led3.timeOn)	HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
 			else	HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
-			Led3.counter++;
-			if(Led3.counter > Led3.timeActive)
+			Led3.counter++;			
+			if(Led3.counter >= Led3.timeActive)
 			{
 				Led3.enable =false;
 				HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);

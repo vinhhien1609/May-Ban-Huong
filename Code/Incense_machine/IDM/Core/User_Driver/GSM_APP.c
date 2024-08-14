@@ -4,20 +4,28 @@
 #include "vdm_device_config.h"
 
 #define MAX_TIMEOUT_4G	200	//second
-#define MaxCommand_GSM	10	//added 05/07/2010
+#define MaxCommand_GSM	14	//added 05/07/2010
 #define MaxCommand_GSMLength	26	//added 05/07/2010
+
+char APN[20];
+char USER[20];
+char PASS[20];
 
 unsigned char commandGSMList[MaxCommand_GSM][MaxCommand_GSMLength]={
 												 	/*0*/	"+CPIN: READY",
 														 		"+CSQ: ",
 												 			 	"GSV,",
 																"OK",
-																"45201",		//COPS
+																"45201",		//COPS 4
 																"+NETOPEN: 1",
 																"Network is already opened",
 																"+IPCLOSE:",
-																"+CIPOPEN:",
+																"+CIPOPEN:",		//8
 																"CMD=|v|",
+																"45204",	//vietel
+																"45202",	//vinaphone
+																"45207",	//Gmobile
+																"45205",	//vietnammobile	
 															  };	//added 05/07/2010
 
 //uint8_t queueUART2[];	//receiver queue
@@ -90,6 +98,7 @@ void TCP_connect(void)
 	if(count_timeout > MAX_TIMEOUT_4G)
 	{
 		TCP_reconnect();
+		GSM_init();
 		count_timeout =0;
 	}
 	switch(TCP_step)
@@ -119,7 +128,7 @@ void TCP_connect(void)
 				current_TCP_step = TCP_step;
 				AT_respone =AT_SENDING;
 				AT_timeout =0;
-				sprintf(s, "AT+QICSGP=1,1,\"m-wap\",\"mms\",\"mms\",1\r\n");
+				sprintf(s, "AT+QICSGP=1,1,\"%s\",\"%s\",\"%s\",1\r\n", APN, USER, PASS);
 				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
 			}
 			else
@@ -178,7 +187,7 @@ void TCP_connect(void)
 					}	
 				}					
 			}
-			break;				
+			break;
 		case 5:
 			if(current_TCP_step != TCP_step)
 			{
@@ -273,9 +282,36 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 					case 3:
 						AT_respone =OK;
 						break;
-					case 4:
+					case 4:	//mobiphone
+						sprintf(APN,"m-wap");
+						sprintf(USER,"mms");
+						sprintf(PASS,"mms");
 						TCP_step =1;		//start connect TCP/IP
 						break;
+					case 10:	//viettel
+						sprintf(APN,"v-internet");
+						sprintf(USER,"");
+						sprintf(PASS,"");
+						TCP_step =1;		//start connect TCP/IP					
+						break;
+					case 11:	//vinaphone
+						sprintf(APN,"m3-word");
+						sprintf(USER,"mms");
+						sprintf(PASS,"mms");
+						TCP_step =1;		//start connect TCP/IP					
+						break;
+					case 12:	//GMobile
+						sprintf(APN,"mms");
+						sprintf(USER,"mms");
+						sprintf(PASS,"mms");	
+						TCP_step =1;		//start connect TCP/IP
+						break;
+					case 13:	//Vietnammobile
+						sprintf(APN,"v-internet");
+						sprintf(USER,"");
+						sprintf(PASS,"");			
+						TCP_step =1;		//start connect TCP/IP
+						break;					
 					case 5:
 						AT_respone = NETOPEN_READY;
 						TCP_step = 5;
@@ -342,5 +378,3 @@ float NMEAtoDegree(char* str)
 	resume =  (int)(resume/100) + (float)temp;
 	return (resume);
 }
-
-

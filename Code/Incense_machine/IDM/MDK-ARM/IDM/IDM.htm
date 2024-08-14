@@ -3,7 +3,7 @@
 <title>Static Call Graph - [IDM\IDM.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image IDM\IDM.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Aug 05 22:08:15 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Aug 15 00:06:26 2024
 <BR><P>
 <H3>Maximum Stack Usage =       2760 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -26,7 +26,7 @@ Mutually Recursive functions
  <LI><a href="#[147]">UART_EndRxTransfer</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[147]">UART_EndRxTransfer</a><BR>
  <LI><a href="#[f]">UsageFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[f]">UsageFault_Handler</a><BR>
  <LI><a href="#[1b2]">UART_EndTxTransfer</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1b2]">UART_EndTxTransfer</a><BR>
- <LI><a href="#[182]">parse_poll</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[178]">NV11_PayoutNote</a><BR>
+ <LI><a href="#[183]">parse_poll</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[179]">NV11_PayoutNote</a><BR>
 </UL>
 <P>
 <H3>
@@ -470,14 +470,14 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[187]"></a>__aeabi_llsl</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
+<P><STRONG><a name="[188]"></a>__aeabi_llsl</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
 </UL>
 
 <P><STRONG><a name="[224]"></a>_ll_shift_l</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
-<P><STRONG><a name="[186]"></a>__aeabi_lasr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llsshr.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
+<P><STRONG><a name="[187]"></a>__aeabi_lasr</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llsshr.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
 </UL>
 
 <P><STRONG><a name="[225]"></a>_ll_sshift_r</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, llsshr.o(.text), UNUSED)
@@ -501,30 +501,30 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_file
 </UL>
-<BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_set_device_id
+<BR>[Called By]<UL><LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_set_device_id
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 <LI><a href="#[1d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Process
 <LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_device_config
 <LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkGPSCommand
-<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
-<LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
+<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_init
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DHT_Sensor_Read
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Error_Handler
-<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_reset
-<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_reset
+<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;waitForPulse
-<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
+<LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scan_BT
 <LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_signal_gsm
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
+<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
 <LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_config
 </UL>
 
@@ -535,7 +535,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sputc
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_common
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_connect
+<BR>[Called By]<UL><LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkGPSCommand
+<LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_connect
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_init
 <LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_send
@@ -995,7 +996,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EncryptSSPPacket
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_crc_loop_CCITT_A
 </UL>
-<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 
 <P><STRONG><a name="[b8]"></a>CreateHostInterKey</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, itlsspproc.o(i.CreateHostInterKey))
@@ -1013,7 +1014,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;XpowYmodN
 </UL>
-<BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
+<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
 </UL>
 
 <P><STRONG><a name="[bd]"></a>DHT_Sensor_Init</STRONG> (Thumb, 78 bytes, Stack size 40 bytes, dht_sensor.o(i.DHT_Sensor_Init))
@@ -1092,7 +1093,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aes_decrypt
 </UL>
-<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 
 <P><STRONG><a name="[2b]"></a>EXTI9_5_IRQHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f1xx_it.o(i.EXTI9_5_IRQHandler))
@@ -1146,10 +1147,10 @@ Global Symbols
 <P><STRONG><a name="[cf]"></a>Flash_write_pin</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, flash.o(i.Flash_write_pin))
 <BR><BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SRAM_ID
+<BR>[Called By]<UL><LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SRAM_ID
 <LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Byte_Sram
-<LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SRAM_writeSTT
-<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
+<LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SRAM_writeSTT
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
 </UL>
 
 <P><STRONG><a name="[d0]"></a>GLcd_ClearScreen</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, glcd.o(i.GLcd_ClearScreen))
@@ -1220,7 +1221,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawPoint
 </UL>
-<BR>[Called By]<UL><LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
+<BR>[Called By]<UL><LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
 </UL>
 
 <P><STRONG><a name="[d9]"></a>GLcd_DrawString</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, glcd.o(i.GLcd_DrawString))
@@ -1247,7 +1248,7 @@ Global Symbols
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawCharUni
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
+<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
 </UL>
 
 <P><STRONG><a name="[d1]"></a>GLcd_FillRect</STRONG> (Thumb, 56 bytes, Stack size 28 bytes, glcd.o(i.GLcd_FillRect))
@@ -1257,7 +1258,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_ClearScreen
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
+<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
 </UL>
 
 <P><STRONG><a name="[dd]"></a>GLcd_Flush</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, glcd.o(i.GLcd_Flush))
@@ -1316,7 +1317,8 @@ Global Symbols
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_connect
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[e9]"></a>GeneratePrime</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, random.o(i.GeneratePrime))
@@ -1426,12 +1428,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_Init
 <LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_InitCard
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_On
 <LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_send
 </UL>
@@ -1460,25 +1461,25 @@ Global Symbols
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 </UL>
 
-<P><STRONG><a name="[18a]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_ReadPin))
+<P><STRONG><a name="[18b]"></a>HAL_GPIO_ReadPin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_ReadPin))
 <BR><BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scan_switch
-<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
-<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SRAM_ID
+<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SRAM_ID
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;waitForPulse
-<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
 </UL>
 
 <P><STRONG><a name="[bf]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_WritePin))
 <BR><BR>[Called By]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scan_switch
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;glcd_lcd_write_pin
-<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DHT_Sensor_Read
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DHT_Sensor_Init
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
+<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_PWR
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_On
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_write_pin
@@ -1496,14 +1497,14 @@ Global Symbols
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_ExitInitMode
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_EnterInitMode
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Transmit
-<LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_WaitFlagStateUntilTimeout
+<LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_WaitFlagStateUntilTimeout
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_WriteBlocks
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_ReadBlocks
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
-<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_WriteCounter
+<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_WriteCounter
 </UL>
 
 <P><STRONG><a name="[1a7]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f1xx_hal.o(i.HAL_IncTick))
@@ -1709,7 +1710,7 @@ Global Symbols
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_DMARxAbort
 </UL>
 
-<P><STRONG><a name="[19b]"></a>HAL_SD_GetCardCSD</STRONG> (Thumb, 402 bytes, Stack size 20 bytes, stm32f1xx_hal_sd.o(i.HAL_SD_GetCardCSD))
+<P><STRONG><a name="[19c]"></a>HAL_SD_GetCardCSD</STRONG> (Thumb, 402 bytes, Stack size 20 bytes, stm32f1xx_hal_sd.o(i.HAL_SD_GetCardCSD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = HAL_SD_GetCardCSD
 </UL>
 <BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
@@ -1948,7 +1949,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Start_Receive_DMA
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
+<BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_UART_init
@@ -2035,7 +2036,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkGPSCommand
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_connect
-<LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_write_data
+<LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_write_data
 <LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 <LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_send
 </UL>
@@ -2078,7 +2079,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GeneratePrime
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateHostInterKey
 </UL>
-<BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
+<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
 </UL>
 
 <P><STRONG><a name="[155]"></a>IsItPrime</STRONG> (Thumb, 40 bytes, Stack size 24 bytes, random.o(i.IsItPrime))
@@ -2092,7 +2093,7 @@ Global Symbols
 <P><STRONG><a name="[153]"></a>Led_init</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, imd.o(i.Led_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Led_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IDM_init
 </UL>
 
@@ -2111,33 +2112,34 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[164]"></a>Menu_draw</STRONG> (Thumb, 6760 bytes, Stack size 216 bytes, user_gui.o(i.Menu_draw))
-<BR><BR>[Stack]<UL><LI>Max Depth = 944 + Unknown Stack Size
-<LI>Call Chain = Menu_draw &rArr; NV11_SetAcceptNote &rArr; ssp6_set_inhibits &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
+<P><STRONG><a name="[164]"></a>Menu_draw</STRONG> (Thumb, 6780 bytes, Stack size 224 bytes, user_gui.o(i.Menu_draw))
+<BR><BR>[Stack]<UL><LI>Max Depth = 952 + Unknown Stack Size
+<LI>Call Chain = Menu_draw &rArr; NV11_Disable &rArr; ssp6_disable &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_set_device_id
+<BR>[Calls]<UL><LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_set_device_id
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setRTC
+<LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_Flush
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawString
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_ClearScreen
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_SetAcceptNote
+<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
+<LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_SetAcceptNote
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_FillRect
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawStringUni
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawStringDef
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawLine
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_DrawBitmap
-<LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_language_get_text
-<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_year
-<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_month
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_revenue_day
-<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
+<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_language_get_text
+<LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
+<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_year
+<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_month
+<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_revenue_day
+<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_Messenger
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scan_BT
 <LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;draw_signal_gsm
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
+<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
@@ -2163,33 +2165,34 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[171]"></a>NV11_Disable</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, nv11.o(i.NV11_Disable))
+<P><STRONG><a name="[165]"></a>NV11_Disable</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, nv11.o(i.NV11_Disable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 728 + Unknown Stack Size
 <LI>Call Chain = NV11_Disable &rArr; ssp6_disable &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_disable
+<BR>[Calls]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_disable
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[173]"></a>NV11_DisplayOn</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, nv11.o(i.NV11_DisplayOn))
+<P><STRONG><a name="[174]"></a>NV11_DisplayOn</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, nv11.o(i.NV11_DisplayOn))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = NV11_DisplayOn &rArr; ssp6_display_on &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_display_on
+<BR>[Calls]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_display_on
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
 </UL>
 
-<P><STRONG><a name="[175]"></a>NV11_GetAvailableChange</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, nv11.o(i.NV11_GetAvailableChange))
+<P><STRONG><a name="[176]"></a>NV11_GetAvailableChange</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, nv11.o(i.NV11_GetAvailableChange))
 <BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = NV11_GetAvailableChange &rArr; ssp6_get_stored_notes &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_get_stored_notes
+<BR>[Calls]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_get_stored_notes
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_heartbeat
 </UL>
@@ -2209,15 +2212,15 @@ Global Symbols
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 </UL>
 
-<P><STRONG><a name="[177]"></a>NV11_GetTotalCashInNoteFloat</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, nv11.o(i.NV11_GetTotalCashInNoteFloat))
+<P><STRONG><a name="[178]"></a>NV11_GetTotalCashInNoteFloat</STRONG> (Thumb, 72 bytes, Stack size 16 bytes, nv11.o(i.NV11_GetTotalCashInNoteFloat))
 <BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = NV11_GetTotalCashInNoteFloat &rArr; ssp6_get_stored_notes &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_get_stored_notes
+<BR>[Calls]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_get_stored_notes
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
 <P><STRONG><a name="[1f0]"></a>NV11_GetUnitType</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, nv11.o(i.NV11_GetUnitType))
@@ -2225,57 +2228,57 @@ Global Symbols
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 </UL>
 
-<P><STRONG><a name="[178]"></a>NV11_PayoutNote</STRONG> (Thumb, 158 bytes, Stack size 24 bytes, nv11.o(i.NV11_PayoutNote))
+<P><STRONG><a name="[179]"></a>NV11_PayoutNote</STRONG> (Thumb, 158 bytes, Stack size 24 bytes, nv11.o(i.NV11_PayoutNote))
 <BR><BR>[Stack]<UL><LI>Max Depth = 2056 + Unknown Stack Size
 <LI>Call Chain = NV11_PayoutNote &rArr; NV11_Process &rArr; ssp6_setup_encryption &rArr; negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_payout_countdown
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_payout_note
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_payout_countdown
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_payout_note
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[17b]"></a>NV11_Process</STRONG> (Thumb, 306 bytes, Stack size 664 bytes, nv11.o(i.NV11_Process))
+<P><STRONG><a name="[17c]"></a>NV11_Process</STRONG> (Thumb, 306 bytes, Stack size 664 bytes, nv11.o(i.NV11_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 2032 + Unknown Stack Size
 <LI>Call Chain = NV11_Process &rArr; ssp6_setup_encryption &rArr; negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
+<BR>[Calls]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_deinitialize
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
-<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_poll
-<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_hold
-<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_reset
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_deinitialize
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
+<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_poll
+<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_hold
+<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_reset
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
 </UL>
 
-<P><STRONG><a name="[16f]"></a>NV11_SetAcceptNote</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, nv11.o(i.NV11_SetAcceptNote))
+<P><STRONG><a name="[171]"></a>NV11_SetAcceptNote</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, nv11.o(i.NV11_SetAcceptNote))
 <BR><BR>[Stack]<UL><LI>Max Depth = 728 + Unknown Stack Size
 <LI>Call Chain = NV11_SetAcceptNote &rArr; ssp6_set_inhibits &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_set_inhibits
+<BR>[Calls]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_set_inhibits
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 </UL>
 
-<P><STRONG><a name="[184]"></a>NegotiateSSPEncryption</STRONG> (Thumb, 320 bytes, Stack size 648 bytes, itlsspproc.o(i.NegotiateSSPEncryption))
+<P><STRONG><a name="[185]"></a>NegotiateSSPEncryption</STRONG> (Thumb, 320 bytes, Stack size 648 bytes, itlsspproc.o(i.NegotiateSSPEncryption))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1360 + Unknown Stack Size
 <LI>Call Chain = NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Calls]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitiateSSPHostKeys
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateSSPHostEncryptionKey
-<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_lasr
-<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
+<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_lasr
+<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;negotiate_ssp_encryption
 </UL>
@@ -2290,21 +2293,21 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[189]"></a>Read_Byte_Sram</STRONG> (Thumb, 178 bytes, Stack size 24 bytes, flash.o(i.Read_Byte_Sram))
+<P><STRONG><a name="[18a]"></a>Read_Byte_Sram</STRONG> (Thumb, 178 bytes, Stack size 24 bytes, flash.o(i.Read_Byte_Sram))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Read_Byte_Sram
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<BR>[Calls]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_write_pin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_device_config
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
+<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
 <LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_config
 </UL>
 
-<P><STRONG><a name="[18b]"></a>Read_SRAM_ID</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, flash.o(i.Read_SRAM_ID))
+<P><STRONG><a name="[18c]"></a>Read_SRAM_ID</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, flash.o(i.Read_SRAM_ID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Read_SRAM_ID
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<BR>[Calls]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_write_pin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -2314,8 +2317,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = Read_config &rArr; Write_config &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
-<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
+<BR>[Calls]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IDM_init
@@ -2326,7 +2329,7 @@ Global Symbols
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_ReadBlocks
 </UL>
 
-<P><STRONG><a name="[19a]"></a>SDIO_GetPowerState</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDIO_GetPowerState))
+<P><STRONG><a name="[19b]"></a>SDIO_GetPowerState</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDIO_GetPowerState))
 <BR><BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
 </UL>
 
@@ -2334,8 +2337,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_GetCardState
 <LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_PowerON
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
-<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp6
-<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp6
+<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
 </UL>
 
 <P><STRONG><a name="[45]"></a>SDIO_IRQHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f1xx_it.o(i.SDIO_IRQHandler))
@@ -2361,22 +2364,22 @@ Global Symbols
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_ReadBlocks
 </UL>
 
-<P><STRONG><a name="[18d]"></a>SDIO_SendCommand</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDIO_SendCommand))
+<P><STRONG><a name="[18e]"></a>SDIO_SendCommand</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDIO_SendCommand))
 <BR><BR>[Called By]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdWriteSingleBlock
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdWriteMultiBlock
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdStopTransfer
-<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSetRelAdd
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSetRelAdd
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendStatus
-<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCSD
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCID
-<LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSelDesel
+<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCSD
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCID
+<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSelDesel
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdReadSingleBlock
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdReadMultiBlock
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdOperCond
-<LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdGoIdleState
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdOperCond
+<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdGoIdleState
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdBlockLength
-<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppOperCommand
-<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppCommand
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppOperCommand
+<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppCommand
 </UL>
 
 <P><STRONG><a name="[11c]"></a>SDIO_WriteFIFO</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDIO_WriteFIFO))
@@ -2384,20 +2387,20 @@ Global Symbols
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_WriteBlocks
 </UL>
 
-<P><STRONG><a name="[18c]"></a>SDMMC_CmdAppCommand</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdAppCommand))
+<P><STRONG><a name="[18d]"></a>SDMMC_CmdAppCommand</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdAppCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdAppCommand &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_PowerON
 </UL>
 
-<P><STRONG><a name="[18f]"></a>SDMMC_CmdAppOperCommand</STRONG> (Thumb, 48 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdAppOperCommand))
+<P><STRONG><a name="[190]"></a>SDMMC_CmdAppOperCommand</STRONG> (Thumb, 48 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdAppOperCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = SDMMC_CmdAppOperCommand
 </UL>
-<BR>[Calls]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp3
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp3
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_PowerON
 </UL>
@@ -2405,25 +2408,25 @@ Global Symbols
 <P><STRONG><a name="[124]"></a>SDMMC_CmdBlockLength</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdBlockLength))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdBlockLength &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_InitCard
 </UL>
 
-<P><STRONG><a name="[191]"></a>SDMMC_CmdGoIdleState</STRONG> (Thumb, 74 bytes, Stack size 32 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdGoIdleState))
+<P><STRONG><a name="[192]"></a>SDMMC_CmdGoIdleState</STRONG> (Thumb, 74 bytes, Stack size 32 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdGoIdleState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = SDMMC_CmdGoIdleState
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_PowerON
 </UL>
 
-<P><STRONG><a name="[192]"></a>SDMMC_CmdOperCond</STRONG> (Thumb, 48 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdOperCond))
+<P><STRONG><a name="[193]"></a>SDMMC_CmdOperCond</STRONG> (Thumb, 48 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdOperCond))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = SDMMC_CmdOperCond
 </UL>
-<BR>[Calls]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp7
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp7
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_PowerON
 </UL>
@@ -2431,8 +2434,8 @@ Global Symbols
 <P><STRONG><a name="[126]"></a>SDMMC_CmdReadMultiBlock</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdReadMultiBlock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdReadMultiBlock &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_ReadBlocks
 </UL>
@@ -2440,35 +2443,35 @@ Global Symbols
 <P><STRONG><a name="[127]"></a>SDMMC_CmdReadSingleBlock</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdReadSingleBlock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdReadSingleBlock &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_ReadBlocks
 </UL>
 
-<P><STRONG><a name="[194]"></a>SDMMC_CmdSelDesel</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSelDesel))
+<P><STRONG><a name="[195]"></a>SDMMC_CmdSelDesel</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSelDesel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdSelDesel &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
 </UL>
 
-<P><STRONG><a name="[195]"></a>SDMMC_CmdSendCID</STRONG> (Thumb, 44 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSendCID))
+<P><STRONG><a name="[196]"></a>SDMMC_CmdSendCID</STRONG> (Thumb, 44 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSendCID))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = SDMMC_CmdSendCID
 </UL>
-<BR>[Calls]<UL><LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp2
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp2
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
 </UL>
 
-<P><STRONG><a name="[197]"></a>SDMMC_CmdSendCSD</STRONG> (Thumb, 44 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSendCSD))
+<P><STRONG><a name="[198]"></a>SDMMC_CmdSendCSD</STRONG> (Thumb, 44 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSendCSD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = SDMMC_CmdSendCSD
 </UL>
-<BR>[Calls]<UL><LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp2
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp2
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
 </UL>
@@ -2476,17 +2479,17 @@ Global Symbols
 <P><STRONG><a name="[114]"></a>SDMMC_CmdSendStatus</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSendStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdSendStatus &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_GetCardState
 </UL>
 
-<P><STRONG><a name="[198]"></a>SDMMC_CmdSetRelAdd</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSetRelAdd))
+<P><STRONG><a name="[199]"></a>SDMMC_CmdSetRelAdd</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdSetRelAdd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = SDMMC_CmdSetRelAdd &rArr; SDMMC_GetCmdResp6
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp6
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp6
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_InitCard
 </UL>
@@ -2494,8 +2497,8 @@ Global Symbols
 <P><STRONG><a name="[118]"></a>SDMMC_CmdStopTransfer</STRONG> (Thumb, 46 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdStopTransfer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdStopTransfer &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_IRQHandler
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_WriteBlocks
@@ -2507,8 +2510,8 @@ Global Symbols
 <P><STRONG><a name="[12a]"></a>SDMMC_CmdWriteMultiBlock</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdWriteMultiBlock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdWriteMultiBlock &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_WriteBlocks
 </UL>
@@ -2516,13 +2519,13 @@ Global Symbols
 <P><STRONG><a name="[12b]"></a>SDMMC_CmdWriteSingleBlock</STRONG> (Thumb, 50 bytes, Stack size 28 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_CmdWriteSingleBlock))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SDMMC_CmdWriteSingleBlock &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_GetCmdResp1
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_SendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_WriteBlocks
 </UL>
 
-<P><STRONG><a name="[18e]"></a>SDMMC_GetCmdResp1</STRONG> (Thumb, 278 bytes, Stack size 8 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp1))
+<P><STRONG><a name="[18f]"></a>SDMMC_GetCmdResp1</STRONG> (Thumb, 278 bytes, Stack size 8 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SDMMC_GetCmdResp1
 </UL>
 <BR>[Calls]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_GetResponse
@@ -2531,32 +2534,32 @@ Global Symbols
 <LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdWriteMultiBlock
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdStopTransfer
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendStatus
-<LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSelDesel
+<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSelDesel
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdReadSingleBlock
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdReadMultiBlock
 <LI><a href="#[124]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdBlockLength
-<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppCommand
+<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppCommand
 </UL>
 
-<P><STRONG><a name="[196]"></a>SDMMC_GetCmdResp2</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp2))
-<BR><BR>[Called By]<UL><LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCSD
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCID
+<P><STRONG><a name="[197]"></a>SDMMC_GetCmdResp2</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp2))
+<BR><BR>[Called By]<UL><LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCSD
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCID
 </UL>
 
-<P><STRONG><a name="[190]"></a>SDMMC_GetCmdResp3</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp3))
-<BR><BR>[Called By]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppOperCommand
+<P><STRONG><a name="[191]"></a>SDMMC_GetCmdResp3</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp3))
+<BR><BR>[Called By]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppOperCommand
 </UL>
 
-<P><STRONG><a name="[199]"></a>SDMMC_GetCmdResp6</STRONG> (Thumb, 130 bytes, Stack size 12 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp6))
+<P><STRONG><a name="[19a]"></a>SDMMC_GetCmdResp6</STRONG> (Thumb, 130 bytes, Stack size 12 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp6))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = SDMMC_GetCmdResp6
 </UL>
 <BR>[Calls]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_GetResponse
 </UL>
-<BR>[Called By]<UL><LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSetRelAdd
+<BR>[Called By]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSetRelAdd
 </UL>
 
-<P><STRONG><a name="[193]"></a>SDMMC_GetCmdResp7</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp7))
-<BR><BR>[Called By]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdOperCond
+<P><STRONG><a name="[194]"></a>SDMMC_GetCmdResp7</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, stm32f1xx_ll_sdmmc.o(i.SDMMC_GetCmdResp7))
+<BR><BR>[Called By]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdOperCond
 </UL>
 
 <P><STRONG><a name="[5f]"></a>SD_initialize</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, sd_diskio.o(i.SD_initialize))
@@ -2596,7 +2599,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> sd_diskio.o(.constdata)
 </UL>
-<P><STRONG><a name="[19d]"></a>SRAM_writeSTT</STRONG> (Thumb, 168 bytes, Stack size 16 bytes, flash.o(i.SRAM_writeSTT))
+<P><STRONG><a name="[19e]"></a>SRAM_writeSTT</STRONG> (Thumb, 168 bytes, Stack size 16 bytes, flash.o(i.SRAM_writeSTT))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SRAM_writeSTT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_write_pin
@@ -2604,45 +2607,45 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_init
 </UL>
 
-<P><STRONG><a name="[19e]"></a>SSPDataIn</STRONG> (Thumb, 208 bytes, Stack size 16 bytes, sspcoms.o(i.SSPDataIn))
+<P><STRONG><a name="[19f]"></a>SSPDataIn</STRONG> (Thumb, 208 bytes, Stack size 16 bytes, sspcoms.o(i.SSPDataIn))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = SSPDataIn &rArr; cal_crc_loop_CCITT_A
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_crc_loop_CCITT_A
 </UL>
-<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 
-<P><STRONG><a name="[185]"></a>SSPSendCommand</STRONG> (Thumb, 458 bytes, Stack size 48 bytes, sspcoms.o(i.SSPSendCommand))
+<P><STRONG><a name="[186]"></a>SSPSendCommand</STRONG> (Thumb, 458 bytes, Stack size 48 bytes, sspcoms.o(i.SSPSendCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPDataIn
+<LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPDataIn
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CompileSSPCommand
-<LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_write_data
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_rx_availble
-<LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_read
+<LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_write_data
+<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_rx_availble
+<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_read
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DecryptSSPPacket
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_crc_loop_CCITT_A
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_ssp_command
-<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
+<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
 </UL>
 
 <P><STRONG><a name="[10]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_it.o(i.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[1a2]"></a>Scan_IDM</STRONG> (Thumb, 730 bytes, Stack size 48 bytes, imd.o(i.Scan_IDM))
+<P><STRONG><a name="[1a3]"></a>Scan_IDM</STRONG> (Thumb, 916 bytes, Stack size 48 bytes, imd.o(i.Scan_IDM))
 <BR><BR>[Stack]<UL><LI>Max Depth = 776 + Unknown Stack Size
 <LI>Call Chain = Scan_IDM &rArr; NV11_Disable &rArr; ssp6_disable &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
+<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
+<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sync_number_celled
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
+<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Led_init
 <LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
 <LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
@@ -2672,11 +2675,12 @@ Global Symbols
 <P><STRONG><a name="[50]"></a>SystemInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, system_stm32f1xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(.text)
 </UL>
-<P><STRONG><a name="[1a9]"></a>TCP_connect</STRONG> (Thumb, 222 bytes, Stack size 24 bytes, gsm_app.o(i.TCP_connect))
-<BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
-<LI>Call Chain = TCP_connect &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
+<P><STRONG><a name="[1a9]"></a>TCP_connect</STRONG> (Thumb, 252 bytes, Stack size 16 bytes, gsm_app.o(i.TCP_connect))
+<BR><BR>[Stack]<UL><LI>Max Depth = 184 + Unknown Stack Size
+<LI>Call Chain = TCP_connect &rArr; GSM_init &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
+<BR>[Calls]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GSM_init
+<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
 <LI><a href="#[1aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
@@ -2764,7 +2768,7 @@ Global Symbols
 <P><STRONG><a name="[1b1]"></a>Time_SetUnixTime</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, rtc_time.o(i.Time_SetUnixTime))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Time_SetUnixTime &rArr; RTC_WriteCounter
 </UL>
-<BR>[Calls]<UL><LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_WriteCounter
+<BR>[Calls]<UL><LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_WriteCounter
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Time_SetCalendarTime
 </UL>
@@ -2810,19 +2814,19 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Flash_write_pin
 </UL>
-<BR>[Called By]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_revenue_day
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
+<BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_revenue_day
+<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
 </UL>
 
-<P><STRONG><a name="[16a]"></a>Write_config</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, flash.o(i.Write_config))
+<P><STRONG><a name="[16e]"></a>Write_config</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, flash.o(i.Write_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = Write_config &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Byte_Sram
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sync_number_celled
 <LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_config
@@ -2842,10 +2846,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__printf
 </UL>
 
-<P><STRONG><a name="[166]"></a>add_revenue_day</STRONG> (Thumb, 88 bytes, Stack size 24 bytes, flash.o(i.add_revenue_day))
+<P><STRONG><a name="[16d]"></a>add_revenue_day</STRONG> (Thumb, 88 bytes, Stack size 24 bytes, flash.o(i.add_revenue_day))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = add_revenue_day &rArr; get_revenue_day &rArr; Read_Byte_Sram
 </UL>
-<BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
+<BR>[Calls]<UL><LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
 <LI><a href="#[1b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_Byte_Sram
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
@@ -2878,13 +2882,13 @@ Global Symbols
 <P><STRONG><a name="[b7]"></a>cal_crc_loop_CCITT_A</STRONG> (Thumb, 52 bytes, Stack size 20 bytes, encryption.o(i.cal_crc_loop_CCITT_A))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = cal_crc_loop_CCITT_A
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPDataIn
+<BR>[Called By]<UL><LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPDataIn
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CompileSSPCommand
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EncryptSSPPacket
 </UL>
 
-<P><STRONG><a name="[1c2]"></a>checkGPSCommand</STRONG> (Thumb, 432 bytes, Stack size 144 bytes, gsm_app.o(i.checkGPSCommand))
+<P><STRONG><a name="[1c2]"></a>checkGPSCommand</STRONG> (Thumb, 486 bytes, Stack size 144 bytes, gsm_app.o(i.checkGPSCommand))
 <BR><BR>[Stack]<UL><LI>Max Depth = 352 + Unknown Stack Size
 <LI>Call Chain = checkGPSCommand &rArr; setRTC &rArr; Time_SetCalendarTime &rArr; Time_ConvCalendarToUnix &rArr; mktime &rArr; _tm_carry
 </UL>
@@ -2893,6 +2897,7 @@ Global Symbols
 <LI><a href="#[1c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readGSM_Buff
 <LI><a href="#[1c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;queueLengthGSM
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;atoi
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -2906,8 +2911,8 @@ Global Symbols
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 </UL>
 
-<P><STRONG><a name="[17a]"></a>display_payout_countdown</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, nv11.o(i.display_payout_countdown))
-<BR><BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<P><STRONG><a name="[17b]"></a>display_payout_countdown</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, nv11.o(i.display_payout_countdown))
+<BR><BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
 </UL>
 
 <P><STRONG><a name="[16c]"></a>draw_signal_gsm</STRONG> (Thumb, 210 bytes, Stack size 32 bytes, user_gui.o(i.draw_signal_gsm))
@@ -2923,7 +2928,7 @@ Global Symbols
 <P><STRONG><a name="[1c5]"></a>flash_init</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, flash.o(i.flash_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = flash_init &rArr; SRAM_writeSTT
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SRAM_writeSTT
+<BR>[Calls]<UL><LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SRAM_writeSTT
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2953,29 +2958,29 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[167]"></a>get_revenue_day</STRONG> (Thumb, 54 bytes, Stack size 24 bytes, flash.o(i.get_revenue_day))
+<P><STRONG><a name="[168]"></a>get_revenue_day</STRONG> (Thumb, 54 bytes, Stack size 24 bytes, flash.o(i.get_revenue_day))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = get_revenue_day &rArr; Read_Byte_Sram
 </UL>
-<BR>[Calls]<UL><LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
+<BR>[Calls]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
-<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_month
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_revenue_day
+<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_month
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_revenue_day
 </UL>
 
-<P><STRONG><a name="[168]"></a>get_revenue_month</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, flash.o(i.get_revenue_month))
+<P><STRONG><a name="[169]"></a>get_revenue_month</STRONG> (Thumb, 60 bytes, Stack size 24 bytes, flash.o(i.get_revenue_month))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = get_revenue_month &rArr; get_revenue_day &rArr; Read_Byte_Sram
 </UL>
-<BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
+<BR>[Calls]<UL><LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_day
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_year
+<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_year
 </UL>
 
-<P><STRONG><a name="[169]"></a>get_revenue_year</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, flash.o(i.get_revenue_year))
+<P><STRONG><a name="[16a]"></a>get_revenue_year</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, flash.o(i.get_revenue_year))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = get_revenue_year &rArr; get_revenue_month &rArr; get_revenue_day &rArr; Read_Byte_Sram
 </UL>
-<BR>[Calls]<UL><LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_month
+<BR>[Calls]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_revenue_month
 </UL>
 <BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 </UL>
@@ -3012,7 +3017,7 @@ Global Symbols
 <P><STRONG><a name="[1ce]"></a>lwrb_get_full</STRONG> (Thumb, 56 bytes, Stack size 12 bytes, lwrb.o(i.lwrb_get_full))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = lwrb_get_full
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_rx_availble
+<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_rx_availble
 <LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwrb_read
 </UL>
 
@@ -3021,7 +3026,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
+<BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
 </UL>
 
 <P><STRONG><a name="[1cd]"></a>lwrb_read</STRONG> (Thumb, 126 bytes, Stack size 24 bytes, lwrb.o(i.lwrb_read))
@@ -3030,12 +3035,12 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwrb_get_full
 <LI><a href="#[1cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_read
+<BR>[Called By]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_read
 </UL>
 
 <P><STRONG><a name="[1e8]"></a>lwrb_reset</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, lwrb.o(i.lwrb_reset))
 <BR><BR>[Called By]<UL><LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_flush
-<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_deinitialize
+<LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_deinitialize
 </UL>
 
 <P><STRONG><a name="[143]"></a>lwrb_write</STRONG> (Thumb, 126 bytes, Stack size 24 bytes, lwrb.o(i.lwrb_write))
@@ -3051,21 +3056,21 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 2760 + Unknown Stack Size
 <LI>Call Chain = main &rArr; vdm_NV11_Process &rArr; vdm_parse_poll &rArr; NV11_PayoutNote &rArr; NV11_Process &rArr; ssp6_setup_encryption &rArr; negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_set_device_id
+<BR>[Calls]<UL><LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_set_device_id
 <LI><a href="#[1d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_start_frame
 <LI><a href="#[1d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_heartbeat
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 <LI><a href="#[1d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Process
 <LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
+<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_initialize
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_device_config
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getRTC
 <LI><a href="#[1c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_init
 <LI><a href="#[1c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkGPSCommand
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_connect
-<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
-<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SRAM_ID
-<LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
+<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_SRAM_ID
+<LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_FATFS_Init
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ITLSSP_Init
@@ -3108,31 +3113,32 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1360 + Unknown Stack Size
 <LI>Call Chain = negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
+<BR>[Calls]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NegotiateSSPEncryption
 </UL>
-<BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
+<BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
 </UL>
 
-<P><STRONG><a name="[1a3]"></a>nv11_enable</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, nv11.o(i.nv11_enable))
+<P><STRONG><a name="[167]"></a>nv11_enable</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, nv11.o(i.nv11_enable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 728 + Unknown Stack Size
 <LI>Call Chain = nv11_enable &rArr; ssp6_enable &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_enable
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[17d]"></a>nv11_reset</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, nv11.o(i.nv11_reset))
+<P><STRONG><a name="[17e]"></a>nv11_reset</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, nv11.o(i.nv11_reset))
 <BR><BR>[Stack]<UL><LI>Max Depth = 728 + Unknown Stack Size
 <LI>Call Chain = nv11_reset &rArr; ssp6_reset &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_reset
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
 <P><STRONG><a name="[1c3]"></a>queueLengthGSM</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, gsm_app.o(i.queueLengthGSM))
@@ -3147,14 +3153,14 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 176 + Unknown Stack Size
 <LI>Call Chain = read_device_config &rArr; save_device_config &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
-<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
+<BR>[Calls]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;save_device_config
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Byte_Sram
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[16e]"></a>save_device_config</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, flash.o(i.save_device_config))
+<P><STRONG><a name="[170]"></a>save_device_config</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, flash.o(i.save_device_config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = save_device_config &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3178,7 +3184,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = scan_switch &rArr; small_delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[1e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;small_delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
@@ -3188,7 +3194,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 712 + Unknown Stack Size
 <LI>Call Chain = send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Calls]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
@@ -3205,7 +3211,7 @@ Global Symbols
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_RTC_Init
 </UL>
 
-<P><STRONG><a name="[16d]"></a>show_Messenger</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, user_gui.o(i.show_Messenger))
+<P><STRONG><a name="[16f]"></a>show_Messenger</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, user_gui.o(i.show_Messenger))
 <BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = show_Messenger &rArr; GLcd_DrawStringUni &rArr; GLcd_DrawCharUni &rArr; GLcd_DrawPoint
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -3222,25 +3228,25 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<BR>[Called By]<UL><LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[172]"></a>ssp6_disable</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_disable))
+<P><STRONG><a name="[173]"></a>ssp6_disable</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_disable))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = ssp6_disable &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
+<BR>[Called By]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 </UL>
 
-<P><STRONG><a name="[174]"></a>ssp6_display_on</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_display_on))
+<P><STRONG><a name="[175]"></a>ssp6_display_on</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_display_on))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = ssp6_display_on &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_DisplayOn
+<BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_DisplayOn
 </UL>
 
 <P><STRONG><a name="[1db]"></a>ssp6_enable</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_enable))
@@ -3250,26 +3256,26 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
+<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
 </UL>
 
-<P><STRONG><a name="[176]"></a>ssp6_get_stored_notes</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, ssp_helpers.o(i.ssp6_get_stored_notes))
+<P><STRONG><a name="[177]"></a>ssp6_get_stored_notes</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, ssp_helpers.o(i.ssp6_get_stored_notes))
 <BR><BR>[Stack]<UL><LI>Max Depth = 736 + Unknown Stack Size
 <LI>Call Chain = ssp6_get_stored_notes &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
-<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetAvailableChange
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetAvailableChange
 </UL>
 
-<P><STRONG><a name="[17c]"></a>ssp6_hold</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_hold))
+<P><STRONG><a name="[17d]"></a>ssp6_hold</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_hold))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = ssp6_hold &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
 <P><STRONG><a name="[1de]"></a>ssp6_host_protocol</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_host_protocol))
@@ -3279,26 +3285,26 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[179]"></a>ssp6_payout_note</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_payout_note))
+<P><STRONG><a name="[17a]"></a>ssp6_payout_note</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_payout_note))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = ssp6_payout_note &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
 </UL>
 
-<P><STRONG><a name="[180]"></a>ssp6_poll</STRONG> (Thumb, 694 bytes, Stack size 32 bytes, ssp_helpers.o(i.ssp6_poll))
+<P><STRONG><a name="[181]"></a>ssp6_poll</STRONG> (Thumb, 694 bytes, Stack size 32 bytes, ssp_helpers.o(i.ssp6_poll))
 <BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = ssp6_poll &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Process
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
 <P><STRONG><a name="[1dc]"></a>ssp6_reset</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_reset))
@@ -3307,7 +3313,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_reset
+<BR>[Called By]<UL><LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_reset
 </UL>
 
 <P><STRONG><a name="[1e2]"></a>ssp6_run_calibration</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_run_calibration))
@@ -3317,20 +3323,20 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[183]"></a>ssp6_set_inhibits</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_set_inhibits))
+<P><STRONG><a name="[184]"></a>ssp6_set_inhibits</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, ssp_helpers.o(i.ssp6_set_inhibits))
 <BR><BR>[Stack]<UL><LI>Max Depth = 720 + Unknown Stack Size
 <LI>Call Chain = ssp6_set_inhibits &rArr; _ssp_return_values &rArr; send_ssp_command &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_ssp_return_values
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_SetAcceptNote
+<LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_SetAcceptNote
 </UL>
 
-<P><STRONG><a name="[181]"></a>ssp6_setup_encryption</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, ssp_helpers.o(i.ssp6_setup_encryption))
+<P><STRONG><a name="[182]"></a>ssp6_setup_encryption</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, ssp_helpers.o(i.ssp6_setup_encryption))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1368 + Unknown Stack Size
 <LI>Call Chain = ssp6_setup_encryption &rArr; negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
@@ -3338,7 +3344,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Process
 <LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
 <P><STRONG><a name="[1e6]"></a>ssp6_setup_request</STRONG> (Thumb, 436 bytes, Stack size 24 bytes, ssp_helpers.o(i.ssp6_setup_request))
@@ -3359,10 +3365,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
 </UL>
 
-<P><STRONG><a name="[17e]"></a>ssp_serial_deinitialize</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_deinitialize))
+<P><STRONG><a name="[17f]"></a>ssp_serial_deinitialize</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_deinitialize))
 <BR><BR>[Calls]<UL><LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwrb_reset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
 <P><STRONG><a name="[1e9]"></a>ssp_serial_flush</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_flush))
@@ -3371,47 +3377,47 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
 </UL>
 
-<P><STRONG><a name="[17f]"></a>ssp_serial_initialize</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, serialfunc.o(i.ssp_serial_initialize))
+<P><STRONG><a name="[180]"></a>ssp_serial_initialize</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, serialfunc.o(i.ssp_serial_initialize))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = ssp_serial_initialize &rArr; HAL_UARTEx_ReceiveToIdle_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_ReceiveToIdle_DMA
 <LI><a href="#[1cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwrb_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
-<P><STRONG><a name="[1a0]"></a>ssp_serial_read</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_read))
+<P><STRONG><a name="[1a1]"></a>ssp_serial_read</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_read))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = ssp_serial_read &rArr; lwrb_read &rArr; lwrb_get_full
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwrb_read
 </UL>
-<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 
-<P><STRONG><a name="[1a1]"></a>ssp_serial_rx_availble</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_rx_availble))
+<P><STRONG><a name="[1a2]"></a>ssp_serial_rx_availble</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_rx_availble))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = ssp_serial_rx_availble &rArr; lwrb_get_full
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lwrb_get_full
 </UL>
-<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 
-<P><STRONG><a name="[19f]"></a>ssp_serial_write_data</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_write_data))
+<P><STRONG><a name="[1a0]"></a>ssp_serial_write_data</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, serialfunc.o(i.ssp_serial_write_data))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = ssp_serial_write_data &rArr; HAL_UART_Transmit_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_DMA
 </UL>
-<BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
+<BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SSPSendCommand
 </UL>
 
 <P><STRONG><a name="[1a4]"></a>sync_number_celled</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, flash.o(i.sync_number_celled))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160 + Unknown Stack Size
 <LI>Call Chain = sync_number_celled &rArr; Write_config &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
+<BR>[Calls]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Write_config
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
 </UL>
 
 <P><STRONG><a name="[1eb]"></a>sys_ctx</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, sys_ctx.o(i.sys_ctx))
@@ -3427,8 +3433,8 @@ Global Symbols
 <LI><a href="#[1e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp_serial_flush
 <LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_sync
 <LI><a href="#[1e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_request
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
-<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_set_inhibits
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
+<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_set_inhibits
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_host_protocol
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_enable
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
@@ -3442,8 +3448,8 @@ Global Symbols
 <LI>Call Chain = vdm_NV11_Process &rArr; vdm_parse_poll &rArr; NV11_PayoutNote &rArr; NV11_Process &rArr; ssp6_setup_encryption &rArr; negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
-<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_poll
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_encryption
+<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_poll
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_parse_poll
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
@@ -3456,7 +3462,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_get_device_config
 <LI><a href="#[1f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetUnitType
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
 <LI><a href="#[1f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetStoredNoteByChannel
 <LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetLatestEvent
 <LI><a href="#[1f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetDenominationForChange
@@ -3479,7 +3485,7 @@ Global Symbols
 <LI><a href="#[1f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetStoredNoteByChannel
 <LI><a href="#[1ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetLatestEvent
 <LI><a href="#[1f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetDenominationForChange
-<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetAvailableChange
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetAvailableChange
 <LI><a href="#[1ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc_calculator_xmodem
 <LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TCP_send
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_time
@@ -3499,7 +3505,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[170]"></a>vdm_app_gsm_set_device_id</STRONG> (Thumb, 126 bytes, Stack size 8 bytes, vdm_app_gsm.o(i.vdm_app_gsm_set_device_id))
+<P><STRONG><a name="[172]"></a>vdm_app_gsm_set_device_id</STRONG> (Thumb, 126 bytes, Stack size 8 bytes, vdm_app_gsm.o(i.vdm_app_gsm_set_device_id))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152 + Unknown Stack Size
 <LI>Call Chain = vdm_app_gsm_set_device_id &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -3523,20 +3529,20 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1e0]"></a>vdm_device_config_lock_resource</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, vdm_device_config.o(i.vdm_device_config_lock_resource))
-<BR><BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<BR><BR>[Called By]<UL><LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
 <P><STRONG><a name="[1e1]"></a>vdm_device_config_unlock_resource</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, vdm_device_config.o(i.vdm_device_config_unlock_resource))
-<BR><BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<BR><BR>[Called By]<UL><LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
 <P><STRONG><a name="[1dd]"></a>vdm_get_device_config</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, vdm_device_config.o(i.vdm_get_device_config))
 <BR><BR>[Called By]<UL><LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_app_gsm_send_door_frame
 <LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Init
-<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parse_poll
 </UL>
 
-<P><STRONG><a name="[165]"></a>vdm_language_get_text</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, vdm_language.o(i.vdm_language_get_text))
+<P><STRONG><a name="[166]"></a>vdm_language_get_text</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, vdm_language.o(i.vdm_language_get_text))
 <BR><BR>[Called By]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_draw
 </UL>
 
@@ -3550,7 +3556,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 168 + Unknown Stack Size
 <LI>Call Chain = waitForPulse &rArr; __2printf &rArr; _printf_char_file &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<BR>[Calls]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DHT_Sensor_Read
@@ -3629,7 +3635,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1a5]"></a>__aeabi_ui2f</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, fflt_clz.o(x$fpl$ffltu))
-<BR><BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR><BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -3638,7 +3644,7 @@ Global Symbols
 <P><STRONG><a name="[1a6]"></a>__aeabi_cfcmple</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, fleqf.o(x$fpl$fleqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_cfcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
+<BR>[Called By]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Scan_IDM
 </UL>
 
 <P><STRONG><a name="[1fc]"></a>_fcmple</STRONG> (Thumb, 104 bytes, Stack size 16 bytes, fleqf.o(x$fpl$fleqf), UNUSED)
@@ -3837,14 +3843,14 @@ Local Symbols
 <P><STRONG><a name="[123]"></a>SD_InitCard</STRONG> (Thumb, 238 bytes, Stack size 72 bytes, stm32f1xx_hal_sd.o(i.SD_InitCard))
 <BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = SD_InitCard &rArr; SDMMC_CmdSetRelAdd &rArr; SDMMC_GetCmdResp6
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_GetCardCSD
-<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSetRelAdd
-<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCSD
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCID
-<LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSelDesel
+<BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_GetCardCSD
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSetRelAdd
+<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCSD
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSendCID
+<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdSelDesel
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_Init
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_GetResponse
-<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_GetPowerState
+<LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_GetPowerState
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_InitCard
 </UL>
@@ -3852,10 +3858,10 @@ Local Symbols
 <P><STRONG><a name="[122]"></a>SD_PowerON</STRONG> (Thumb, 174 bytes, Stack size 40 bytes, stm32f1xx_hal_sd.o(i.SD_PowerON))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = SD_PowerON &rArr; SDMMC_CmdAppCommand &rArr; SDMMC_GetCmdResp1
 </UL>
-<BR>[Calls]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdOperCond
-<LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdGoIdleState
-<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppOperCommand
-<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppCommand
+<BR>[Calls]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdOperCond
+<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdGoIdleState
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppOperCommand
+<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDMMC_CmdAppCommand
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDIO_GetResponse
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_InitCard
@@ -3864,12 +3870,12 @@ Local Symbols
 <P><STRONG><a name="[12f]"></a>SPI_EndRxTxTransaction</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, stm32f1xx_hal_spi.o(i.SPI_EndRxTxTransaction))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = SPI_EndRxTxTransaction &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_WaitFlagStateUntilTimeout
+<BR>[Calls]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Transmit
 </UL>
 
-<P><STRONG><a name="[19c]"></a>SPI_WaitFlagStateUntilTimeout</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, stm32f1xx_hal_spi.o(i.SPI_WaitFlagStateUntilTimeout))
+<P><STRONG><a name="[19d]"></a>SPI_WaitFlagStateUntilTimeout</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, stm32f1xx_hal_spi.o(i.SPI_WaitFlagStateUntilTimeout))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
@@ -4092,36 +4098,36 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GLcd_Flush
 </UL>
 
-<P><STRONG><a name="[182]"></a>parse_poll</STRONG> (Thumb, 1782 bytes, Stack size 48 bytes, nv11.o(i.parse_poll))
+<P><STRONG><a name="[183]"></a>parse_poll</STRONG> (Thumb, 1782 bytes, Stack size 48 bytes, nv11.o(i.parse_poll))
 <BR><BR>[Stack]<UL><LI>Max Depth = 808 + Unknown Stack Size
  + In Cycle
 <LI>Call Chain = parse_poll &rArr;  NV11_PayoutNote (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
+<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 <LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_get_device_config
 <LI><a href="#[1e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_device_config_unlock_resource
 <LI><a href="#[1e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_device_config_lock_resource
 <LI><a href="#[1e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_run_calibration
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_host_protocol
 <LI><a href="#[1df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_check_note_level
-<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
+<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
+<BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Process
 </UL>
 
 <P><STRONG><a name="[1ea]"></a>vdm_parse_poll</STRONG> (Thumb, 1496 bytes, Stack size 32 bytes, nv11.o(i.vdm_parse_poll))
 <BR><BR>[Stack]<UL><LI>Max Depth = 2088 + Unknown Stack Size
 <LI>Call Chain = vdm_parse_poll &rArr; NV11_PayoutNote &rArr; NV11_Process &rArr; ssp6_setup_encryption &rArr; negotiate_ssp_encryption &rArr; NegotiateSSPEncryption &rArr; SSPSendCommand &rArr; CompileSSPCommand &rArr; EncryptSSPPacket &rArr; aes_encrypt &rArr; aes_encrypt_16_byte_block &rArr; forward_s_box_compute &rArr; inverse_element
 </UL>
-<BR>[Calls]<UL><LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
+<BR>[Calls]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_Disable
 <LI><a href="#[1e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_run_calibration
-<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_DisplayOn
+<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nv11_enable
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_PayoutNote
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_GetTotalCashInNoteFloat
+<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NV11_DisplayOn
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vdm_NV11_Process
@@ -4135,17 +4141,17 @@ Local Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_sync
 <LI><a href="#[1e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_setup_request
-<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_set_inhibits
+<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_set_inhibits
 <LI><a href="#[1e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_run_calibration
 <LI><a href="#[1dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_reset
-<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_poll
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_payout_note
+<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_poll
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_payout_note
 <LI><a href="#[1de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_host_protocol
-<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_hold
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_get_stored_notes
+<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_hold
+<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_get_stored_notes
 <LI><a href="#[1db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_enable
-<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_display_on
-<LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_disable
+<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_display_on
+<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_disable
 <LI><a href="#[1df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ssp6_check_note_level
 </UL>
 
@@ -4160,7 +4166,7 @@ Local Symbols
 <LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_time
 </UL>
 
-<P><STRONG><a name="[188]"></a>RTC_WriteCounter</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, rtc_time.o(i.RTC_WriteCounter))
+<P><STRONG><a name="[189]"></a>RTC_WriteCounter</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, rtc_time.o(i.RTC_WriteCounter))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = RTC_WriteCounter
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick

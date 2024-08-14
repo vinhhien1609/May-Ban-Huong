@@ -327,7 +327,7 @@ void sync_number_celled(uint16_t number_cell)
 	if(IDM.currentTotalInsenseBuy <number_cell)	IDM.currentTotalInsenseBuy =0;
 	else	IDM.currentTotalInsenseBuy -= number_cell;
 	
-	if(IDM_Status.isEmptyIsenseSW)
+	if(IDM_Status.isEmptyIsenseSW)		// không tác dong
 	{
 		if(IDM.currentNumberBuyMore < number_cell)	IDM.currentNumberBuyMore =0;
 		else	IDM.currentNumberBuyMore -=number_cell;

@@ -51,13 +51,13 @@ void IDM_init(void)
 }
 
 
+uint8_t time_blink_led_error_cell =0;
+
 void Scan_IDM(void)
 {
 	uint16_t timeConveyerRun[3] ={10, 10, 20};
-	if(IDM.currentTotalInsenseBuy==0)		//chu ky dao huong
-		IDM_state = 5;
 
-//	if(buy.StateBuy == EMPTY_INSENCE && IDM_Status.isEmptyIsenseSW ==false)
+//	if(buy.StateBuy == STOP_SERVICE && IDM_Status.isEmptyIsenseSW ==false)
 //	{
 //		buy.StateBuy = CELL_WAIT;
 //		IDM_state = 1;
@@ -65,6 +65,19 @@ void Scan_IDM(void)
 //		IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
 //		Write_config();
 //	}
+	
+	if(time_blink_led_error_cell<12)
+	{
+					if(Led3.timeActive ==1000 && Led3.enable==false)
+					{
+						Led_init(&Led3,0,500,500);		// led tat 500ms
+						time_blink_led_error_cell++;
+					}
+					if(Led3.timeActive ==500 && Led3.enable==false)
+					{
+						Led_init(&Led3,250,500,1000);		//2 chu ky on/off
+					}
+	}
 	
 	switch (IDM_state)
 	{
@@ -100,26 +113,37 @@ void Scan_IDM(void)
 				nv11_enable(true);
 				Led_init(&Led1,0,10,2000);
 				
-				if((IDM.currentNumberBuyMore==0 || IDM.currentRetryCellEmpty==0) && buy.StateBuy != EMPTY_INSENCE)
+				if((IDM.currentNumberBuyMore==0 || IDM.currentRetryCellEmpty==0) && buy.StateBuy != STOP_SERVICE)
 				{
-					buy.StateBuy = EMPTY_INSENCE;
+					buy.StateBuy = STOP_SERVICE;
 					IDM_state =6;
 					NV11_Disable(true);
 				}
+				if(IDM.currentTotalInsenseBuy==0)		//chu ky dao huong
+					IDM_state = 5;
 			}
 			else
 			{
 				if(havemoney)
 				{
 					havemoney =0;
-					IDM_state = 2;
 					count=MAXTimeDropRespone-10;
 					buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
 					buy.numberRetry =0;		// time retry when conveyer no out insense
-					buy.StateBuy = CELLING;
-					Led_init(&Led1,10,10,200000);
-					printf("CELL>> %d\r\n", IDM_state);					
-					NV11_Disable(true);
+					if(IDM.NumberInsenseBuy==0)
+					{
+						buy.StateBuy = DONATE;
+						State = 255;
+//						IDM_state = 1;
+					}
+					else
+					{
+						buy.StateBuy = CELLING;
+						IDM_state = 2;
+						Led_init(&Led1,10,10,200000);
+						printf("CELL>> %d\r\n", IDM_state);
+						NV11_Disable(true);
+					}
 				}
 			}
 			break;
@@ -166,7 +190,7 @@ void Scan_IDM(void)
 				  sync_number_celled(IDM.NumberInsenseBuy - buy.TotalIsenseDroped);		// so que da nha ra
 					printf("IDM>> EMPTY INSENCE AND WILL RETRY TIME: %d\r\n",IDM.currentRetryCellEmpty);
 					printf("IDM>> CYCLE CELL INSENCE: %d\r\n",IDM.currentTotalInsenseBuy);
-					Led_init(&Led3,125,250,30000);
+					Led_init(&Led3,125,250,20000);		//20s
 				}
 			}
 			else
@@ -188,6 +212,7 @@ void Scan_IDM(void)
 			{
 				count=0;
 				IDM_Status.Motor_conveyer.isRun =0;
+				IDM_Status.Motor_swap.isRun =0;
 				IDM_Status.Solenoid.isRun=1;
 				State = IDM_state;
 				printf("CELL>> %d\r\n", IDM_state);
@@ -201,7 +226,8 @@ void Scan_IDM(void)
 				{
 					IDM_Status.Solenoid.isRun=0;
 					IDM_state =1;
-					Led_init(&Led2,100,100,30000);
+					Led_init(&Led2,100,100,10000);
+					Led_init(&Led1,0,10,2000);		//led1 off
 				}
 			}
 			break;
@@ -224,13 +250,24 @@ void Scan_IDM(void)
 				}				
 			}
 			break;
-		case 6:
+		case 6:	// INSENCE IMPTY
 			if(State != IDM_state)
+			{
 				State = IDM_state;
+				Led_init(&Led3,250,500,1000);		//2 chu ky on/off
+				Led_init(&Led1,0,10,2000);		//led1 off
+				time_blink_led_error_cell =0;
+			}
 			else
 				if(buy.StateBuy == CELL_WAIT)
 				{
 					IDM_state = 1; //celling
+				}
+				if(buy.StateBuy == STOP_SERVICE)	// tam ngung phuc vu
+				{
+					time_blink_led_error_cell = 100;
+					if(Led3.enable==false)
+						Led_init(&Led3,250,500,1000);		//2 chu ky on/off
 				}
 			break;
 	}
