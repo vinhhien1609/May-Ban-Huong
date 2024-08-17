@@ -5,7 +5,7 @@
 #include "platform.h"
 #include "glcd_font.h"
 #include "main.h"
-#define LCD_MONO
+#define LCD_COLOR
 
 /* LCD Dimension */
 #define GLCD_WIDTH      128
