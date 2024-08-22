@@ -29,6 +29,8 @@
 unsigned char scan_BT(void);
 void scan_switch(void);
 void Menu_draw(void);
+void Menu_draw_MONO(void);
+void Menu_draw_TFT(void);
 
 /* Private variables ---------------------------------------------------------*/
 typedef enum displayType{
@@ -75,6 +77,7 @@ typedef enum displayType{
 //		VDM_QUY_KHACH,
 //    VDM_LANG_ID_MAX
 //} vdm_language_id_t;
+
 
 
 

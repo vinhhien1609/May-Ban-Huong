@@ -59,6 +59,7 @@ idm\main.o: ../Core/User_Driver/ITLSSPProc.h
 idm\main.o: ../Core/User_Driver/GLCD.h
 idm\main.o: ../Core/User_Driver/platform.h
 idm\main.o: ../Core/User_Driver/glcd_font.h
+idm\main.o: ../Core/User_Driver/TFT_glcd.h
 idm\main.o: ../Core/User_Driver/RTC_time.h
 idm\main.o: ../Core/User_Driver/GSM_drv.h
 idm\main.o: ../Core/User_Driver/GSM_app.h

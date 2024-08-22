@@ -1,7 +1,7 @@
 Dependencies for Project 'IDM', Target 'IDM': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
-F (startup_stm32f103xe.s)(0x66BF7242)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 529" --pd "_RTE_ SETA 1" --pd "STM32F10X_HD SETA 1"--list startup_stm32f103xe.lst --xref -o idm\startup_stm32f103xe.o --depend idm\startup_stm32f103xe.d)
-F (../Core/Src/main.c)(0x66C0FFC1)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\main.o --omf_browse idm\main.crf --depend idm\main.d)
+F (startup_stm32f103xe.s)(0x66C75781)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 529" --pd "_RTE_ SETA 1" --pd "STM32F10X_HD SETA 1"--list startup_stm32f103xe.lst --xref -o idm\startup_stm32f103xe.o --depend idm\startup_stm32f103xe.d)
+F (../Core/Src/main.c)(0x66C7717E)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\main.o --omf_browse idm\main.crf --depend idm\main.d)
 I (../Core/Inc/main.h)(0x66A60D32)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66575382)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x66A14DD2)
@@ -58,17 +58,18 @@ I (../Core/User_Driver/SSPComs.h)(0x65E5A04C)
 I (../Core/User_Driver/itl_types.h)(0x62B2E6AB)
 I (../Core/User_Driver/ssp_helpers.h)(0x6686C398)
 I (../Core/User_Driver/ITLSSPProc.h)(0x65E5A04C)
-I (../Core/User_Driver/GLCD.h)(0x66BE1912)
+I (../Core/User_Driver/GLCD.h)(0x66C76532)
 I (../Core/User_Driver/platform.h)(0x62B2E6AB)
 I (../Core/User_Driver/glcd_font.h)(0x6684350D)
+I (../Core/User_Driver/TFT_glcd.h)(0x66C76465)
 I (../Core/User_Driver/RTC_time.h)(0x6688368A)
 I (../Core/User_Driver/GSM_drv.h)(0x667F9202)
 I (../Core/User_Driver/GSM_app.h)(0x66BCDBA2)
-I (../Core/User_Driver/USER_GUIDE.h)(0x66ABA392)
+I (../Core/User_Driver/USER_GUIDE.h)(0x66C77628)
 I (../Core/User_Driver/dht_sensor.h)(0x5E7FE146)
 I (../Core/User_Driver/dht_sensor_conf.h)(0x667DAAE8)
 I (../Core/User_Driver/delay.h)(0x667F6041)
-I (../Core/User_Driver/IDM.h)(0x66BB8B1F)
+I (../Core/User_Driver/IDM.h)(0x66C773ED)
 I (../Core/User_Driver/flash.h)(0x66A926C6)
 I (../Core/User_Driver/vdm_app_gsm.h)(0x66A917D3)
 I (../Core/User_Driver/vdm_fw.h)(0x66BCE40C)
@@ -923,8 +924,8 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
 I (..\Core\User_Driver\Encryption.h)(0x65D42359)
 I (C:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5D9AE022)
-F (..\Core\User_Driver\glcd.c)(0x66C0FF99)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\glcd.o --omf_browse idm\glcd.crf --depend idm\glcd.d)
-I (..\Core\User_Driver\glcd.h)(0x66BE1912)
+F (..\Core\User_Driver\glcd.c)(0x66C76525)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\glcd.o --omf_browse idm\glcd.crf --depend idm\glcd.d)
+I (..\Core\User_Driver\glcd.h)(0x66C76532)
 I (..\Core\User_Driver\platform.h)(0x62B2E6AB)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9AE028)
@@ -963,14 +964,6 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x66575382)
-I (../FATFS/App/fatfs.h)(0x66A14DD1)
-I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x6657537B)
-I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x6657537B)
-I (../FATFS/Target/ffconf.h)(0x66A42B62)
-I (../FATFS/Target/bsp_driver_sd.h)(0x66A14DD1)
-I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x6657537B)
-I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x6657537B)
-I (../Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.h)(0x6657537B)
 F (..\Core\User_Driver\glcd_font.c)(0x66576324)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\glcd_font.o --omf_browse idm\glcd_font.crf --depend idm\glcd_font.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
 I (..\Core\User_Driver\glcd_font.h)(0x6684350D)
@@ -1310,7 +1303,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x66575382)
-I (..\Core\User_Driver\IDM.h)(0x66BB8B1F)
+I (..\Core\User_Driver\IDM.h)(0x66C773ED)
 I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x5D9AE022)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
@@ -1318,7 +1311,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9AE028)
 I (../Core/Inc/main.h)(0x66A60D32)
 I (..\Core\User_Driver\flash.h)(0x66A926C6)
 I (..\Core\User_Driver\nv11.h)(0x66A7C07F)
-F (..\Core\User_Driver\user_gui.c)(0x66BB9F86)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\user_gui.o --omf_browse idm\user_gui.crf --depend idm\user_gui.d)
+F (..\Core\User_Driver\user_gui.c)(0x66C7762D)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\user_gui.o --omf_browse idm\user_gui.crf --depend idm\user_gui.d)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66575382)
@@ -1355,11 +1348,11 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x66575382)
-I (..\Core\User_Driver\USER_GUIDE.h)(0x66ABA392)
+I (..\Core\User_Driver\USER_GUIDE.h)(0x66C77628)
 I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x5D9AE022)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9AE028)
-I (..\Core\User_Driver\GLCD.h)(0x66BE1912)
+I (..\Core\User_Driver\GLCD.h)(0x66C76532)
 I (..\Core\User_Driver\platform.h)(0x62B2E6AB)
 I (..\Core\User_Driver\glcd_font.h)(0x6684350D)
 I (../Core/Inc/main.h)(0x66A60D32)
@@ -1369,7 +1362,7 @@ I (..\Core\User_Driver\RTC_time.h)(0x6688368A)
 I (..\Core\User_Driver\dht_sensor.h)(0x5E7FE146)
 I (..\Core\User_Driver\dht_sensor_conf.h)(0x667DAAE8)
 I (..\Core\User_Driver\delay.h)(0x667F6041)
-I (..\Core\User_Driver\IDM.h)(0x66BB8B1F)
+I (..\Core\User_Driver\IDM.h)(0x66C773ED)
 I (..\Core\User_Driver\vdm_language.h)(0x66BB8E2A)
 I (..\Core\User_Driver\images.h)(0x66843A56)
 I (..\Core\User_Driver\ssp_helpers.h)(0x6686C398)
@@ -1380,7 +1373,7 @@ I (..\Core\User_Driver\nv11.h)(0x66A7C07F)
 I (..\Core\User_Driver\flash.h)(0x66A926C6)
 I (..\Core\User_Driver\vdm_device_config.h)(0x66A60EEF)
 I (..\Core\User_Driver\vdm_app_gsm.h)(0x66A917D3)
-F (..\Core\User_Driver\dht_sensor.c)(0x66A4F638)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\dht_sensor.o --omf_browse idm\dht_sensor.crf --depend idm\dht_sensor.d)
+F (..\Core\User_Driver\dht_sensor.c)(0x66C75948)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\dht_sensor.o --omf_browse idm\dht_sensor.crf --depend idm\dht_sensor.d)
 I (../Core/Inc/main.h)(0x66A60D32)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66575382)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x66A14DD2)
@@ -1421,7 +1414,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
 I (..\Core\User_Driver\dht_sensor_conf.h)(0x667DAAE8)
 I (..\Core\User_Driver\delay.h)(0x667F6041)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
-I (..\Core\User_Driver\IDM.h)(0x66BB8B1F)
+I (..\Core\User_Driver\IDM.h)(0x66C773ED)
 I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x5D9AE022)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9AE028)
 F (..\Core\User_Driver\crc_calculator.c)(0x62CBD364)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\crc_calculator.o --omf_browse idm\crc_calculator.crf --depend idm\crc_calculator.d)
@@ -1471,7 +1464,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x66575382)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x66575382)
-I (..\Core\User_Driver\IDM.h)(0x66BB8B1F)
+I (..\Core\User_Driver\IDM.h)(0x66C773ED)
 I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x5D9AE022)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5D9AE02A)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
@@ -1490,7 +1483,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5D9AE028)
 I (..\Core\User_Driver\sys_ctx.h)(0x66A7BCC2)
 I (..\Core\User_Driver\vdm_device_config.h)(0x66A60EEF)
 I (..\Core\User_Driver\nv11.h)(0x66A7C07F)
-I (..\Core\User_Driver\IDM.h)(0x66BB8B1F)
+I (..\Core\User_Driver\IDM.h)(0x66C773ED)
 I (..\Core\User_Driver\app_debug.h)(0x65F2853E)
 I (..\Core\User_Driver\GSM_APP.h)(0x66BCDBA2)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9AE02A)
@@ -1536,6 +1529,55 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9AE028)
 F (..\Core\User_Driver\utilities.c)(0x62B2E6AB)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\utilities.o --omf_browse idm\utilities.crf --depend idm\utilities.d)
 I (..\Core\User_Driver\utilities.h)(0x62B2E6AB)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
+F (..\Core\User_Driver\TFT_GLCD.c)(0x66C77124)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\tft_glcd.o --omf_browse idm\tft_glcd.crf --depend idm\tft_glcd.d)
+I (..\Core\User_Driver\TFT_glcd.h)(0x66C76465)
+I (../Core/Inc/main.h)(0x66A60D32)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66575382)
+I (../Core/Inc/stm32f1xx_hal_conf.h)(0x66A14DD2)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h)(0x66575382)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h)(0x66575382)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xe.h)(0x66575382)
+I (../Drivers/CMSIS/Include/core_cm3.h)(0x6657537A)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9AE028)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6657537A)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6657537A)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6657537A)
+I (../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x66575382)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9AE028)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x66575382)
+I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x66575382)
+I (..\Core\User_Driver\glcd.h)(0x66C76532)
+I (..\Core\User_Driver\platform.h)(0x62B2E6AB)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5D9AE028)
+I (..\Core\User_Driver\glcd_font.h)(0x6684350D)
+I (../FATFS/App/fatfs.h)(0x66A14DD1)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x6657537B)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x6657537B)
+I (../FATFS/Target/ffconf.h)(0x66A42B62)
+I (../FATFS/Target/bsp_driver_sd.h)(0x66A14DD1)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x6657537B)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x6657537B)
+I (../Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.h)(0x6657537B)
 F (../FATFS/Target/bsp_driver_sd.c)(0x66A3D165)(--c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../Core/User_Driver -I ../Core/User_Driver/SPI_SD_Card -I ../Core/User_Driver/SPI -I ../FATFS/Target -I ../FATFS/App -I ../Middlewares/Third_Party/FatFs/src -I ../Middlewares/Third_Party/FatFs/src/drivers-I.\RTE\_IDM-IC:\Users\vinhh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\vinhh\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE-o idm\bsp_driver_sd.o --omf_browse idm\bsp_driver_sd.crf --depend idm\bsp_driver_sd.d)
 I (../FATFS/Target/bsp_driver_sd.h)(0x66A14DD1)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x66575382)

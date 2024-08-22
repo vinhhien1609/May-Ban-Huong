@@ -35,6 +35,7 @@
 #include "ssp_helpers.h"
 #include "ITLSSPProc.h"
 #include "GLCD.h"
+#include "TFT_glcd.h"
 #include "RTC_time.h"
 #include "GSM_drv.h"
 #include "GSM_app.h"
@@ -66,6 +67,7 @@ extern vdm_device_config_t m_device_config;
 uint32_t sram_ID=0;
 uint32_t time_buzz=0;
 extern uint16_t count_timeout;
+extern uint8_t isLCD_COLOR;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -212,12 +214,12 @@ int main(void)
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
 	//LCD
 
-	GLcd_Init(glcd_lcd_write_pin, 0);
+	LCD_init();
 	printf("LCD_COLOR\r\n");
 
-#ifdef LCD_COLOR	
+//#ifdef LCD_COLOR	
 	
-	while(1)
+	while(isLCD_COLOR)
 	{
 //    uint32_t freeClust;
 //    FATFS* fs_ptr = &fs;
@@ -232,7 +234,7 @@ int main(void)
 		test_lcd();		
 		HAL_Delay(100);	
 	}
-#endif
+//#endif
 	GLcd_DrawString("Starting...", 0, 0, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
 	GLcd_Flush();
 //load config
@@ -328,7 +330,7 @@ int main(void)
 			currentTime = getRTC();
 //			uint32_t size_of_frame = sizeof(m_door_close_frame);
 //			printf("size fram: %d\r\n", size_of_frame);
-			if(currentTime.second%10==0)
+			if(currentTime.second%2==0)
 			{
 				stt_DHT = DHT_Sensor_Read(&DHT_21);
 				flag_readDHT12=false;
@@ -360,13 +362,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -382,7 +383,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -637,7 +638,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -715,9 +716,9 @@ static void MX_TIM6_Init(void)
 
   /* USER CODE END TIM6_Init 1 */
   htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 0;
+  htim6.Init.Prescaler = 35;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 15999;
+  htim6.Init.Period = 999;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {

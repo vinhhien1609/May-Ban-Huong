@@ -110,7 +110,7 @@ DHT_ReadStatus DHT_Sensor_Read(DHT_HandleTypeDef *hdht){
 	switch (hdht->DHT_Type) {
 	case DHT22:
 	case DHT21:	//>1.1ms
-	_delay(5500);
+	_delay(200000);
 		break;
 	case DHT11:
 	default:		//20ms
