@@ -10,29 +10,27 @@
 #include "fatfs.h"
 #include "ff.h"
 
-#define uchar uint8_t
-#define uint uint16_t
-#define bit bool
-	
-#define color_brown   0x40c0
-#define color_black   0x0000
-#define color_white   0xffff
-#define color_red     0xf800
-#define color_green   0x07e0
-#define color_blue    0x001f
-#define color_yellow  color_red|color_green
-#define color_cyan    color_green|color_blue
-#define color_purple  color_red|color_blue
+
+
+INFO code_BINARY_INFO[9]=
+{
+  /*  No. , Width , Height , Size , Start Address  */ 
+  {1,800,480,384000,0},          /*     Back_ground , element 0     */
+  {2,800,480,384000,384000},          /*     Empty , element 1     */
+  {3,800,480,384000,768000},          /*     Hello , element 2     */
+  {4,800,480,384000,1152000},          /*     Insense_out , element 3     */
+  {5,800,480,384000,1536000},          /*     Setting_Sell , element 4     */
+  {6,800,480,384000,1920000},          /*     Setting_Tech , element 5     */
+  {7,800,480,384000,2304000},          /*     Thanks , element 6     */
+  {8,800,480,384000,2688000},          /*     Wait_insense , element 7     */
+	{9,800,480,384000,384000},          /*     Stop_service , element 7     */
+};
 
 
 extern SPI_HandleTypeDef hspi2;
 
-uint8_t isLCD_COLOR=0;
+extern uint8_t isLCD_COLOR;
 
-void LCD_CmdWrite(uint8_t cmd);
-void LCD_DataWrite(uint8_t Data);
-uint8_t  LCD_DataRead(void);
-void LCD_TFT_Init(void);
 void Chk_Busy(void);
 
 
@@ -68,101 +66,6 @@ void LCD_init(void)
 
 ///////////////////////////////////////////////////////////////////////////
 //#ifdef	LCD_MONO	//LCD color
-unsigned char Pic1[1500] = { /* 0X00,0X01,0X78,0X00,0X64,0X00, */
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X60,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X01,0XFC,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X03,0XFF,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X03,0XFF,0XC0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,
-0XEF,0XE0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0XC1,
-0XF8,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0XC0,0X7C,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0XC0,0X3E,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X01,0XE1,0XC0,0X1F,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X0F,0XFF,0XE0,0X07,0X80,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X0F,0XFF,0XE0,0X03,0XC0,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X0E,0X7F,0XF0,0X01,0XE0,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X0E,0X03,0XF0,0X00,0XE0,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X0E,0X00,0X78,0X00,0X70,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X0E,0X00,0X1E,0X00,0X38,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X07,0X02,0X07,0X00,0X1C,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X07,0X07,0XC1,0XC0,0X1E,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X07,0X80,0XF8,0X60,0X0F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X3F,
-0XE3,0X80,0X0E,0X38,0X07,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0XFF,0XFF,
-0XC0,0X03,0X9C,0X03,0X80,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X0F,0XFF,0XFF,0XC0,
-0X01,0XC6,0X03,0XC0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X7F,0XFF,0XFF,0XE0,0X00,
-0X73,0X01,0XE0,0X00,0X00,0X00,0X00,0X00,0X00,0X01,0XFF,0XE0,0X1F,0XE0,0X00,0X39,
-0X81,0XE0,0X00,0X00,0X00,0X00,0X00,0X00,0X07,0XFE,0X00,0X03,0XF0,0X03,0X9C,0XC0,
-0XF0,0X00,0X00,0X00,0X00,0X00,0X00,0X0F,0XF0,0X00,0X00,0XF8,0X01,0XFE,0X60,0X70,
-0X00,0X00,0X00,0X00,0X00,0X00,0X1F,0XC0,0X00,0X00,0X3C,0X00,0X7F,0X30,0X78,0X00,
-0X00,0X00,0X00,0X00,0X00,0X7F,0X00,0X00,0X00,0X0E,0X00,0X01,0X98,0X3C,0X00,0X00,
-0X00,0X00,0X00,0X00,0XFE,0X00,0X00,0X00,0X07,0X00,0X00,0X8C,0X3C,0X00,0X00,0X00,
-0X00,0X00,0X01,0XF8,0X00,0X00,0X00,0X01,0XC1,0XC0,0XC6,0X1E,0X00,0X00,0X00,0X00,
-0X00,0X03,0XF0,0X00,0X00,0X00,0X00,0XF0,0XFF,0XC7,0X0E,0X00,0X00,0X00,0X00,0X00,
-0X07,0XE0,0X00,0X00,0X00,0X00,0X3C,0X1F,0XE3,0XCF,0X80,0X00,0X00,0X00,0X00,0X0F,
-0X80,0X00,0X00,0X00,0X00,0X0F,0X80,0X61,0XFF,0XC0,0X00,0X00,0X00,0X00,0X0F,0X00,
-0X00,0X00,0X00,0X00,0X01,0XF0,0X40,0X3F,0XF0,0X00,0X00,0X00,0X00,0X1E,0X00,0X00,
-0X00,0X00,0X00,0X00,0X3C,0X00,0X01,0XFC,0X00,0X00,0X00,0X00,0X3C,0X00,0X00,0X00,
-0X00,0X00,0X00,0X07,0X80,0X00,0X7F,0X00,0X00,0X00,0X00,0X78,0X00,0X00,0X00,0X00,
-0X00,0X00,0X01,0XF8,0X00,0X1F,0X80,0X00,0X00,0X00,0X70,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X3C,0X00,0X07,0XE0,0X00,0X00,0X00,0XF0,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X01,0XF0,0X00,0X00,0X01,0XE0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X78,0X00,0X00,0X03,0XC0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X3C,0X00,0X00,0X03,0X80,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X40,0X1E,0X00,0X00,0X07,0X80,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X02,0XF0,
-0X0E,0X00,0X00,0X07,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X02,0XF8,0X0F,
-0X00,0X00,0X0E,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF8,0X07,0X00,
-0X00,0X0E,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X07,0X80,0X00,
-0X1E,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X07,0X80,0X00,0X1C,
-0X00,0X00,0X00,0XC0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0X80,0X00,0X1C,0X00,
-0X00,0X00,0XC0,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0X80,0X00,0X1C,0X00,0X00,
-0X00,0X60,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0X80,0X00,0X38,0X00,0X00,0X00,
-0X30,0X00,0X00,0X00,0X04,0X40,0X00,0X00,0X03,0X80,0X00,0X38,0X00,0X00,0X00,0X30,
-0X00,0X00,0X00,0X0E,0X40,0X00,0X00,0X03,0X80,0X00,0X38,0X00,0X00,0X00,0X10,0X00,
-0X00,0X00,0X07,0X60,0X00,0X00,0X03,0X80,0X00,0X70,0X00,0X00,0X00,0X18,0X00,0X00,
-0X00,0X03,0X20,0X00,0X00,0X13,0X80,0X00,0X70,0X00,0X00,0X00,0X08,0X00,0X00,0X00,
-0X01,0XB0,0X00,0X00,0X1F,0X00,0X00,0X70,0X00,0X00,0X00,0X08,0X00,0X00,0X00,0X01,
-0X98,0X00,0X00,0X07,0X80,0X00,0XF0,0X00,0X00,0X00,0X0C,0X00,0X00,0X00,0X00,0X8C,
-0X00,0X00,0X8F,0X80,0X00,0XE0,0X00,0X00,0X00,0X0C,0X00,0X00,0X00,0X00,0X86,0X00,
-0X00,0XFF,0X00,0X01,0XE1,0X80,0X00,0X00,0X0C,0X00,0X00,0X00,0X00,0XC3,0X80,0X00,
-0X7E,0X00,0X01,0XC1,0X80,0X00,0X00,0X0C,0X00,0X00,0X00,0X00,0XC1,0XF0,0XFC,0XFC,
-0X00,0X03,0XC1,0X00,0X00,0X00,0X08,0X00,0X00,0X00,0X00,0XC0,0X7F,0XFF,0XF0,0X00,
-0X03,0X83,0X00,0X00,0X00,0X18,0X00,0X00,0X00,0X00,0X40,0X07,0XFF,0XE0,0X00,0X07,
-0X83,0X00,0X00,0X00,0X18,0X00,0X00,0X00,0X00,0X44,0X07,0XE0,0X00,0X00,0X0F,0X03,
-0X00,0X00,0X00,0X30,0X00,0X00,0X00,0X00,0X43,0XFF,0XC0,0X00,0X00,0X0F,0X03,0X80,
-0X00,0X00,0X30,0X00,0X00,0X00,0X00,0XC0,0XFF,0X00,0X00,0X00,0X1F,0X8F,0X98,0X00,
-0X00,0X60,0X00,0X00,0X00,0X00,0XC0,0X1E,0X00,0X00,0X00,0X3F,0XFF,0X98,0X00,0X00,
-0X60,0X00,0X00,0X00,0X00,0X80,0X3E,0X00,0X00,0X00,0X3F,0XFF,0XD8,0X00,0X00,0XC0,
-0X00,0X00,0X00,0X00,0X80,0X7C,0X00,0X00,0X00,0X0F,0XFF,0XF0,0X00,0X01,0X80,0X00,
-0X03,0X00,0X01,0X80,0XF8,0X00,0X00,0X00,0X00,0X01,0XE0,0X00,0X03,0X00,0X00,0X03,
-0X00,0X01,0X07,0XF0,0X00,0X00,0X00,0X00,0X03,0XC0,0X00,0X07,0X00,0X00,0X03,0X00,
-0X03,0XFF,0XF0,0X00,0X00,0X00,0X00,0X03,0XC0,0X00,0X1F,0X00,0X00,0X03,0X00,0X07,
-0XFF,0XF0,0X00,0X00,0X00,0X00,0X07,0X80,0X00,0X3F,0X80,0X00,0X07,0X80,0X0F,0X83,
-0XF8,0X00,0X00,0X00,0X00,0X07,0X80,0X01,0XFF,0XF0,0X00,0X0F,0X80,0X0F,0XE0,0X7C,
-0X00,0X00,0X00,0X00,0X03,0X80,0X0F,0XFF,0XFF,0X00,0XFF,0X80,0X00,0XFC,0X1C,0X00,
-0X00,0X00,0X00,0X03,0XC0,0X03,0XFF,0XFF,0XFF,0XFF,0XC0,0X00,0X0F,0X0E,0X00,0X00,
-0X00,0X00,0X03,0XE0,0X00,0X1F,0XFF,0XFF,0XFF,0XF8,0X00,0X03,0X8F,0X00,0X00,0X00,
-0X00,0X01,0XFC,0X00,0X01,0XFF,0XFF,0XF0,0XFF,0XC0,0X00,0XC7,0X00,0X00,0X00,0X00,
-0X00,0XFF,0XC0,0X00,0X3F,0X00,0X00,0X3F,0XF8,0X02,0X73,0X00,0X00,0X00,0X00,0X00,
-0X3F,0XFC,0X00,0X0F,0X00,0X00,0X07,0XFE,0X00,0X33,0X00,0X00,0X00,0X00,0X00,0X07,
-0XFF,0X80,0X27,0X80,0X00,0X00,0XFF,0X80,0X5F,0X00,0X00,0X00,0X00,0X00,0X00,0XFF,
-0XF0,0X0B,0X80,0X00,0X00,0X1F,0XE0,0X1F,0X00,0X00,0X00,0X00,0X00,0X00,0X1F,0XFE,
-0X01,0X80,0X00,0X00,0X03,0XF8,0X0F,0X00,0X00,0X00,0X00,0X00,0X00,0X03,0XFF,0XC3,
-0X80,0X00,0X00,0X00,0XFE,0X1E,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X3F,0XF3,0X80,
-0X00,0X00,0X00,0X3F,0XBE,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X07,0XFF,0X80,0X00,
-0X00,0X00,0X0F,0XFE,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X01,0XFF,0X80,0X00,0X00,
-0X00,0X03,0XFE,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X3F,0X00,0X00,0X00,0X00,
-0X01,0XFC,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X1E,0X00,0X00,0X00,0X00,0X00,
-0XF8,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X20,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,};
 //*********4_wire_SPI****************************
 
 void Chk_Busy(void);
@@ -590,6 +493,7 @@ void FontWrite_Position(uint X,uint Y)
 void String(uchar *str)
 {   
     Write_Dir(0x40,0x80);//Set the character mode
+	  Write_Dir(0x41,0x01);//Set the character mode
 	LCD_CmdWrite(0x02);
 	while(*str != '\0')
 	{
@@ -862,7 +766,6 @@ void Text_Mode(void)
 	LCD_DataWrite(temp);
 }
 
-
 /*******************************************************************************
 * Function Name  : LCD_SetCursor
 * Description    : Sets the cursor position.
@@ -881,6 +784,27 @@ void LCD_SetCursor(uint16_t Xpos, uint16_t Ypos)
 	LCD_DataWrite(Ypos);
     LCD_CmdWrite(0x49);	   
 	LCD_DataWrite(Ypos>>8);
+}
+
+
+//---------------------------------//
+//REG[20h]
+
+void Select_Layers_One(void)
+{
+	uint8_t temp;
+	LCD_CmdWrite(0x20);//DPCR
+	temp = LCD_DataRead();
+	temp &= 0x7F ;
+	LCD_DataWrite(temp);
+}	
+				 
+void Select_Layers_Two(void)
+{	uint8_t temp;
+	LCD_CmdWrite(0x20);//DPCR
+	temp = LCD_DataRead();
+	temp |= 0x80 ;
+	LCD_DataWrite(temp);
 }
 
 //---------------------------------------------//
@@ -911,7 +835,7 @@ void LCD_WriteRAM_Prepare(void)
 }
 ////////////Show the picture of the flash
 void Read_flash(uchar picnum)
-{  
+{
    uchar picnumtemp, temp;
 	
    Write_Dir(0X06,0X00);//FLASH frequency setting
@@ -939,9 +863,9 @@ void Read_flash(uchar picnum)
 ////////////Show the picture of the flash
 void Displaypicture(uchar picnum)
 {  
-   uchar picnumtemp;
 //	Read_flash(1);
-   Active_Window(0,799,0,479); 
+	 Select_Layers_One();
+   Active_Window(0,code_BINARY_INFO[picnum].img_width-1,0,code_BINARY_INFO[picnum].img_height-1); 
    MemoryWrite_Position(0,0);//Memory write position	
 //	Graphic_Mode();	
    Write_Dir(0X06,0X00);//FLASH frequency setting
@@ -950,20 +874,49 @@ void Displaypicture(uchar picnum)
 
 	Write_Dir(0XBF,0X02);//Stop DMA
 	
-	picnumtemp=picnum;
-   DMA_Start_address_setting(384000*(picnumtemp-1));//DMA Start address setting
+  DMA_Start_address_setting(code_BINARY_INFO[picnum].start_addr);//DMA Start address setting
 //   DMA_Start_address_setting(0);//DMA Start address setting	
-   DMA_block_mode_size_setting(800,480,800);
+  DMA_block_mode_size_setting(code_BINARY_INFO[picnum].img_width,code_BINARY_INFO[picnum].img_height,code_BINARY_INFO[picnum].img_width);
 	
 	
 //	LCD_WriteRAM_Prepare(); // Prepare to write GRAM 
 //   Write_Dir(0XBF,0x02);//FLASH setting DMA Block
    Write_Dir(0XBF,0x03);//FLASH setting
-	HAL_Delay(1000);
+//	HAL_Delay(1000);
 	Chk_DMA_Busy();
 }
 
+void TFT_DrawString(char* str, int16_t x, int16_t y, int16_t color)
+{
+		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 			
+		Write_Dir(0x40,0x80);//text mode	
+		Write_Dir(0x21,0x20);//Select the external character
+		Write_Dir(0x06,0x03);//Set the frequency
+		Write_Dir(0x2E,0x80);//Font Write Type Setting Register Set up 24 x24 character mode     spacing   0 
+		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
+		Text_Foreground_Color1(color);
+		Write_Dir(0x22,0x80);//Full alignment is enable.The text background color
+		FontWrite_Position(x,y);//Text written to the position
+		Write_Dir(0x40,0x80);//Set the character mode
+		LCD_CmdWrite(0x02);//start write data
+		String((uint8_t*)str);
+}
 
+void TFT_DrawString_X4(char* str, int16_t x, int16_t y, int16_t color)
+{
+		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 			
+		Write_Dir(0x40,0x80);//text mode	
+		Write_Dir(0x21,0x20);//Select the external character
+		Write_Dir(0x06,0x03);//Set the frequency
+		Write_Dir(0x2E,0x80);//Font Write Type Setting Register Set up 24 x24 character mode     spacing   0 
+		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
+		Text_Foreground_Color1(color);
+		Write_Dir(0x22,0xC5);//Full alignment is enable.The text background color
+		FontWrite_Position(x,y);//Text written to the position
+		Write_Dir(0x40,0x80);//Set the character mode
+		LCD_CmdWrite(0x02);//start write data
+		String((uint8_t*)str);
+}
 
 typedef struct BmpFileHeader {
    char bfType[2];	// 2 byte
@@ -1205,7 +1158,7 @@ void test_lcd()
 			HAL_Delay(1000);			
 			Displaypicture(3);
 			Write_Dir(0XBF,0X02);//Stop DMA
-		    Chk_Busy();			
+		    Chk_Busy();
 			Text_Foreground_Color1(color_red);//Color Settings
 			Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 			
 			Write_Dir(0x40,0x80);//text mode	
@@ -1217,14 +1170,29 @@ void test_lcd()
 			FontWrite_Position(400,210);//Text written to the position
 		    Write_Dir(0x40,0x80);//Set the character mode
 		    LCD_CmdWrite(0x02);//start write data
-		    String("20.000");			
-			HAL_Delay(1000);	
-			for(int n=1; n<8;n++)
-			{
-				Displaypicture(n);
+		    String("20.000");
+				
+			
+				Displaypicture(Back_ground);
+				HAL_Delay(1000);
+				
+				Displaypicture(Empty);
 				HAL_Delay(20);
-			}			
+				Displaypicture(Hello);
+				HAL_Delay(20);
+				Displaypicture(Insense_out);
+				HAL_Delay(20);
+				Displaypicture(Setting_Sell);
+				HAL_Delay(20);
+				Displaypicture(Setting_Tech);
+				HAL_Delay(20);
+				Displaypicture(Thanks);
+				HAL_Delay(20);
+				Displaypicture(Wait_insense);
+				HAL_Delay(20);				
 }
+
+
 
 void test_lc(void)
 {
@@ -1320,18 +1288,17 @@ LCD_CmdWrite(0x04);  //PCLK inverse
 
 //		LCD_CmdWrite(0x20);
 //		LCD_DataWrite(0x00);
-		
 		LCD_background(0x0000);
 		
-//		LCD_CmdWrite(0x8a);//PWM setting
-//	  LCD_DataWrite(0x80);
+//	  Select_Layers_Two();
+//		Write_Dir(0x52,0x03);
 		
 		LCD_CmdWrite(0x8a);//PWM setting
 		LCD_DataWrite(0x87);//open PWM
 		
 		LCD_CmdWrite(0x8b);//Backlight brightness setting
-		LCD_DataWrite(20);//Brightness parameter 0xff-0x00
-			printf("LCD_COLOR--\r\n");
+		LCD_DataWrite(15);//Brightness parameter 0xff-0x00
+//			printf("LCD_COLOR--\r\n");
 		Display_ON();
 		Memory_Clear();
 //		test_lcd();
@@ -1351,7 +1318,7 @@ void Display_OFF(void)
 
 
 
-//Cor de fundo com 65k colors
+////Cor de fundo com 65k colors
 void LCD_background(uint16_t color)
 {
 	LCD_CmdWrite(0x60);

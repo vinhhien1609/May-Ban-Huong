@@ -29,8 +29,8 @@
 #define VDM_APP_GSM_MSG_ID_UPDATE_TIMESTAMP 0x70
 
 #define VDM_APP_GSM_DEVICE_REBOOT_OK 0x31
-#define VDM_APP_GSM_LED_ON 0x31
-#define VDM_APP_GSM_LED_OFF 0x30
+#define VDM_APP_RELAY1_ON 0x31
+#define VDM_APP_RELAY1_OFF 0x30
 #define VDM_APP_GSM_DROP_SENSOR_IS_ON 0x31
 #define VDM_APP_GSM_DROP_SENSOR_IS_OFF 0x30
 #define VDM_APP_GSM_NOT_FIXED_ERROR 0x30
@@ -41,7 +41,7 @@
 #define VDM_APP_GSM_ID_STORAGE 0x70
 #define VDM_APP_GSM_ID_QRM_SELL_OK 0x71
 #define VDM_APP_GSM_ID_RTC 0x72
-#define VDM_APP_GSM_ID_QRM_ERROR 0x73
+#define VDM_APP_GSM_ID_QRM_ERROR 0x66		//0x73
 #define VDM_APP_GSM_SERVER_REQUEST_OTA 0x75
 #define VDM_APP_GSM_SERVER_CONFIRM_SUCCESS 0x76
 #define VDM_APP_GSM_SERVER_CONFIRM_FAILED 0x77
@@ -212,6 +212,36 @@ typedef struct
     char end[3]; // = "&&&"
 } __attribute__((packed)) vdm_app_server_turn_off_warning_t;
 
+
+//typedef struct
+//{
+//    char header[3];      // = "###"
+//    char split_0;        // = '|'
+//    char machine_id[10]; // = "TPA0123456"
+//    char split_1;        // = '|'
+//    char cmd_str[4];     // = "CMD="
+//    char split_2;        // = '|'
+//    uint8_t cmd;
+//    uint8_t split_3; // symbol '|'
+//    /* Data */
+//    uint8_t led;
+//    uint8_t temperature;
+//    uint8_t drop_sensor;
+//    uint8_t money_payback[MAX_MONEY_PAYBACK_LEN];
+//    uint8_t item_price[60];
+//    uint8_t nb_of_items_rack[60];
+//    uint8_t year;
+//    uint8_t month;
+//    uint8_t day;
+//    uint8_t hour;
+//    uint8_t minutes;
+//    uint8_t sec;
+//    /* End of data */
+//    uint8_t split_4; // symbol '|'
+//    uint16_t crc;
+//    char end[3]; // = "&&&"
+//} __attribute__((packed)) vdm_app_gsm_door_close_frame_t;
+
 typedef struct
 {
     char header[3];      // = "###"
@@ -223,8 +253,8 @@ typedef struct
     uint8_t cmd;
     uint8_t split_3; // symbol '|'
     /* Data */
-    uint8_t led;
-    uint8_t temperature;
+    uint8_t relay1_state;
+    uint8_t huminity_set;
     uint8_t drop_sensor;
     uint8_t money_payback[MAX_MONEY_PAYBACK_LEN];
     uint8_t item_price[60];
@@ -334,7 +364,7 @@ typedef struct
     uint8_t split_3; // symbol '|'
                      /* Data */
     uint8_t door;
-    uint8_t temp;
+    uint8_t huminity;
     uint8_t nv11_error;      // Loi cua dau doc tien
     uint8_t cash_info[9];    // So luong to tien cua moi menh gia, vi du 10 to 1k, 15 to 20k....
                              // Byte 1 -> byte n tuong ung 1k-500k

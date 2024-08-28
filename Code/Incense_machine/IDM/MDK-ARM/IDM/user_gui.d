@@ -44,6 +44,8 @@ idm\user_gui.o: ..\Core\User_Driver\GLCD.h
 idm\user_gui.o: ..\Core\User_Driver\platform.h
 idm\user_gui.o: ..\Core\User_Driver\glcd_font.h
 idm\user_gui.o: ../Core/Inc/main.h
+idm\user_gui.o: ..\Core\User_Driver\TFT_glcd.h
+idm\user_gui.o: ..\Core\User_Driver\All_75_Pic_256.h
 idm\user_gui.o: ..\Core\User_Driver\GSM_app.h
 idm\user_gui.o: ..\Core\User_Driver\GSM_drv.h
 idm\user_gui.o: ..\Core\User_Driver\RTC_time.h

@@ -167,11 +167,18 @@ static vdm_app_gsm_qr_sell_fail_frame_t m_qrm_sale_error_frame =
         .end = "&&&",
 };
 
+extern IDM_PARA IDM;
+extern IDM_HARDWARE IDM_Status;
+
 static uint8_t m_device_id[10];
 
 static void send_frame(vdm_app_gsm_server_type_t server_type, uint8_t cmd, uint8_t *data, uint32_t length)
 {
 	TCP_send(data, length);
+	printf("GSM>>");
+	for(int n=0; n<length; n++)
+		printf(" %02X",data[n]);
+	printf("\r\n");
 }
 
 //static void send_frame(vdm_app_gsm_server_type_t server_type, uint8_t cmd, uint8_t *data, uint32_t length)
@@ -366,28 +373,35 @@ void vdm_app_gsm_send_door_frame(bool door_close)
 
         /* Led & Temperature & Drop sensor config */
 
-        m_door_close_frame.led = device_config->peripheral.feature_enable.name.led_enable
-                                     ? VDM_APP_GSM_LED_ON
-                                     : VDM_APP_GSM_LED_OFF;
-        m_door_close_frame.temperature = device_config->peripheral.temperature;
-        m_door_close_frame.drop_sensor = device_config->peripheral.feature_enable.name.drop_sensor_enable
-                                             ? VDM_APP_GSM_DROP_SENSOR_IS_ON
-                                             : VDM_APP_GSM_DROP_SENSOR_IS_OFF;
+        m_door_close_frame.relay1_state = IDM_Status.isHeater//device_config->peripheral.feature_enable.name.led_enable
+                                     ? VDM_APP_RELAY1_ON
+                                     : VDM_APP_RELAY1_OFF;
+        m_door_close_frame.huminity_set = IDM.HumidityMAX;//device_config->peripheral.temperature;
+        m_door_close_frame.drop_sensor = VDM_APP_GSM_DROP_SENSOR_IS_ON;//device_config->peripheral.feature_enable.name.drop_sensor_enable
+                                         //    ? VDM_APP_GSM_DROP_SENSOR_IS_ON
+                                         //   : VDM_APP_GSM_DROP_SENSOR_IS_OFF;
 
         /* Item price */
         for (uint32_t i = 0; i < sizeof(m_door_close_frame.item_price); i++)
         {
             //	    	m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i+1)/1000;
-            m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i) / 1000;
+            m_door_close_frame.item_price[i] = (vdm_device_config_get_item_price(i) / 1000)&0xFF;
         }
 
         /* Number of item per rack */
         for (uint32_t i = 0; i < sizeof(m_door_close_frame.nb_of_items_rack); i++)
         {
             //	    	m_door_close_frame.nb_of_items_rack[i] = vdm_device_config_get_item_remain(i+1);
-            m_door_close_frame.nb_of_items_rack[i] = vdm_device_config_get_item_remain(i);
+            m_door_close_frame.nb_of_items_rack[i] = 0;//vdm_device_config_get_item_remain(i);
         }
-
+				//added hiendv
+				if(IDM.currentNumberBuyMore >0)
+					m_door_close_frame.nb_of_items_rack[0] = 0x01;
+				else
+					m_door_close_frame.nb_of_items_rack[0] = 0x00;
+				if(!IDM_Status.isEmptyIsenseSW)	m_door_close_frame.nb_of_items_rack[0] = 0xFF;
+				// end added
+				
         // NV11
         // Clear all return money
         memset(m_door_close_frame.money_payback, 0, sizeof(m_door_close_frame.money_payback));
@@ -444,6 +458,12 @@ void vdm_app_gsm_send_door_frame(bool door_close)
                     m_door_close_frame.money_payback[channel_index] = NV11_GetStoredNoteByChannel(channel_index); /* The number of change notes */
                 }
             }
+						
+						//added Hiendv
+						for (uint32_t channel_index = 0; channel_index < 9; channel_index++)
+						{
+								m_door_close_frame.money_payback[channel_index] = 0;//NV11_GetStoredNoteByChannel(channel_index); /* The number of change notes */
+						}						
         }
         else
         {
@@ -827,6 +847,7 @@ void vdm_app_gsm_set_device_id(uint8_t *device_id)
     memcpy(m_released_item_frame.machine_id, m_device_id, 10);
     memcpy(m_selling_error_frame.machine_id, m_device_id, 10);
 		memcpy(m_start_frame.machine_id, m_device_id, 10);
+		memcpy(m_qrm_sale_error_frame.machine_id, m_device_id, 10);
 		printf("IDM>> ID Machine: %s\r\n",m_device_id);
 }
 
@@ -857,6 +878,7 @@ void vdm_app_gsm_send_selling_error_frame(uint8_t received_cash, uint8_t error_s
     send_frame(VDM_APP_GSM_MAIN_SERVER, m_selling_error_frame.cmd, (uint8_t *)&m_selling_error_frame, sizeof(m_selling_error_frame));
 }
 
+//sell susscess
 void vdm_app_gsm_send_released_item_frame(uint8_t received_cash, uint8_t slot_number)
 {
     DEBUG_INFO("Send release frame\r\n");
@@ -897,6 +919,7 @@ void vdm_app_gsm_send_released_item_frame(uint8_t received_cash, uint8_t slot_nu
 
 extern IDM_HARDWARE IDM_Status;
 extern float Humidity, Temperature;
+
 void vdm_app_gsm_send_heartbeat()
 {
 #if 1
@@ -906,7 +929,7 @@ void vdm_app_gsm_send_heartbeat()
     bool nv11_error = (NV11_GetLatestEvent(true) == NV11_ERROR) ? 1 : 0;
 
     m_heartbeat_frame.door = IDM_Status.isDoorOpen ? VDM_APP_GSM_DOOR_OPEN : VDM_APP_GSM_DOOR_CLOSE;
-    m_heartbeat_frame.temp = (int8_t)Temperature;
+    m_heartbeat_frame.huminity = (int8_t)Humidity;
     m_heartbeat_frame.nv11_error = nv11_error ? VDM_APP_GSM_ERROR : VDM_APP_GSM_OK;
     memset(m_heartbeat_frame.cash_info, 0, 9); // If nv11 error  =>> Set all cash value to zero
     if (nv11_error == false)                   // NV11 ok, get all value
@@ -960,6 +983,12 @@ void vdm_app_gsm_send_heartbeat()
                 m_heartbeat_frame.cash_info[channel] = NV11_GetStoredNoteByChannel(channel); /* The number of change notes */
             }
         }
+				//added hiendv = 0 for insence
+				for (uint32_t channel = 0; channel < 9; channel++)
+				{
+						m_heartbeat_frame.cash_info[channel] = 0;//NV11_GetStoredNoteByChannel(channel); /* The number of change notes */
+				}
+				//end added
     }
 
     /* So hang hoa hien tai tren tung khay */
@@ -968,6 +997,14 @@ void vdm_app_gsm_send_heartbeat()
         /* Lay so luong hang tren tung khay luu vao (60 khay)*/
         m_heartbeat_frame.item_remain[i] = vdm_device_config_get_item_remain(i);
     }
+		
+		//added hiendv
+				if(IDM.currentNumberBuyMore >0)
+					m_door_close_frame.nb_of_items_rack[0] = 0x01;
+				else
+					m_door_close_frame.nb_of_items_rack[0] = 0x00;
+				if(!IDM_Status.isEmptyIsenseSW)	m_door_close_frame.nb_of_items_rack[0] = 0xFF;
+		// and added
 
     // Insert timestamp to message
     SET_MESSAGE_TIME(m_heartbeat_frame, time);
@@ -1135,26 +1172,26 @@ void vdm_app_gsm_send_heartbeat()
 //               sizeof(m_qrm_sale_success_frame));
 //}
 
-//void vdm_app_gsm_send_qrm_sale_fail_frame(uint8_t money, uint8_t supplier, uint8_t index)
-//{
-//    rtc_date_time_t time;
-//    get_time(&time);
+void vdm_app_gsm_send_qrm_sale_fail_frame(uint8_t money, uint8_t supplier, uint8_t index)
+{
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    // Insert timestamp to message
-//    m_qrm_sale_error_frame.money = money;
-//    m_qrm_sale_error_frame.supplier = supplier;
-//    m_qrm_sale_error_frame.index = index;
+    // Insert timestamp to message
+    m_qrm_sale_error_frame.money = money;
+    m_qrm_sale_error_frame.supplier = supplier;
+    m_qrm_sale_error_frame.index = index;
 
-//    SET_MESSAGE_TIME(m_qrm_sale_error_frame, time);
+    SET_MESSAGE_TIME(m_qrm_sale_error_frame, time);
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_qr_sell_fail_frame_t, crc) - offsetof(vdm_app_gsm_qr_sell_fail_frame_t, split_0);
+    uint32_t crc_size = offsetof(vdm_app_gsm_qr_sell_fail_frame_t, crc) - offsetof(vdm_app_gsm_qr_sell_fail_frame_t, split_0);
 
-//    m_qrm_sale_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_qrm_sale_error_frame.split_0,
-//                                                       crc_size);
+    m_qrm_sale_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_qrm_sale_error_frame.split_0,
+                                                       crc_size);
 
-//    /* Luu du lieu vao ROM */
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_qrm_sale_error_frame.cmd, (uint8_t *)&m_qrm_sale_error_frame, sizeof(m_qrm_sale_error_frame));
-//}
+    /* Luu du lieu vao ROM */
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_qrm_sale_error_frame.cmd, (uint8_t *)&m_qrm_sale_error_frame, sizeof(m_qrm_sale_error_frame));
+}
 
 //static AT_NONCACHEABLE_SECTION_INIT(uint8_t m_uart_rx[64]) = {0};
 //// uint8_t m_uart_rx[64] = {0};

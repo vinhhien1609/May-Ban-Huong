@@ -20,6 +20,7 @@
 //#include "stm32f1xx_hal_rtc.h"
 #include "USER_GUIDE.h"
 #include "GLCD.h"
+#include "TFT_glcd.h"
 #include "GSM_app.h"
 #include "RTC_time.h"
 #include "dht_sensor.h"
@@ -32,6 +33,7 @@
 #include "flash.h"
 #include "vdm_device_config.h"
 #include "vdm_app_gsm.h"
+#include "All_75_Pic_256.h"
 
 #define KEY_HOLE_TIME 50
 #define KEY_REPEAT_TIME 1500
@@ -73,6 +75,8 @@ extern unsigned char havemoney, IDM_state;
 extern SSP6_SETUP_REQUEST_DATA m_setup_req;
 extern 	float Humidity;
 static uint8_t RTC_WeekDayNum(uint32_t nYear, uint8_t nMonth, uint8_t nDay);
+
+uint16_t dht_error;
 /* Private define ------------------------------------------------------------*/
 
 void draw_signal_gsm(void);
@@ -233,36 +237,44 @@ void Menu_draw_MONO(void)
 				{
 					GLcd_FillRect(0, 10, 127, 50, BLACK);
 					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DO_NOT_SERVICE),5, 20, WHITE);
+					NV11_Disable(true);
+				}
+				if(buy.StateBuy == STARTUP)
+				{
+					GLcd_FillRect(0, 10, 127, 50, BLACK);
+					GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);
+					NV11_Disable(true);
 				}				
-				if(buy.StateBuy==CELLING)
+				if(buy.StateBuy == HELLO_CUSTOM)
+				{
+					GLcd_FillRect(0, 10, 127, 50, BLACK);
+					GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);
+					nv11_enable(true);
+				}
+				if(buy.StateBuy==WAIT_INSENCE)
 				{
 					GLcd_FillRect(0, 10, 127, 50, BLACK);
 					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_MONEY_RECEIVED),0, 10, WHITE);
 					sprintf(s,"%3d.000VND", m_lastest_note/1000);
 					GLcd_DrawString(s,64,15,WHITE);
 					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_WAIT_RECEVER_INSENCE),15, 45, WHITE);
-				}
-				if(buy.StateBuy == CELL_WAIT)
-				{
-					GLcd_FillRect(0, 10, 127, 50, BLACK);
-					GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);
-					nv11_enable(true);
-				}
-				if(buy.StateBuy ==CELL_EMPTY_INSENCE)
+					NV11_Disable(true);
+				}				
+				if(buy.StateBuy ==INSENCE_EMPTY)
 				{
 					GLcd_FillRect(0, 10, 127, 50, BLACK);
 					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_SORRY),40, 15, WHITE);
 					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_EMPTY_INSENCE),20, 30, WHITE);
-					buy.StateBuy = CELL_WAIT;
+					buy.StateBuy = HELLO_CUSTOM;
 				}
 				if(buy.StateBuy ==CELL_SUCCESS)
 				{				
-					buy.StateBuy = CELL_WAIT;
+					buy.StateBuy = HELLO_CUSTOM;
 				}
 				if(buy.StateBuy ==DONATE)
 				{
-					buy.StateBuy = CELL_WAIT;
-				}					
+					buy.StateBuy = HELLO_CUSTOM;
+				}
 				break;
 			case DIS_Password:
 				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_PASSWORD),20, 20, WHITE);
@@ -515,10 +527,8 @@ void Menu_draw_MONO(void)
 					current_display = last_DIS;
 				break;
 			case DIS_Home:
-
 				if(isSecond_display)
 				{
-				
 					isSecond_display =0;
 					if(show_time>0)	show_time --;
 					sprintf(s,"%s %02d/%02d %2d  %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
@@ -528,9 +538,19 @@ void Menu_draw_MONO(void)
 					draw_signal_gsm();
 					sprintf(s,"%2d%% ", (int)Humidity);
 					GLcd_DrawString(s, 105, 0, WHITE);
-					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == CELL_WAIT)
+					
+					sprintf(s,"E%3d", dht_error);
+					GLcd_DrawString(s, 96, 10, WHITE);
+					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == HELLO_CUSTOM)
 					{
-						havemoney =1;
+						if(IDM.NumberInsenseBuy)
+						{
+							buy.StateBuy = WAIT_INSENCE;
+							havemoney =1;
+						}
+						else
+							buy.StateBuy = DONATE;
+						
 						m_last_n11_event = NV11_EVENT_NONE;
 						//luu doanh thu
 						reven.money = m_lastest_note/1000;
@@ -545,8 +565,9 @@ void Menu_draw_MONO(void)
 						{
 							GLcd_FillRect(0, 10, 127, 50, BLACK);
 							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DO_NOT_SERVICE),5, 20, WHITE);
-						}							
-						if(buy.StateBuy==CELLING)
+							NV11_Disable(true);
+						}
+						if(buy.StateBuy==WAIT_INSENCE)
 						{
 							GLcd_FillRect(0, 10, 127, 50, BLACK);
 							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_MONEY_RECEIVED),0, 10, WHITE);
@@ -554,24 +575,27 @@ void Menu_draw_MONO(void)
 //							m_lastest_note =0;
 							GLcd_DrawString(s,64,15,WHITE);
 							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_WAIT_RECEVER_INSENCE),15, 45, WHITE);
+							NV11_Disable(true);
 						}
-						if(buy.StateBuy == CELL_WAIT)
+						if(buy.StateBuy == HELLO_CUSTOM)
 						{
 							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);					
+							GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);
+							nv11_enable(true);
 						}
-						if(buy.StateBuy ==CELL_EMPTY_INSENCE)
+						if(buy.StateBuy ==INSENCE_EMPTY)
 						{
 							GLcd_FillRect(0, 10, 127, 50, BLACK);
 							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_SORRY),40, 15, WHITE);
 							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_EMPTY_INSENCE),20, 30, WHITE);
-							buy.StateBuy = CELL_WAIT;
+							buy.StateBuy = HELLO_CUSTOM;
 							if(buy.TotalIsenseDroped !=IDM.NumberInsenseBuy)
 							{
 								reven.number = IDM.NumberInsenseBuy - buy.TotalIsenseDroped;
 								reven.money =0;
 								add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);
-							}							
+							}
+							vdm_app_gsm_send_qrm_sale_fail_frame((m_lastest_note/1000)&0xFF, 0xFF, 0x01);
 						}
 						if(buy.StateBuy ==CELL_SUCCESS)
 						{
@@ -583,14 +607,16 @@ void Menu_draw_MONO(void)
 							reven.number = IDM.NumberInsenseBuy;
 							reven.money =0;
 							add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);							
-							buy.StateBuy = CELL_WAIT;
+							buy.StateBuy = HELLO_CUSTOM;
+							vdm_app_gsm_send_released_item_frame((m_lastest_note/1000)&0xFF, 0x01);
 						}
 						if(buy.StateBuy ==DONATE)
 						{
 							show_time=10;
 							GLcd_FillRect(0, 10, 127, 50, BLACK);
 							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_THANK),15, 25, WHITE);					
-							buy.StateBuy = CELL_WAIT;
+							buy.StateBuy = HELLO_CUSTOM;
+							vdm_app_gsm_send_released_item_frame((m_lastest_note/1000)&0xFF, 0x01);
 						}
 					}
 					GLcd_Flush();
@@ -1164,7 +1190,7 @@ void Menu_draw_MONO(void)
 					IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
 					IDM.currentNumberBuyMore = IDM.NumberBuyMore;
 					Write_config();
-					buy.StateBuy = CELL_WAIT;
+					buy.StateBuy = HELLO_CUSTOM;
 	//				IDM_state = 1;
 					Buzz_On(100);
 					printf("Retry: %d/%d\r\n Buy_state: %d\r\n", IDM.currentRetryCellEmpty, IDM.retryCellEmpty, buy.StateBuy);
@@ -1324,47 +1350,47 @@ void Menu_draw_TFT(void)
 				csq = 255;
 				if(buy.StateBuy==STOP_SERVICE)
 				{
-					GLcd_FillRect(0, 10, 127, 50, BLACK);
-					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DO_NOT_SERVICE),5, 20, WHITE);
-				}				
-				if(buy.StateBuy==CELLING)
-				{
-					GLcd_FillRect(0, 10, 127, 50, BLACK);
-					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_MONEY_RECEIVED),0, 10, WHITE);
-					sprintf(s,"%3d.000VND", m_lastest_note/1000);
-//					//luu doanh thu
-//					reven.money = m_lastest_note/1000;
-//					reven.number =0;
-//					add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);
-//					m_lastest_note =0;
-					GLcd_DrawString(s,64,15,WHITE);
-					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_WAIT_RECEVER_INSENCE),15, 45, WHITE);
+					Displaypicture(Stop_Service);
+					NV11_Disable(true);
 				}
-				if(buy.StateBuy == CELL_WAIT)
+				if(buy.StateBuy == STARTUP)
 				{
-					GLcd_FillRect(0, 10, 127, 50, BLACK);
-					GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);
+					Displaypicture(Hello);
+					NV11_Disable(true);
+				}				
+				if(buy.StateBuy == HELLO_CUSTOM)
+				{
+					Displaypicture(Hello);
 					nv11_enable(true);
 				}
-				if(buy.StateBuy ==CELL_EMPTY_INSENCE)
+				if(buy.StateBuy==WAIT_INSENCE)
 				{
-					GLcd_FillRect(0, 10, 127, 50, BLACK);
-					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_SORRY),40, 15, WHITE);
-					GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_EMPTY_INSENCE),20, 30, WHITE);
-					buy.StateBuy = CELL_WAIT;
+					Displaypicture(Wait_insense);
+					LCD_background(color_white);
+					sprintf(s,"%3d.000VND", m_lastest_note/1000);
+					TFT_DrawString(s, 400, 200, color_red );
+					NV11_Disable(true);
+				}				
+				if(buy.StateBuy ==INSENCE_EMPTY)
+				{
+					Displaypicture(Empty);
+					buy.StateBuy = HELLO_CUSTOM;
 				}
 				if(buy.StateBuy ==CELL_SUCCESS)
 				{				
-					buy.StateBuy = CELL_WAIT;
+					buy.StateBuy = HELLO_CUSTOM;
 				}
 				if(buy.StateBuy ==DONATE)
 				{
-					buy.StateBuy = CELL_WAIT;
-				}					
+					buy.StateBuy = HELLO_CUSTOM;
+				}
 				break;
 			case DIS_Password:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_PASSWORD),20, 20, WHITE);
-				GLcd_DrawString("------", 40, 40, WHITE);
+				Displaypicture(Back_ground);
+				LCD_background(color_blue);
+				sprintf(s,"PASSWORD");
+				TFT_DrawString_X4(s, 200, 200, color_red );			
+				TFT_DrawString_X4("------", 200, 300, color_red );			
 				memcpy(temp_menu_char, "------", 6);
 				break;
 			case DIS_Setup:
@@ -1613,22 +1639,30 @@ void Menu_draw_TFT(void)
 					current_display = last_DIS;
 				break;
 			case DIS_Home:
-
 				if(isSecond_display)
 				{
-				
 					isSecond_display =0;
 					if(show_time>0)	show_time --;
-					sprintf(s,"%s %02d/%02d %2d  %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
-					GLcd_DrawString(s, 16, 0, WHITE);
+//					Displaypicture(Old_cell_state);
+					sprintf(s,"%s %02d/%02d %02d  %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
+					LCD_background(color_blue);
+					TFT_DrawString(s, 16, 50, color_white);
 					if(currentTime.second%2)
-						GLcd_DrawString(":", 78, 0, WHITE);
-					draw_signal_gsm();
+						TFT_DrawString(":", 195, 50, color_white);
+//					draw_signal_gsm();
 					sprintf(s,"%2d%% ", (int)Humidity);
-					GLcd_DrawString(s, 105, 0, WHITE);
-					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == CELL_WAIT)
+					TFT_DrawString(s, 400, 20, color_white);
+					
+					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == HELLO_CUSTOM)
 					{
-						havemoney =1;
+						if(IDM.NumberInsenseBuy)
+						{
+							buy.StateBuy = WAIT_INSENCE;
+							havemoney =1;
+						}
+						else
+							buy.StateBuy = DONATE;
+						
 						m_last_n11_event = NV11_EVENT_NONE;
 						//luu doanh thu
 						reven.money = m_lastest_note/1000;
@@ -1641,57 +1675,58 @@ void Menu_draw_TFT(void)
 						Old_cell_state = buy.StateBuy;
 						if(buy.StateBuy==STOP_SERVICE)
 						{
-							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DO_NOT_SERVICE),5, 20, WHITE);
-						}							
-						if(buy.StateBuy==CELLING)
-						{
-							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_MONEY_RECEIVED),0, 10, WHITE);
-							sprintf(s,"%3d.000VND", m_lastest_note/1000);
-//							m_lastest_note =0;
-							GLcd_DrawString(s,64,15,WHITE);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_WAIT_RECEVER_INSENCE),15, 45, WHITE);
+							Displaypicture(Stop_Service);
+							LCD_background(color_white);
+							TFT_DrawString("STOP SERVICE", 300, 200, color_red);
+							NV11_Disable(true);
 						}
-						if(buy.StateBuy == CELL_WAIT)
+						if(buy.StateBuy==WAIT_INSENCE)
 						{
-							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringDef("Xin Kính Chào\n      Quý Khách",20, 20, WHITE);					
+							Displaypicture(Wait_insense);
+							LCD_background(color_white);
+							sprintf(s,"%3d.000", m_lastest_note/1000);
+							TFT_DrawString_X4(s, 400, 200, color_red);
+							NV11_Disable(true);
 						}
-						if(buy.StateBuy ==CELL_EMPTY_INSENCE)
+						if(buy.StateBuy == HELLO_CUSTOM)
 						{
-							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_SORRY),40, 15, WHITE);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_EMPTY_INSENCE),20, 30, WHITE);
-							buy.StateBuy = CELL_WAIT;
+							Displaypicture(Hello);
+							nv11_enable(true);
+						}
+						if(buy.StateBuy ==INSENCE_EMPTY)
+						{
+							Displaypicture(Empty);
+							buy.StateBuy = HELLO_CUSTOM;
 							if(buy.TotalIsenseDroped !=IDM.NumberInsenseBuy)
 							{
 								reven.number = IDM.NumberInsenseBuy - buy.TotalIsenseDroped;
 								reven.money =0;
 								add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);
-							}							
+							}
+							vdm_app_gsm_send_qrm_sale_fail_frame((m_lastest_note/1000)&0xFF, 0xFF, 0x01);
 						}
 						if(buy.StateBuy ==CELL_SUCCESS)
 						{
 							show_time=10;
-							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_THANK),10, 15, WHITE);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_CUSTOM_RECIVER_INSENSE),15, 35, WHITE);
+							Displaypicture(Insense_out);
 							
 							reven.number = IDM.NumberInsenseBuy;
 							reven.money =0;
 							add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);							
-							buy.StateBuy = CELL_WAIT;
+							buy.StateBuy = HELLO_CUSTOM;
+							vdm_app_gsm_send_released_item_frame((m_lastest_note/1000)&0xFF, 0x01);
 						}
 						if(buy.StateBuy ==DONATE)
 						{
 							show_time=10;
-							GLcd_FillRect(0, 10, 127, 50, BLACK);
-							GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_THANK),15, 25, WHITE);					
-							buy.StateBuy = CELL_WAIT;
+							Displaypicture(Thanks);
+							buy.StateBuy = HELLO_CUSTOM;
+							LCD_background(color_white);
+							sprintf(s,"%3d.000", m_lastest_note/1000);
+							TFT_DrawString_X4(s, 400, 200, color_red);							
+							vdm_app_gsm_send_released_item_frame((m_lastest_note/1000)&0xFF, 0x01);
 						}
 					}
-					GLcd_Flush();
 				}
 				break;
 			case DIS_Password:
@@ -1705,7 +1740,7 @@ void Menu_draw_TFT(void)
 						if(temp_menu_char[0] == pass_shop[0] && temp_menu_char[1] == pass_shop[1] && temp_menu_char[2] == pass_shop[2]\
 							&& temp_menu_char[3] == pass_shop[3] && temp_menu_char[4] == pass_shop[4] && temp_menu_char[5] == pass_shop[5])
 						{
-							current_display = DIS_Setup;
+//							current_display = DIS_Setup;
 							Buzz_On(100);
 							break;
 						}
@@ -1713,7 +1748,7 @@ void Menu_draw_TFT(void)
 							&& temp_menu_char[3] == pass_tech[3] && temp_menu_char[4] == pass_tech[4] && temp_menu_char[5] == pass_tech[5])
 						{
 							Buzz_On(100);
-							current_display = DIS_SETUP_TECH;
+//							current_display = DIS_SETUP_TECH;
 							break;
 						}
 						Buzz_On(500);
@@ -1725,7 +1760,8 @@ void Menu_draw_TFT(void)
 						else	str[n] ='-';
 					}
 					str[6]=0;
-					GLcd_DrawString(str, 40, 40, WHITE);
+					LCD_background(color_blue);
+					TFT_DrawString_X4(str, 200, 300, color_white );	
 				}
 				if(key_pressed == CANCEL)
 				{
@@ -2262,7 +2298,7 @@ void Menu_draw_TFT(void)
 					IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
 					IDM.currentNumberBuyMore = IDM.NumberBuyMore;
 					Write_config();
-					buy.StateBuy = CELL_WAIT;
+					buy.StateBuy = HELLO_CUSTOM;
 	//				IDM_state = 1;
 					Buzz_On(100);
 					printf("Retry: %d/%d\r\n Buy_state: %d\r\n", IDM.currentRetryCellEmpty, IDM.retryCellEmpty, buy.StateBuy);

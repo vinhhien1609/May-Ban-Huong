@@ -36,6 +36,8 @@
 #include "ITLSSPProc.h"
 #include "GLCD.h"
 #include "TFT_glcd.h"
+//#include "RA8875.h"
+//#include "RA_LCD.h"
 #include "RTC_time.h"
 #include "GSM_drv.h"
 #include "GSM_app.h"
@@ -67,7 +69,8 @@ extern vdm_device_config_t m_device_config;
 uint32_t sram_ID=0;
 uint32_t time_buzz=0;
 extern uint16_t count_timeout;
-extern uint8_t isLCD_COLOR;
+extern uint16_t dht_error;
+uint8_t isLCD_COLOR;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -108,6 +111,7 @@ extern	rtc_date_time_t currentTime;
 GSM_State GSM;
 extern IDM_PARA IDM;
 extern IDM_HARDWARE IDM_Status;
+uint32_t timeInterval=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -160,7 +164,6 @@ int stt_DHT=0;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	uint32_t timeInterval=0;
 	bool isStart =false, doorOpenStatus = false;	// true is close
   /* USER CODE END 1 */
 
@@ -215,28 +218,27 @@ int main(void)
 	//LCD
 
 	LCD_init();
+//	RA8875_LCD_Initial();
 	printf("LCD_COLOR\r\n");
 
-//#ifdef LCD_COLOR	
-	
-	while(isLCD_COLOR)
-	{
-//    uint32_t freeClust;
-//    FATFS* fs_ptr = &fs;
-//    res = f_getfree("", &freeClust, &fs_ptr); // Warning! This fills fs.n_fatent and fs.csize!
-//    if(res != FR_OK) {
-//        printf("f_getfree() failed, res = %d\r\n", res);
-//    }
+//	while(isLCD_COLOR)
+//	{
 
+//		printf("LCD_COLOR\r\n");
+//		test_lcd();
 
-// 		GLcd_Init(glcd_lcd_write_pin, 0);
-		printf("LCD_COLOR\r\n");
-		test_lcd();		
-		HAL_Delay(100);	
-	}
+//		HAL_Delay(100);	
+//	}
 //#endif
-	GLcd_DrawString("Starting...", 0, 0, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
-	GLcd_Flush();
+	if(isLCD_COLOR)
+	{
+		Displaypicture(Back_ground);
+	}
+	else
+	{
+		GLcd_DrawString("Starting...", 0, 0, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
+		GLcd_Flush();
+	}
 //load config
 	flash_init();
 //	printf("Sram_STT: %d\r\n", Read_SRAM_STT());
@@ -244,22 +246,43 @@ int main(void)
 	read_device_config();
 	vdm_app_gsm_set_device_id(m_device_config.peripheral.machine_id);
 //	test_nv11();
-	GLcd_DrawString("Init NV9...", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
-	GLcd_Flush();
+	if(isLCD_COLOR)
+	{
+		
+	}
+	else
+	{	
+		GLcd_DrawString("Init NV9...", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
+		GLcd_Flush();
+	}
 	ssp_serial_initialize();	
   ITLSSP_Init();
 	int8_t i8_nv11_init = vdm_NV11_Init();
 	
 	if(i8_nv11_init == INIT_OK)
 	{
-		GLcd_DrawString("Init NV9...OK", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
-		GLcd_Flush();
+		if(isLCD_COLOR)
+		{
+			
+		}
+		else
+		{		
+			GLcd_DrawString("Init NV9...OK", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
+			GLcd_Flush();
+		}
 		printf("NV11 Init Successful!\r\n");
 	}
 	else
 	{
-		GLcd_DrawString("Init NV9...NOK", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
-		GLcd_Flush();
+		if(isLCD_COLOR)
+		{
+			
+		}
+		else
+		{		
+			GLcd_DrawString("Init NV9...NOK", 0, 10, WHITE); /* Hien thi len man hinh GLCD trang thai khoi tao GSM/GPRS */
+			GLcd_Flush();
+		}
 		printf("NV11 Init Fail: %d\r\n",i8_nv11_init);
 	}
 
@@ -313,7 +336,6 @@ int main(void)
 				doorOpenStatus = IDM_Status.isDoorOpen;
 				vdm_app_gsm_send_door_frame(!IDM_Status.isDoorOpen);
 			}
-			timeInterval++;
 			if(timeInterval>120)	// 2phut 
 			{
 				timeInterval =0;
@@ -330,12 +352,13 @@ int main(void)
 			currentTime = getRTC();
 //			uint32_t size_of_frame = sizeof(m_door_close_frame);
 //			printf("size fram: %d\r\n", size_of_frame);
-			if(currentTime.second%2==0)
+			if(currentTime.second%10==0)
 			{
 				stt_DHT = DHT_Sensor_Read(&DHT_21);
 				flag_readDHT12=false;
 				if(stt_DHT!=READ_OK)
 				{
+					dht_error ++;
 					DHT_21.values.humidity =0;
 					DHT_21.values.temperature =0;
 				}
@@ -1065,8 +1088,9 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
   /* NOTE : This function Should not be modified, when the callback is needed,
             the HAL_RTCEx_RTCEventCallback could be implemented in the user file
    */
-			isSecond =1;
+	isSecond =1;
 	isSecond_display ++;
+	timeInterval++;
 	
 }
 
