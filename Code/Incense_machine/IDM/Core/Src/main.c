@@ -48,6 +48,10 @@
 #include "vdm_app_gsm.h"
 #include "vdm_fw.h"
 #include "vdm_device_config.h"
+#include "TOUCH.h"
+#include "w25qxx.h"
+#include "keyboard.h"
+#include "graphic.h"
 
 //#include "FATFS/src/ff.h"
 //#include "SPI_MSD_Driver.h"
@@ -71,6 +75,7 @@ uint32_t time_buzz=0;
 extern uint16_t count_timeout;
 extern uint16_t dht_error;
 uint8_t isLCD_COLOR;
+extern unsigned char key_tick, key_map[];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -91,6 +96,7 @@ RTC_HandleTypeDef hrtc;
 
 SD_HandleTypeDef hsd;
 
+SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
 
 TIM_HandleTypeDef htim3;
@@ -112,6 +118,7 @@ GSM_State GSM;
 extern IDM_PARA IDM;
 extern IDM_HARDWARE IDM_Status;
 uint32_t timeInterval=0;
+extern struct _ts_event ts_event;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -127,6 +134,7 @@ static void MX_TIM6_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_SDIO_SD_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_SPI1_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -196,6 +204,7 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
   MX_TIM3_Init();
+  MX_SPI1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -203,8 +212,9 @@ int main(void)
 	    DEBUG_INFO("Vending machine V2.0\r\nBuild %s %s\r\nFirmware version %s, hardware version %s\r\n",
                __DATE__, __TIME__,
                VDM_FIRMWARE_VERSION, VDM_HARDWARE_VERSION);
+	HAL_Delay(1000);							 
 	IDM_init();
-//	HAL_Delay(1000);	
+//	HAL_Delay(1000);
 	//init DHT21
 	DHT_Sensor_Init(&DHT_21);
 	DHT_21.values.humidity =0;
@@ -218,21 +228,22 @@ int main(void)
 	//LCD
 
 	LCD_init();
-//	RA8875_LCD_Initial();
-	printf("LCD_COLOR\r\n");
-
-//	while(isLCD_COLOR)
-//	{
-
-//		printf("LCD_COLOR\r\n");
-//		test_lcd();
-
-//		HAL_Delay(100);	
-//	}
 //#endif
 	if(isLCD_COLOR)
 	{
 		Displaypicture(Back_ground);
+//		Active_Window(10,750, 0, 479);
+//		test_TFT_DrawString(0,20,color_yellow);
+		IOT47_GFX_connectToDriver(&RA8875_drawpixel);
+
+//		while(1)
+//		{
+//			for(int n=0; n<5; n++)
+//			{
+//				COLOR_mono(32+(n*128),32,32,32);
+//				HAL_Delay(500);
+//			}
+//		}
 	}
 	else
 	{
@@ -240,15 +251,32 @@ int main(void)
 		GLcd_Flush();
 	}
 //load config
+	W25qxx_Init();
+//	uint8_t data[300];
+//	W25qxx_EraseSector(0x00);
+//	for(int n=0; n<300; n++)
+//	{
+//		//data[n] =n;
+//		W25qxx_WriteByte(300-n,n);
+//	}
+//	W25qxx_ReadBytes(&data[0],0, 300);
+//	printf("Read SPI_Flash: ");
+//	for(int n=0; n<300; n++)
+//	{
+//		//data[n] =n;
+//		printf("%X ", data[n]);
+//	}	
+	
 	flash_init();
 //	printf("Sram_STT: %d\r\n", Read_SRAM_STT());
-	printf("ID_SRAM: %u\r\n", Read_SRAM_ID());
+	printf("ID_SRAM: %X\r\n", Read_SRAM_ID());
 	read_device_config();
 	vdm_app_gsm_set_device_id(m_device_config.peripheral.machine_id);
 //	test_nv11();
 	if(isLCD_COLOR)
 	{
-		
+		//touch int
+		TOUCH_Init();
 	}
 	else
 	{	
@@ -303,6 +331,10 @@ int main(void)
 //	}
 	int res;
 	uint8_t nv11_timeout_count=0;//, GSM_connect_timeout=0;
+	uint8_t n, m, isTouch=0, oldTouch=0;
+	char s[30];
+
+//isTouch = GSLX680_read_data();
   while (1)
   {
     /* USER CODE END WHILE */
@@ -323,8 +355,20 @@ int main(void)
 		checkGPSCommand();
 		Scan_IDM();
 		Menu_draw();
+//		if(ts_event.touch_event == TOUCH_UP)
+//		{
+//			Buzz_On(100);
+//			ts_event.touch_event = NO_TOUCH;
+//		}
+		if(isTouch==0)
+			isTouch = GSLX680_read_data();	
 		if(isSecond)
 		{
+
+//			if(currentTime.second%2)
+//				HAL_GPIO_WritePin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin, GPIO_PIN_SET);
+//			else
+//				HAL_GPIO_WritePin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin, GPIO_PIN_RESET);
 			isSecond=0;
 			if(isStart == false	&& GSM.Connect4G==1 )
 			{
@@ -622,6 +666,44 @@ static void MX_SDIO_SD_Init(void)
 }
 
 /**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
   * @brief SPI2 Initialization Function
   * @param None
   * @retval None
@@ -630,7 +712,8 @@ static void MX_SPI2_Init(void)
 {
 
   /* USER CODE BEGIN SPI2_Init 0 */
-#ifdef	LCD_MONO
+if(isLCD_COLOR)
+{
   hspi2.Instance = SPI2;
   hspi2.Init.Mode = SPI_MODE_MASTER;
   hspi2.Init.Direction = SPI_DIRECTION_2LINES;
@@ -638,7 +721,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16	;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -647,7 +730,8 @@ static void MX_SPI2_Init(void)
   {
     Error_Handler();
   }
-#else
+}
+else{
   /* USER CODE END SPI2_Init 0 */
 
   /* USER CODE BEGIN SPI2_Init 1 */
@@ -671,7 +755,7 @@ static void MX_SPI2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SPI2_Init 2 */
-#endif
+}
   /* USER CODE END SPI2_Init 2 */
 
 }
@@ -888,32 +972,38 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|Heater_Pin|Flash_MOSI_Pin|Flash_SCK_Pin
-                          |MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(Flash_SS_GPIO_Port, Flash_SS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|Heater_Pin|MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED3_Pin|LED2_Pin|SOLENOID_Pin|SWAP_MOTOR_Pin
-                          |CONVEYER_MOTOR_Pin, GPIO_PIN_RESET);
+                          |CONVEYER_MOTOR_Pin|TOUCH_SCL_Pin|TOUCH_SDA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, LED1_Pin|GSM_RESET_Pin|GSM_PWKEY_Pin|EN_PWR_GSM_Pin
                           |RELAY5_Pin|RELAY4_Pin|RELAY3_Pin|RELAY2_Pin
-                          |RELAY1_Pin, GPIO_PIN_RESET);
+                          |RELAY1_Pin|TOUCH_RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LCD_RESET_GPIO_Port, LCD_RESET_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOD, LCD_RESET_Pin|KEY_COL3_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(KEY_COL3_GPIO_Port, KEY_COL3_Pin, GPIO_PIN_RESET);
+  /*Configure GPIO pin : Flash_SS_Pin */
+  GPIO_InitStruct.Pin = Flash_SS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(Flash_SS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : BUZZER_Pin KEY_COL1_Pin KEY_COL2_Pin */
   GPIO_InitStruct.Pin = BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin;
@@ -936,18 +1026,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Flash_MOSI_Pin Flash_SCK_Pin Flash_SS_Pin */
-  GPIO_InitStruct.Pin = Flash_MOSI_Pin|Flash_SCK_Pin|Flash_SS_Pin;
+  /*Configure GPIO pin : FLASH_CS_Pin */
+  GPIO_InitStruct.Pin = FLASH_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : Flash_MISO_Pin */
-  GPIO_InitStruct.Pin = Flash_MISO_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Flash_MISO_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(FLASH_CS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Empty_Pin */
   GPIO_InitStruct.Pin = Empty_Pin;
@@ -994,12 +1078,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(LCD_CS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LCD_RESET_Pin KEY_COL3_Pin */
-  GPIO_InitStruct.Pin = LCD_RESET_Pin|KEY_COL3_Pin;
+  /*Configure GPIO pin : LCD_RESET_Pin */
+  GPIO_InitStruct.Pin = LCD_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(LCD_RESET_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LCD_INT_Pin MCU_IN1_Pin MCU_IN2_Pin MCU_IN3_Pin */
   GPIO_InitStruct.Pin = LCD_INT_Pin|MCU_IN1_Pin|MCU_IN2_Pin|MCU_IN3_Pin;
@@ -1014,6 +1098,37 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : KEY_COL3_Pin */
+  GPIO_InitStruct.Pin = KEY_COL3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(KEY_COL3_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : TOUCH_SCL_Pin TOUCH_SDA_Pin */
+  GPIO_InitStruct.Pin = TOUCH_SCL_Pin|TOUCH_SDA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : TOUCH_INT_Pin */
+  GPIO_InitStruct.Pin = TOUCH_INT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(TOUCH_INT_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : TOUCH_RST_Pin */
+  GPIO_InitStruct.Pin = TOUCH_RST_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(TOUCH_RST_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -1031,6 +1146,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == htim6.Instance)			//1ms
 	{
 //	HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_SET);
+		if(ts_event.touch_hold_count<30)	ts_event.touch_hold_count ++;
+		if(ts_event.touch_hold_count==29)	ts_event.touch_event = TOUCH_UP;
+			
 		if(time_buzz)
 		{
 			time_buzz--;

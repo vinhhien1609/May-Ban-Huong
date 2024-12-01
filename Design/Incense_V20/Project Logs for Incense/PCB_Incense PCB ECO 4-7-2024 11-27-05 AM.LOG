@@ -1,0 +1,9 @@
+Added Pin To Net: NetName=MCU_MOTOR_CUR Pin=C82-2
+Added Pin To Net: NetName=MCU_MOTOR_CUR Pin=R121-2
+Added Pin To Net: NetName=MCU_MOTOR_CUR Pin=U6-15
+Added Net: Name=MCU_MOTOR_CUR
+Added Pin To Net: NetName=MCU_MOTOR_SWAP_CUR_ADC Pin=C84-2
+Added Pin To Net: NetName=MCU_MOTOR_SWAP_CUR_ADC Pin=R125-1
+Added Pin To Net: NetName=MCU_MOTOR_SWAP_CUR_ADC Pin=U6-16
+Added Net: Name=MCU_MOTOR_SWAP_CUR_ADC
+Added Member To Class: ClassName=02-Insence_interface Member=Component U8 LM358BIDGKR

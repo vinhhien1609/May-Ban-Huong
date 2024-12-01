@@ -73,6 +73,10 @@ typedef enum
 		VDM_LANG_DO_NOT_SERVICE,
 		VDM_LANG_ID_MACHINE,
 		VDM_LANG_SERVER_IP,
+		VDM_LANG_UNIT_PRICE,
+		VDM_LANG_QUANLITY,
+		VDM_LANG_BALANCE,
+		VDM_LANG_MISSING_AMOUNT,
     VDM_LANG_ID_MAX,		
 } vdm_language_id_t;
 
@@ -99,6 +103,12 @@ vdm_language_t vdm_language_get_current_lang();
  */
 const char* vdm_language_get_text(vdm_language_id_t language_id);
 
+
+/**
+ * @brief           Get text form language id
+ * @retval          Text
+ */
+const char* vdm_language_text(vdm_language_id_t language_id);
 /**
  * \}
  */

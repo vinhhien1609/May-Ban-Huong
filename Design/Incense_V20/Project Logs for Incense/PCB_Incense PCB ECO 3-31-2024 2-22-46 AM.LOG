@@ -1,0 +1,21 @@
+Removed Pin From Net: NetName=NetR50_2 Pin=U6-33
+Removed Pin From Net: NetName=NetR61_2 Pin=U6-34
+Removed Pin From Net: NetName=NetR63_2 Pin=U6-35
+Removed Pin From Net: NetName=NetC41_2 Pin=U6-86
+Removed Pin From Net: NetName=NetC43_2 Pin=U6-87
+Removed Pin From Net: NetName=NetC45_2 Pin=U6-88
+Removed Pin From Net: NetName=NetC42_2 Pin=U6-89
+Removed Pin From Net: NetName=NetC44_2 Pin=U6-90
+Added Pin To Net: NetName=NetC41_2 Pin=U6-33
+Added Pin To Net: NetName=NetC43_2 Pin=U6-34
+Added Pin To Net: NetName=NetC45_2 Pin=U6-35
+Added Pin To Net: NetName=NetC42_2 Pin=U6-36
+Added Pin To Net: NetName=NetC44_2 Pin=U6-37
+Added Pin To Net: NetName=NetR50_2 Pin=U6-38
+Added Pin To Net: NetName=NetR61_2 Pin=U6-39
+Added Pin To Net: NetName=NetR63_2 Pin=U6-40
+Change Net Name : Old Net Name=NetC41_2 New Net Name=MCU_IN1
+Change Net Name : Old Net Name=NetC42_2 New Net Name=MCU_IN4
+Change Net Name : Old Net Name=NetC43_2 New Net Name=MCU_IN2
+Change Net Name : Old Net Name=NetC44_2 New Net Name=MCU_IN5
+Change Net Name : Old Net Name=NetC45_2 New Net Name=MCU_IN3

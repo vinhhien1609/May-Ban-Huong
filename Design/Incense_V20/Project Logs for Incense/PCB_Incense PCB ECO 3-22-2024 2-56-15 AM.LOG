@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=INPUT1 Pin=J4-1
+Removed Pin From Net: NetName=INPUT2 Pin=J4-2
+Removed Pin From Net: NetName=INPUT3 Pin=J4-3
+Removed Pin From Net: NetName=INPUT4 Pin=J4-4
+Removed Pin From Net: NetName=INPUT5 Pin=J4-5
+Removed Pin From Net: NetName=DGND Pin=J4-6
+Change Component Designator: OldDesignator=J? NewDesignator=J7
+Added Pin To Net: NetName=DGND Pin=J4-1
+Added Pin To Net: NetName=INPUT1 Pin=J4-2
+Added Pin To Net: NetName=INPUT2 Pin=J4-3
+Added Pin To Net: NetName=INPUT3 Pin=J4-4
+Added Pin To Net: NetName=INPUT4 Pin=J4-5
+Added Pin To Net: NetName=INPUT5 Pin=J4-6
+Added Member To Class: ClassName=02-Insence_interface Member=Component J4 XH2.54-6P
+Added Member To Class: ClassName=02-Insence_interface Member=Component J7 XH2.54-5P

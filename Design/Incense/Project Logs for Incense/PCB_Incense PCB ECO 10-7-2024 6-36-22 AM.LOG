@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=T_SCL Pin=R81-2
+Removed Pin From Net: NetName=T_SDA Pin=R82-2
+Added Pin To Net: NetName=touch_scl Pin=R81-2
+Added Pin To Net: NetName=touch_scl Pin=R134-1
+Added Pin To Net: NetName=touch_scl Pin=U6-95
+Added Net: Name=touch_scl
+Added Pin To Net: NetName=touch_sda Pin=R82-2
+Added Pin To Net: NetName=touch_sda Pin=R133-1
+Added Pin To Net: NetName=touch_sda Pin=U6-96
+Added Net: Name=touch_sda
+Added Room: Name=01-Insence_Power
+Added Room: Name=02-Insence_interface
+Added Room: Name=04_Incense_MCU

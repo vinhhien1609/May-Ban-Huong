@@ -1,0 +1,32 @@
+Added Component: Designator=R81(res 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Yageo"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RC0603FR-075K1L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "5.1K"; VariantName = "[No Variations]"
+Added Component: Designator=R82(res 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Yageo"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RC0603FR-075K1L"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "5.1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=3V3 Pin=R81-1
+Added Pin To Net: NetName=T_SCL Pin=R81-2
+Added Pin To Net: NetName=3V3 Pin=R82-1
+Added Pin To Net: NetName=T_SDA Pin=R82-2
+Added Member To Class: ClassName=02-Insence_interface Member=Component R81 5.1K
+Added Member To Class: ClassName=02-Insence_interface Member=Component R82 5.1K

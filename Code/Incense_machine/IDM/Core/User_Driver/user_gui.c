@@ -34,18 +34,17 @@
 #include "vdm_device_config.h"
 #include "vdm_app_gsm.h"
 #include "All_75_Pic_256.h"
+#include "touch.h"
+#include "keyboard.h"
+#include "graphic.h"
 
-#define KEY_HOLE_TIME 50
-#define KEY_REPEAT_TIME 1500
-#define ENTER	'*'
-#define CANCEL '#'
-#define UP	'8'
-#define DOWN	'0'
+unsigned char temp_menu_char[30];
+unsigned int temp_menu_int[5];
+unsigned char point=0, old_point=0, sub1_point, sub2_point, Old_cell_state, show_time=0, last_DIS=0, stt_door;
 
-unsigned char key_map[16]= {'0','1','2','3','4','5','6','7','8','9','*','#'}, key_tick=255, temp_menu_char[30];
-unsigned char old_key=255, point=0, old_point=0, sub1_point, sub2_point, Old_cell_state, show_time=0, last_DIS=0, stt_door;
-unsigned int key_count=0;
-
+//#define debug_display_info
+#define COLOR_CHANGE	color_red
+#define COLOR_MENU	color_green
 
 Display_Typedef current_display=DIS_Home, old_display=255;
 rtc_date_time_t TimeSetting;
@@ -54,9 +53,10 @@ char str[30];
 
 typedef uint16_t char16_t;
 
-uint16_t temp_data_Menu;
+uint32_t temp_data_Menu;
 char pass_shop[6] = VDM_DEVICE_CONFIG_DEFAULT_SHOP_PASSWORD;
 char pass_tech[6] = VDM_DEVICE_CONFIG_DEFAULT_TECH_PASSWORD;
+unsigned char isTouch=0;
 
 extern GSM_State GSM;
 extern uint8_t isSecond_display;
@@ -73,10 +73,11 @@ extern nv11_event_t m_last_n11_event;
 extern vdm_device_config_t m_device_config;
 extern unsigned char havemoney, IDM_state;
 extern SSP6_SETUP_REQUEST_DATA m_setup_req;
-extern 	float Humidity;
+extern 	float Humidity, Temperature;
 static uint8_t RTC_WeekDayNum(uint32_t nYear, uint8_t nMonth, uint8_t nDay);
 
 uint16_t dht_error;
+
 /* Private define ------------------------------------------------------------*/
 
 void draw_signal_gsm(void);
@@ -88,105 +89,85 @@ static void small_delay()		// not importance function
 	while (i--);
 }
 
-unsigned char scan_BT(void)
-{
-	unsigned char temp= key_tick;
-	if( temp!=255)	printf("KEY >> %c Pressed\r\n", key_tick);
-	key_tick =255;
-	return (temp);
-}
-	
-void scan_switch(void)
-{
-	unsigned char key=255;
-	HAL_GPIO_WritePin(KEY_COL1_GPIO_Port, KEY_COL1_Pin, GPIO_PIN_SET);
-	small_delay();
-	if(HAL_GPIO_ReadPin(KEY_ROW1_GPIO_Port, KEY_ROW1_Pin))	key =0;
-	if(HAL_GPIO_ReadPin(KEY_ROW2_GPIO_Port, KEY_ROW2_Pin))	key =1;
-	if(HAL_GPIO_ReadPin(KEY_ROW3_GPIO_Port, KEY_ROW3_Pin))	key =2;
-	if(HAL_GPIO_ReadPin(KEY_ROW4_GPIO_Port, KEY_ROW4_Pin))	key =3;	//*
-	HAL_GPIO_WritePin(KEY_COL1_GPIO_Port, KEY_COL1_Pin, GPIO_PIN_RESET);
-	
-	HAL_GPIO_WritePin(KEY_COL2_GPIO_Port, KEY_COL2_Pin, GPIO_PIN_SET);
-	small_delay();
-	if(HAL_GPIO_ReadPin(KEY_ROW1_GPIO_Port, KEY_ROW1_Pin))	key =4;
-	if(HAL_GPIO_ReadPin(KEY_ROW2_GPIO_Port, KEY_ROW2_Pin))	key =5;
-	if(HAL_GPIO_ReadPin(KEY_ROW3_GPIO_Port, KEY_ROW3_Pin))	key =6;
-	if(HAL_GPIO_ReadPin(KEY_ROW4_GPIO_Port, KEY_ROW4_Pin))	key =7;
-	HAL_GPIO_WritePin(KEY_COL2_GPIO_Port, KEY_COL2_Pin, GPIO_PIN_RESET);
-	
-	HAL_GPIO_WritePin(KEY_COL3_GPIO_Port, KEY_COL3_Pin, GPIO_PIN_SET);
-	small_delay();
-	if(HAL_GPIO_ReadPin(KEY_ROW1_GPIO_Port, KEY_ROW1_Pin))	key =8;
-	if(HAL_GPIO_ReadPin(KEY_ROW2_GPIO_Port, KEY_ROW2_Pin))	key =9;
-	if(HAL_GPIO_ReadPin(KEY_ROW3_GPIO_Port, KEY_ROW3_Pin))	key =10;	//*
-	if(HAL_GPIO_ReadPin(KEY_ROW4_GPIO_Port, KEY_ROW4_Pin))	key =11;	//#
-	HAL_GPIO_WritePin(KEY_COL3_GPIO_Port, KEY_COL3_Pin, GPIO_PIN_RESET);
-
-	if(old_key==key && key <255)
-	{
-		key_count ++;
-		if(key_count > KEY_REPEAT_TIME)
-			key_count =0;
-		if(key_count==KEY_HOLE_TIME)
-		{
-			Buzz_On(10);
-				key_tick = key_map[key];// chi gui 1 lan cho toi khi nha
-		}
-	}
-	else
-	{
-		key_count =0;
-		old_key = key;
-	}
-
-}
 
 void show_Messenger(const char *messenger, uint16_t timeOn)
 {
-	GLcd_FillRect(30, 10, 60, 35, BLACK);
-	GLcd_DrawRect(30, 10, 60, 35, WHITE);
-	GLcd_DrawStringUni(messenger, 35, 25, WHITE);
-	last_DIS = current_display;
-	current_display = DIS_SHOW_MESSENGER;
-	Buzz_On(100);
+	if(isLCD_COLOR)
+	{
+		char str[100];
+		uint16_t width = FontMakerGetWidth(messenger,&uArial_32);
+		last_DIS = current_display;
+		current_display = DIS_SHOW_MESSENGER;
+		
+		drawRoundRect((450-width)/2 + 10,240,width + 40, 100,10, color_blue, true);
+		drawRoundRect((450-width)/2 + 10,240,width + 40, 100,10, color_brown, false);
+		sprintf(str,"%s", messenger);
+		FontMakerPutStringTRANPARENT((450-width)/2 +30,260,str,&Arial_32,GREEN);
+	}
+	else
+	{
+		GLcd_FillRect(30, 10, 60, 35, BLACK);
+		GLcd_DrawRect(30, 10, 60, 35, WHITE);
+		GLcd_DrawStringUni(messenger, 35, 25, WHITE);
+		last_DIS = current_display;
+		current_display = DIS_SHOW_MESSENGER;
+	}
+		Buzz_On(100);	
 }
+
+
 
 //draw signal GSM
 uint8_t csq=255;
 void draw_signal_gsm(void)
 {
-	uint8_t t=0;
+	uint8_t t=0, n;
 	if(csq != GSM.CSQ)
 			csq = GSM.CSQ;
 	else
 		return;
-	while(t<14)
+	if(isLCD_COLOR)
 	{
-		GLcd_DrawLine(t,0, t, 6, BLACK);
-		t++;
+//		GSM.CSQ =20;
+		drawRoundRect(10,9,80,40,0,color_blue,true);
+		for(t=0; t<5; t++)	//draw y= 10-50
+		{
+			if(t<GSM.CSQ/7)
+				drawRoundRect(20 + t*10, 15+(4-t)*5,6,25-(4-t)*5,2,color_green,true);		//10-->50
+			else
+				drawRoundRect(20 + t*10, 15+(4-t)*5,6,25-(4-t)*5,2,color_green,false);
+//				drawRoundRect(20 + t*10, 15+(4-t)*5,6,25-(4-t)*5,2,color_dark_blue,true);
+		}
 	}
-		printf("GSM>> CSQ: %d\r\n", GSM.CSQ);
-		if(GSM.CSQ)
+	else
+	{
+		while(t<14)
 		{
-			GLcd_DrawLine(0,0, 3, 3, WHITE);
-			GLcd_DrawLine(3,3, 6, 0, WHITE);
-			GLcd_DrawLine(0,0, 6, 0, WHITE);
-			if(GSM.Connect4G)	GLcd_DrawLine(3,0, 3, 6, WHITE);
-			else	GLcd_DrawLine(3,0, 3, 3, WHITE);
-		}
-		else
-		{
-			GLcd_DrawLine(0,0, 4, 4, WHITE);
-			GLcd_DrawLine(0,4, 4, 0, WHITE);
-		}
-		t=0;
-		while(t<5)
-		{
-			if(t<GSM.CSQ/6)	GLcd_DrawLine(5+t*2, 5 - t, 5+t*2, 6, WHITE);
-			else	GLcd_DrawLine(5+t*2, 6, 5+t*2, 6, WHITE);
+			GLcd_DrawLine(t,0, t, 6, BLACK);
 			t++;
 		}
+			printf("GSM>> CSQ: %d\r\n", GSM.CSQ);
+			if(GSM.CSQ)
+			{
+				GLcd_DrawLine(0,0, 3, 3, WHITE);
+				GLcd_DrawLine(3,3, 6, 0, WHITE);
+				GLcd_DrawLine(0,0, 6, 0, WHITE);
+				if(GSM.Connect4G)	GLcd_DrawLine(3,0, 3, 6, WHITE);
+				else	GLcd_DrawLine(3,0, 3, 3, WHITE);
+			}
+			else
+			{
+				GLcd_DrawLine(0,0, 4, 4, WHITE);
+				GLcd_DrawLine(0,4, 4, 0, WHITE);
+			}
+			t=0;
+			while(t<5)
+			{
+				if(t<GSM.CSQ/6)	GLcd_DrawLine(5+t*2, 5 - t, 5+t*2, 6, WHITE);
+				else	GLcd_DrawLine(5+t*2, 6, 5+t*2, 6, WHITE);
+				t++;
+			}
+	}
 }
 
 void Menu_draw(void)
@@ -230,7 +211,7 @@ void Menu_draw_MONO(void)
 		{
 			case DIS_SHOW_MESSENGER:
 				show_time=0;
-				break;			
+				break;
 			case DIS_Home:
 				csq = 255;
 				if(buy.StateBuy==STOP_SERVICE)
@@ -280,6 +261,7 @@ void Menu_draw_MONO(void)
 				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_PASSWORD),20, 20, WHITE);
 				GLcd_DrawString("------", 40, 40, WHITE);
 				memcpy(temp_menu_char, "------", 6);
+
 				break;
 			case DIS_Setup:
 					GLcd_DrawBitmap(img_arrow_bmp, 0, (point%3)*15 + 15);
@@ -309,13 +291,13 @@ void Menu_draw_MONO(void)
 			case DIS_SET_IP:
 				sub2_point=0;
 				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_SERVER_IP),40, 0, WHITE);
-				temp_menu_char[0] = (m_device_config.server.addr>>24)&0xFF;
-				temp_menu_char[1] = (m_device_config.server.addr>>16)&0xFF;
-				temp_menu_char[2] = (m_device_config.server.addr>>8)&0xFF;
-				temp_menu_char[3] = m_device_config.server.addr&0xFF;
+				temp_menu_int[0] = (m_device_config.server.addr>>24)&0xFF;
+				temp_menu_int[1] = (m_device_config.server.addr>>16)&0xFF;
+				temp_menu_int[2] = (m_device_config.server.addr>>8)&0xFF;
+				temp_menu_int[3] = m_device_config.server.addr&0xFF;
 				temp_data_Menu = m_device_config.server.port;
 				
-				sprintf(s,"IP: %03d.%03d.%03d.%03d", temp_menu_char[0], temp_menu_char[1], temp_menu_char[2], temp_menu_char[3]);
+				sprintf(s,"IP: %03d.%03d.%03d.%03d", temp_menu_int[0], temp_menu_int[1], temp_menu_int[2], temp_menu_int[3]);
 				GLcd_DrawString(s, 0, 20, WHITE);
 			
 				sprintf(s,"PORT: %04d", temp_data_Menu);
@@ -464,6 +446,7 @@ void Menu_draw_MONO(void)
 					}
 					if((n + sub1_point/5)>=m_setup_req.NumberOfChannels)	break;
 				}
+				
 				break;
 			case DIS_TIME_SWAP_RUN:		// thoi gian swap
 				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TIME_RUN_INSENSE),10, 10, WHITE);
@@ -502,7 +485,7 @@ void Menu_draw_MONO(void)
 	else
 	{
 		key_pressed = scan_BT();
-		if(key_pressed!=255)
+		if(key_pressed!=255 || get_touch_env()== TOUCH_DOWN)
 			isSecond_display =0;
 //		if(key_pressed =='*')
 //			current_display++;
@@ -514,6 +497,7 @@ void Menu_draw_MONO(void)
 			else
 				current_display = DIS_Home;
 		}
+		
 		switch(current_display)
 		{
 			case DIS_SHOW_MESSENGER:
@@ -539,18 +523,27 @@ void Menu_draw_MONO(void)
 					sprintf(s,"%2d%% ", (int)Humidity);
 					GLcd_DrawString(s, 105, 0, WHITE);
 					
-					sprintf(s,"E%3d", dht_error);
-					GLcd_DrawString(s, 96, 10, WHITE);
+//					sprintf(s,"E%3d", dht_error);
+//					GLcd_DrawString(s, 96, 10, WHITE);
 					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == HELLO_CUSTOM)
 					{
-						if(IDM.NumberInsenseBuy)
+						
+						if(m_device_config.item[0].price)
 						{
-							buy.StateBuy = WAIT_INSENCE;
-							havemoney =1;
+							buy.StateBuy = SALES_SERVICE;
+							m_device_config.closing_balance.closing_balance += m_lastest_note;
+							save_device_config();
 						}
 						else
-							buy.StateBuy = DONATE;
-						
+						{
+							if(IDM.NumberInsenseBuy)
+							{
+								buy.StateBuy = WAIT_INSENCE;
+								havemoney =1;
+							}
+							else
+								buy.StateBuy = DONATE;
+						}
 						m_last_n11_event = NV11_EVENT_NONE;
 						//luu doanh thu
 						reven.money = m_lastest_note/1000;
@@ -913,15 +906,7 @@ void Menu_draw_MONO(void)
 					sprintf(s, "%3d ", temp_data_Menu);
 					GLcd_DrawString(s, 64, 30, WHITE);					
 				}
-//				if(key_pressed=='0')
-//					if(temp_data_Menu>0)	temp_data_Menu --;
-//				if(key_pressed=='8')
-//					if(temp_data_Menu<30)	temp_data_Menu ++;
-//				if(key_pressed=='0' || key_pressed=='8')
-//				{
-//					sprintf(s, "%2d ", temp_data_Menu);
-//					GLcd_DrawString(s, 64, 30, WHITE);
-//				}
+
 				if(key_pressed == ENTER)
 				{
 					IDM.NumberInsenseBuy=temp_data_Menu;
@@ -1241,7 +1226,7 @@ void Menu_draw_MONO(void)
 				{
 					if(sub2_point/3 <4)
 					{
-						temp_menu_char[sub2_point/3] = (temp_menu_char[sub2_point/3]%100)*10 + key_pressed-'0';
+						temp_menu_int[sub2_point/3] = (temp_menu_int[sub2_point/3]%100)*10 + key_pressed-'0';
 					}
 					else
 						temp_data_Menu = (temp_data_Menu%1000)*10 + key_pressed-'0';
@@ -1251,7 +1236,7 @@ void Menu_draw_MONO(void)
 				if(old_point!= sub2_point)
 				{
 					old_point= sub2_point;
-					sprintf(s,"ID: %03d.%03d.%03d.%03d", temp_menu_char[0], temp_menu_char[1], temp_menu_char[2], temp_menu_char[3]);
+					sprintf(s,"ID: %03d.%03d.%03d.%03d", temp_menu_int[0], temp_menu_int[1], temp_menu_int[2], temp_menu_int[3]);
 					GLcd_DrawString(s, 0, 20, WHITE);
 				
 					sprintf(s,"PORT: %04d", temp_data_Menu);
@@ -1268,10 +1253,10 @@ void Menu_draw_MONO(void)
 				}
 				if(key_pressed == ENTER)
 				{
-					m_device_config.server.addr = (uint32_t)temp_menu_char[0];
-					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_char[1];
-					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_char[2];
-					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_char[3];
+					m_device_config.server.addr = (uint32_t)temp_menu_int[0];
+					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_int[1];
+					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_int[2];
+					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_int[3];
 					m_device_config.server.port = temp_data_Menu;
 					save_device_config();
 					show_Messenger(vdm_language_get_text(VDM_LANG_FINISH), 2);
@@ -1333,20 +1318,33 @@ void Menu_draw_TFT(void)
 			current_display = DIS_Home;
 	}
 	
+	if(isTouch)
+	{
+		isTouch =0;
+		GSLX680_read_data();
+	}
+	
 	if(current_display!= old_display)		//init etc display
 	{
 		old_display = current_display;
 
 //		point =sub1_point;
 //		old_point =0;
-		if(current_display!=DIS_SHOW_MESSENGER)
-			GLcd_ClearScreen(BLACK);
+//		if(current_display!=DIS_SHOW_MESSENGER)
+//			GLcd_ClearScreen(BLACK);
 		switch(current_display)
 		{
 			case DIS_SHOW_MESSENGER:
 				show_time=0;
-				break;			
+				break;
+			case DIS_KEYBOARD:
+				break;
 			case DIS_Home:
+				Access_layer(0);				
+				LCD_background(color_black);		
+				Memory_Clear();
+			
+				Enable_Vitual_key(false);
 				csq = 255;
 				if(buy.StateBuy==STOP_SERVICE)
 				{
@@ -1368,7 +1366,7 @@ void Menu_draw_TFT(void)
 					Displaypicture(Wait_insense);
 					LCD_background(color_white);
 					sprintf(s,"%3d.000VND", m_lastest_note/1000);
-					TFT_DrawString(s, 400, 200, color_red );
+					TFT_DrawString(s, 400, 200, color_red);
 					NV11_Disable(true);
 				}				
 				if(buy.StateBuy ==INSENCE_EMPTY)
@@ -1386,20 +1384,22 @@ void Menu_draw_TFT(void)
 				}
 				break;
 			case DIS_Password:
-				Displaypicture(Back_ground);
+				Displaypicture(Setting_Sell);		
 				LCD_background(color_blue);
-				sprintf(s,"PASSWORD");
-				TFT_DrawString_X4(s, 200, 200, color_red );			
-				TFT_DrawString_X4("------", 200, 300, color_red );			
+
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				sprintf(s,"%s",vdm_language_text(VDM_LANG_PASSWORD));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&uArial_32))/2 +10,150,s,&Arial_32,GREEN);			
+				TFT_DrawString_option("------", 130, 220, color_red,false,4);			
 				memcpy(temp_menu_char, "------", 6);
+				Enable_Vitual_key(true);
+				point=0;
 				break;
 			case DIS_Setup:
-					GLcd_DrawBitmap(img_arrow_bmp, 0, (point%3)*15 + 15);
-					for(int n=0; n<3; n++)
-					{
-						if((point/3)*3 +n >10)	break;
-						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT+(point/3)*3 +n),10, 10 + n*15, WHITE);
-					}			
+				Displaypicture(Setting_Sell);		
+				Enable_Vitual_key(false);
+				old_point = 255;
 				break;
 			case DIS_TimeSetup:
 				GLcd_DrawString("Time Setting", 18, 0, WHITE);
@@ -1411,93 +1411,171 @@ void Menu_draw_TFT(void)
 				GLcd_DrawLine(18,33,23,33,WHITE);
 				break;
 			case DIS_SETUP_TECH:
-					GLcd_DrawBitmap(img_arrow_bmp, 0, (point%3)*15 + 15);
-					for(int n=0; n<3; n++)
-					{
-						if((point/3)*3 +n >1)	break;
-						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ID_MACHINE+(point/3)*3 +n),10, 10 + n*15, WHITE);
-					}
+				Displaypicture(Setting_Tech);		
+				Enable_Vitual_key(false);
+				old_point = 255;
 				break;
 			case DIS_SET_IP:
 				sub2_point=0;
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_SERVER_IP),40, 0, WHITE);
-				temp_menu_char[0] = (m_device_config.server.addr>>24)&0xFF;
-				temp_menu_char[1] = (m_device_config.server.addr>>16)&0xFF;
-				temp_menu_char[2] = (m_device_config.server.addr>>8)&0xFF;
-				temp_menu_char[3] = m_device_config.server.addr&0xFF;
+				old_point =0;
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_SERVER_IP));
+				FontMakerPutStringTRANPARENT(150,150,s,&font_16,GREEN);
+			
+				temp_menu_int[0] = (m_device_config.server.addr>>24)&0xFF;
+				temp_menu_int[1] = (m_device_config.server.addr>>16)&0xFF;
+				temp_menu_int[2] = (m_device_config.server.addr>>8)&0xFF;
+				temp_menu_int[3] = m_device_config.server.addr&0xFF;
 				temp_data_Menu = m_device_config.server.port;
 				
-				sprintf(s,"IP: %03d.%03d.%03d.%03d", temp_menu_char[0], temp_menu_char[1], temp_menu_char[2], temp_menu_char[3]);
-				GLcd_DrawString(s, 0, 20, WHITE);
-			
+				sprintf(s,"IP:%03d.%03d.%03d.%03d", temp_menu_int[0], temp_menu_int[1], temp_menu_int[2], temp_menu_int[3]);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,20, 200, color_green, false, 3);
+				drawRoundRect(92,205,71, 40,4, color_green, false);
 				sprintf(s,"PORT: %04d", temp_data_Menu);
-				GLcd_DrawString(s, 0, 40, WHITE);
-				GLcd_DrawLine(23, 30, 35, 30, WHITE);
+				TFT_DrawString_option(s,20, 250, color_green, false, 3);			
 				break;
 			case DIS_SET_ID_MACHINE:
 				sub2_point=0;
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ID_MACHINE),40, 0, WHITE);
+				old_point = 0;
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_ID_MACHINE));
+				FontMakerPutStringTRANPARENT(150,150,s,&font_16,GREEN);
+			
 				for(int n=0; n<7; n++)
 					temp_menu_char[n] = m_device_config.peripheral.machine_id[n] + '0';
 				temp_menu_char[7]=0;
 				sprintf(s,"ID: %s", temp_menu_char);
-				GLcd_DrawString(s, 0, 20, WHITE);
-				GLcd_DrawLine(23, 30, 27, 30, WHITE);	
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,20, 200, color_green, true, 3);
+				drawRoundRect(116+ old_point*24,205,24, 40,4, COLOR_MENU, false);
+
 				break;
-			case DIS_TOTAL_MONEY:
-				GLcd_DrawBitmap(img_arrow_bmp, 0, 15 + 15*sub1_point);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DAY),10, 10, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_MONTH),10, 25, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_YEAR),10, 40, WHITE);
+			case DIS_TOTAL:
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				LCD_background(color_blue);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_TOTAL));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_NUMBER));
+				FontMakerPutStringTRANPARENT(20,230,s,&font_16,GREEN);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_TOTAL_MONEY));
+				FontMakerPutStringTRANPARENT(20,290,s,&font_16,GREEN);
+			
+				revenue_total revenTotal = get_revenue_total();
+				sprintf(s,"%9lu000", revenTotal.money);
+				TFT_DrawString_option(s,125, 210, color_green, false, 3);
+				sprintf(s,"%9lu", revenTotal.number);
+				TFT_DrawString_option(s,125, 270, color_green, false, 3);			
 				break;
 			case DIS_DAY:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);
+			
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				LCD_background(color_blue);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_DAY));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_NUMBER));
+				FontMakerPutStringTRANPARENT(20,230,s,&font_16,GREEN);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_TOTAL_MONEY));
+				FontMakerPutStringTRANPARENT(20,290,s,&font_16,GREEN);
+			
 				TimeSetting = currentTime;
 				sprintf(s,"%02d/%02d/%4d",TimeSetting.day, TimeSetting.month,TimeSetting.year);
-				GLcd_DrawString(s, 35, 10,WHITE);
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN);
+			
 				reven = get_revenue_day(TimeSetting.day,TimeSetting.month, TimeSetting.year);
-				sprintf(s,"%d000", reven.money);
-				GLcd_DrawString(s, 60, 45,WHITE);
-				sprintf(s,"%d", reven.number);
-				GLcd_DrawString(s, 60, 30,WHITE);			
+				sprintf(s,"%7d000", reven.money);
+				TFT_DrawString_option(s,150, 210, color_green, false, 3);
+				sprintf(s,"%7d", reven.number);
+				TFT_DrawString_option(s,150, 270, color_green, false, 3);
 				break;
 			case DIS_MONTH:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);
-				TimeSetting = currentTime;				
+//				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
+//				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);
+			
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				LCD_background(color_blue);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_MONTH));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_NUMBER));
+				FontMakerPutStringTRANPARENT(20,230,s,&font_16,GREEN);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_TOTAL_MONEY));
+				FontMakerPutStringTRANPARENT(20,290,s,&font_16,GREEN);
+			
+				TimeSetting = currentTime;
 				sprintf(s,"%02d/%4d",TimeSetting.month,TimeSetting.year);
-				GLcd_DrawString(s, 40, 10,WHITE);
-				revenue_t reven = get_revenue_month(TimeSetting.month, TimeSetting.year);
-				sprintf(s,"%d000", reven.money);
-				GLcd_DrawString(s, 60, 45,WHITE);
-				sprintf(s,"%d", reven.number);
-				GLcd_DrawString(s, 60, 30,WHITE);			
-				break;
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN);
+			
+				reven = get_revenue_month(TimeSetting.month, TimeSetting.year);
+				sprintf(s,"%7d000", reven.money);
+				TFT_DrawString_option(s,150, 210, color_green, false, 3);
+				sprintf(s,"%7d", reven.number);
+				TFT_DrawString_option(s,150, 270, color_green, false, 3);
+				break;				
+//			case DIS_MONTH:
+//				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
+//				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);
+//				TimeSetting = currentTime;				
+//				sprintf(s,"%02d/%4d",TimeSetting.month,TimeSetting.year);
+//				GLcd_DrawString(s, 40, 10,WHITE);
+//				revenue_t reven = get_revenue_month(TimeSetting.month, TimeSetting.year);
+//				sprintf(s,"%d000", reven.money);
+//				GLcd_DrawString(s, 60, 45,WHITE);
+//				sprintf(s,"%d", reven.number);
+//				GLcd_DrawString(s, 60, 30,WHITE);			
+//				break;
 			
 			case DIS_YEAR:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);
+//				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
+//				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);
+			
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				LCD_background(color_blue);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_YEAR));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_NUMBER));
+				FontMakerPutStringTRANPARENT(20,230,s,&font_16,GREEN);
+				sprintf(s, "%s",vdm_language_text(VDM_LANG_TOTAL_MONEY));
+				FontMakerPutStringTRANPARENT(20,290,s,&font_16,GREEN);
+			
 				TimeSetting = currentTime;
 				sprintf(s,"%4d",TimeSetting.year);
-				GLcd_DrawString(s, 45, 10,WHITE);
-				reven = get_revenue_year(TimeSetting.year);
-				sprintf(s,"%d000", reven.money);
-				GLcd_DrawString(s, 60, 45,WHITE);
-				sprintf(s,"%d", reven.number);
-				GLcd_DrawString(s, 60, 30,WHITE);			
-				break;
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN);
 			
-			case DIS_TOTAL:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT),10, 10, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MONEY),0, 40, WHITE);	
-				break;
+				reven = get_revenue_year(TimeSetting.year);
+				sprintf(s,"%7d000", reven.money);
+				TFT_DrawString_option(s,150, 210, color_green, false, 3);
+				sprintf(s,"%7d", reven.number);
+				TFT_DrawString_option(s,150, 270, color_green, false, 3);
+				break;				
+	
 			
 			case DIS_CELL_EACH_TIME:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER),0, 25, WHITE);
-				sprintf(s, "%d", IDM.NumberInsenseBuy);
-				GLcd_DrawString(s, 64, 30, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				sprintf(s, "%s (%d)",vdm_language_text(VDM_LANG_TOTAL_SETTING), IDM.NumberInsenseBuy);
+//				uint16_t n = FontMakerGetWidth(s,&ufont_16);
+//				sprintf(s, "%s (%d)",s, n);
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+				LCD_background(color_blue);
+				sprintf(s, "%3d", IDM.NumberInsenseBuy);
+				TFT_DrawString_option(s,200, 200, color_green, false, 3);
 				temp_data_Menu = IDM.NumberInsenseBuy;
 				break;
 			
@@ -1544,87 +1622,154 @@ void Menu_draw_TFT(void)
 				break;
 			
 			case DIS_ONOFF_HUMIDITY:
-				if(IDM.EnableHumidity==0)	sub1_point =1;
-				GLcd_DrawBitmap(img_arrow_bmp, 0, 15 + sub1_point*15);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ON),10, 10, WHITE);
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_OFF),10, 25, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				FontMakerPutStringTRANPARENT(150,160,vdm_language_text(VDM_LANG_EN_CONTROL_HUMIDITY),&font_16,GREEN);
+				if(IDM.EnableHumidity==0)
+				{
+					drawRoundRect(150,220,100, 30,15, color_gray, true);
+					drawRoundRect(152,222,30, 26,12, color_white, true);
+					sub1_point =1;
+				}
+				else
+				{
+					drawRoundRect(150,220,100, 30,15, color_green, true);
+					drawRoundRect(218,222,30, 26,12, color_white, true);
+					sub1_point =0;
+				}
+				Enable_Vitual_key(true);
+			
 				break;
 			
 			case DIS_HUMIDITY_SET:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_HUMUDITY_SETTING),10, 10, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+				sprintf(s, "%s (%d%%)", vdm_language_text(VDM_LANG_HUMUDITY_SETTING), IDM.HumidityMAX);
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
 				sprintf(s, "%d%%", IDM.HumidityMAX);
-				GLcd_DrawString(s, 50, 30, WHITE);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,200, 200, color_green, false, 3);
 				temp_data_Menu = IDM.HumidityMAX;
 				break;
 			
 			case DIS_ACCEPT_DENO:
 				temp_data_Menu = m_device_config.accept_cash_max;
-				GLcd_DrawBitmap(img_arrow_bmp, 0, (sub1_point%5)*10 + 10);
-				for(int n=0; n< 5; n++)
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+//				FontMakerPutStringTRANPARENT(150,150,vdm_language_text(VDM_LANG_ACCEPT_MOUNT),&font_16,GREEN);
+				sprintf(s,"%s",vdm_language_text(VDM_LANG_ACCEPT_MOUNT));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+				for(int n=0; n< m_setup_req.NumberOfChannels; n++)
 				{
-					sprintf(s,"%3d.000 %s",m_setup_req.ChannelData[n + sub1_point/5].value/1000, m_setup_req.ChannelData[n + sub1_point/5].cc);
-					GLcd_DrawString(s,20, n*10 +10,WHITE);
-					if((temp_data_Menu>>(n + sub1_point/5))&0x01)
+					sprintf(s,"%3d.000 %s",m_setup_req.ChannelData[n].value/1000, m_setup_req.ChannelData[n].cc);
+					
+					if((temp_data_Menu>>n)&0x01)
 					{
-						GLcd_DrawLine(10, n*10 +12, 12, n*10 +15, WHITE);
-						GLcd_DrawLine(12, n*10 +15, 16, n*10 +10, WHITE);
+						TFT_DrawString_option(s,10+n/5*250, (n%5)*50 +170, color_green, true, 2);
 					}
 					else
-					{
-							GLcd_DrawLine(10, n*10 +12, 12, n*10 +15, BLACK);
-							GLcd_DrawLine(12, n*10 +15, 16, n*10 +10, BLACK);					
+					{	
+						TFT_DrawString_option(s,10+n/5*250, (n%5)*50 +170, color_gray, true, 2);					
 					}
-					if((n + sub1_point/5)>=m_setup_req.NumberOfChannels)	break;
 				}
 				break;
 			case DIS_TIME_SWAP_RUN:		// thoi gian swap
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TIME_RUN_INSENSE),10, 10, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);			
+				sprintf(s, "%s (%ds)", vdm_language_text(VDM_LANG_TIME_RUN_INSENSE), IDM.TimeSWAPRun);
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
 				sprintf(s, "%3ds ", IDM.TimeSWAPRun);
-				GLcd_DrawString(s, 50, 30, WHITE);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,200, 200, color_green, false, 3);
 				temp_data_Menu = IDM.TimeSWAPRun;
+				Enable_Vitual_key(true);
 				break;
 			case DIS_NUMBER_CELL_SWAP:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_INSENSE_CELL),10, 10, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+				sprintf(s, "%s (%d)", vdm_language_text(VDM_LANG_TOTAL_INSENSE_CELL), IDM.TotalInsenseCycleSwapBuy);
+				FontMakerPutStringTRANPARENT(150,160,s,&font_16,GREEN);
+			
 				sprintf(s, "%d", IDM.TotalInsenseCycleSwapBuy);
-				GLcd_DrawString(s, 50, 30, WHITE);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,200, 200, color_green, false, 3);
 				temp_data_Menu = IDM.TotalInsenseCycleSwapBuy;
 				break;
 			case DIS_CELL_MORE:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_INSENSE_CELL_MORE),10, 10, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+				sprintf(s, "%s (%d)", vdm_language_text(VDM_LANG_INSENSE_CELL_MORE), IDM.NumberBuyMore);
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
 				sprintf(s, "%d", IDM.NumberBuyMore);
-				GLcd_DrawString(s, 50, 30, WHITE);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,200, 200, color_green, false, 3);
 				temp_data_Menu = IDM.NumberBuyMore;
 				break;
 			case DIS_NUMBER_CELL_MORE_EMPTY:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_NUMBER_CELL_MORE),10, 10, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+				sprintf(s, "%s (%d)", vdm_language_text(VDM_LANG_NUMBER_CELL_MORE), IDM.retryCellEmpty);
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);
+			
 				sprintf(s, "%2d", IDM.retryCellEmpty);
-				GLcd_DrawString(s, 50, 30, WHITE);
+				FontMakerPutStringTRANPARENT(150,160,s,&font_16,GREEN);
 				temp_data_Menu = IDM.retryCellEmpty;				
 				break;
 			case DIS_DEL_CELL_ERROR:
-				GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_DELETE_ERROR_CELL),10, 10, WHITE);
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				sprintf(s,"%s", vdm_language_text(VDM_LANG_DELETE_ERROR_CELL));
+				FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,GREEN);			
+				break;
+			case DIS_PRICE_SET:
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);
+				temp_data_Menu = m_device_config.item[0].price;
+				sprintf(s, "%s (%d VND)", vdm_language_text(VDM_LANG_UNIT_PRICE), temp_data_Menu);
+				FontMakerPutStringTRANPARENT(150,160,s,&font_16,GREEN);
+			
+				sprintf(s, "%6d(VND)", temp_data_Menu);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,180, 200, color_green, false, 3);			
 				break;
 			default:
 				current_display = DIS_Home;
 				break;
 		}
-		GLcd_Flush();		
+#ifdef debug_display_info
+		sprintf(s,"DIS: %2d", current_display);
+		printf(s);	printf("\r\n");
+		TFT_DrawString(s, 20, 400, color_green);	
+#endif		
 	}
 ////////////////////////////////////////////////////////////////////////////////////////	
 	else
 	{
 		key_pressed = scan_BT();
-		if(key_pressed!=255)
+		scan_vitual_key();
+		if(key_pressed!=255 || get_touch_env()==TOUCH_DOWN)
 			isSecond_display =0;
-//		if(key_pressed =='*')
-//			current_display++;
 		if(isSecond_display>60)
 		{
 			isSecond_display =0;
 			if(IDM_Status.isDoorOpen==true)
+			{
 				current_display = DIS_Password;
+			}
 			else
+			{
 				current_display = DIS_Home;
+				Enable_Vitual_key(false);
+			}
 		}
 		switch(current_display)
 		{
@@ -1638,30 +1783,77 @@ void Menu_draw_TFT(void)
 				if(key_pressed==CANCEL)
 					current_display = last_DIS;
 				break;
+			case DIS_KEYBOARD:
+//				scan_vitual_key();				
+				if(get_vitual_key()==KEY_CANCEL)
+					current_display = last_DIS;
+				break;
 			case DIS_Home:
 				if(isSecond_display)
 				{
 					isSecond_display =0;
 					if(show_time>0)	show_time --;
 //					Displaypicture(Old_cell_state);
-					sprintf(s,"%s %02d/%02d %02d  %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
-					LCD_background(color_blue);
-					TFT_DrawString(s, 16, 50, color_white);
+//					sprintf(s,"%s %02d/%02d %02d  %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
+					LCD_background(color_black);
+//					TFT_DrawString(s, 16, 50, color_white);
 					if(currentTime.second%2)
-						TFT_DrawString(":", 195, 50, color_white);
-//					draw_signal_gsm();
-					sprintf(s,"%2d%% ", (int)Humidity);
-					TFT_DrawString(s, 400, 20, color_white);
+//						TFT_DrawString(":", 195, 50, color_white);
+						sprintf(s,"%s %02d/%02d %02d:%02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
+					else
+						sprintf(s,"%s %02d/%02d %02d %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
+					TFT_DrawString(s, 550, 440, color_green);					
+					draw_signal_gsm();
+					sprintf(s,"%2d%%", (int)Humidity);
+					TFT_DrawString(s, 400, 20, color_green);
+					sprintf(s,"%2dC",(int)Temperature);
+					TFT_DrawString(s, 250, 20, color_green);
+					
+
+					if(get_touch(TOUCH_UP, 300, 200, 200, 200)== true && m_device_config.item[0].price >0)
+					{
+						Buzz_On(100);
+						drawRoundRect(10,140,450, 330,10, color_blue, true);
+						drawRoundRect(10,140,450, 330,10, color_brown, false);
+						Enable_Vitual_key(true);
+						sprintf(s, "%s", vdm_language_text(VDM_LANG_BALANCE));
+						FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,145,s,&font_16,GREEN);
+						drawRoundRect(50,180,350, 60,10, color_brown, false);
+						LCD_background(color_blue);
+						sprintf(s, "%6d", m_device_config.closing_balance.closing_balance);
+						TFT_DrawString_option(s,120, 185, color_green, false, 3);
+						
+						sprintf(s, "%s", vdm_language_text(VDM_LANG_QUANLITY));
+						FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,260,s,&font_16,GREEN);
+						drawRoundRect(50,290,350, 60,10, color_white, true);
+						drawRoundRect(50,290,350, 60,10, color_brown, false);
+						
+						sprintf(s, "%s", vdm_language_text(VDM_LANG_MISSING_AMOUNT));
+						FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,375,s,&font_16,GREEN);
+						drawRoundRect(50,405,350, 60,10, color_white, true);
+						drawRoundRect(50,405,350, 60,10, color_brown, false);
+						last_DIS = current_display;
+						current_display = DIS_KEYBOARD;
+					}
 					
 					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == HELLO_CUSTOM)
 					{
-						if(IDM.NumberInsenseBuy)
+						if(m_device_config.item[0].price)
 						{
-							buy.StateBuy = WAIT_INSENCE;
-							havemoney =1;
+							buy.StateBuy = SALES_SERVICE;
+							m_device_config.closing_balance.closing_balance += m_lastest_note;
+							save_device_config();
 						}
 						else
-							buy.StateBuy = DONATE;
+						{
+							if(IDM.NumberInsenseBuy)
+							{
+								buy.StateBuy = WAIT_INSENCE;
+								havemoney =1;
+							}
+							else
+								buy.StateBuy = DONATE;
+						}
 						
 						m_last_n11_event = NV11_EVENT_NONE;
 						//luu doanh thu
@@ -1676,7 +1868,7 @@ void Menu_draw_TFT(void)
 						if(buy.StateBuy==STOP_SERVICE)
 						{
 							Displaypicture(Stop_Service);
-							LCD_background(color_white);
+//							LCD_background(color_white);
 							TFT_DrawString("STOP SERVICE", 300, 200, color_red);
 							NV11_Disable(true);
 						}
@@ -1714,6 +1906,9 @@ void Menu_draw_TFT(void)
 							reven.money =0;
 							add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);							
 							buy.StateBuy = HELLO_CUSTOM;
+//							if(m_device_config.closing_balance.closing_balance
+//							m_device_config.closing_balance.closing_balance += m_lastest_note;
+//							save_device_config();
 							vdm_app_gsm_send_released_item_frame((m_lastest_note/1000)&0xFF, 0x01);
 						}
 						if(buy.StateBuy ==DONATE)
@@ -1730,6 +1925,7 @@ void Menu_draw_TFT(void)
 				}
 				break;
 			case DIS_Password:
+//				char str[7];
 				if(key_pressed>='0' && key_pressed <='9')
 				{
 					temp_menu_char[point] = key_pressed;
@@ -1740,20 +1936,22 @@ void Menu_draw_TFT(void)
 						if(temp_menu_char[0] == pass_shop[0] && temp_menu_char[1] == pass_shop[1] && temp_menu_char[2] == pass_shop[2]\
 							&& temp_menu_char[3] == pass_shop[3] && temp_menu_char[4] == pass_shop[4] && temp_menu_char[5] == pass_shop[5])
 						{
-//							current_display = DIS_Setup;
+							current_display = DIS_Setup;
 							Buzz_On(100);
+//							Displaypicture(Setting_Sell);
 							break;
 						}
 						if(temp_menu_char[0] == pass_tech[0] && temp_menu_char[1] == pass_tech[1] && temp_menu_char[2] == pass_tech[2]\
 							&& temp_menu_char[3] == pass_tech[3] && temp_menu_char[4] == pass_tech[4] && temp_menu_char[5] == pass_tech[5])
 						{
-							Buzz_On(100);
-//							current_display = DIS_SETUP_TECH;
+							current_display = DIS_SETUP_TECH;
+							Buzz_On(100);							
 							break;
 						}
 						Buzz_On(500);
+						sprintf(str,"------");
 					}
-					char str[7];
+
 					for(int n=0; n<6; n++)
 					{
 						if(n<point) str[n] = '*';
@@ -1761,7 +1959,7 @@ void Menu_draw_TFT(void)
 					}
 					str[6]=0;
 					LCD_background(color_blue);
-					TFT_DrawString_X4(str, 200, 300, color_white );	
+					TFT_DrawString_option(str, 130, 220, color_white,false,4);	
 				}
 				if(key_pressed == CANCEL)
 				{
@@ -1788,61 +1986,68 @@ void Menu_draw_TFT(void)
 					current_display = DIS_Password;
 					point=0;
 				}
-				if(key_pressed == ENTER)
+
+				if(get_touch(TOUCH_DOWN, 55, 70, 705, 240)== true)
+				{
+					struct _ts_event touch_mouse = get_mouse();
+					if((touch_mouse.x1-55)%235 <230 && (touch_mouse.y1-70)%40 <35)
+						point = ((touch_mouse.x1-55)/235)*6 + (touch_mouse.y1-70)/40;
+				}
+					
+				if(old_point!= point)
+				{
+					if(old_point<255)
+					{						
+						drawRoundRect(55+(old_point/6)*235,70+(old_point%6)*40,220, 30,10, color_black, false);
+						drawRoundRect(56+(old_point/6)*235,71+(old_point%6)*40,218, 28,8, color_black, false);
+					}
+					drawRoundRect(55+(point/6)*235,70+(point%6)*40,220, 30,10, color_green, false);
+					drawRoundRect(56+(point/6)*235,71+(point%6)*40,218, 28,8, color_green, false);
+					old_point =point;
+					Buzz_On(10);
+				}
+				if(key_pressed == ENTER || get_touch(TOUCH_UP, 55, 70, 705, 240)== true)
 				{
 					sub1_point =0;
 					switch(point)
 					{
-						case 0:
-							current_display = DIS_TOTAL_MONEY;
-							sub1_point=0;
-							break;
-						case 1:
+						case 6:////////////////
 							current_display = DIS_CELL_EACH_TIME;
 							break;
-						case 2:
-							current_display = DIS_ERROR_INFO;
-							sub1_point =0;
-							break;
-						case 3:
-							current_display = DIS_ONOFF_HUMIDITY;
-							break;
-						case 4:
+//						case 2:
+//							current_display = DIS_ERROR_INFO;
+//							sub1_point =0;
+//							break;
+						case 13:
 							current_display = DIS_HUMIDITY_SET;
 							break;
-						case 5:
+						case 10:	//////////////////
 							current_display = DIS_ACCEPT_DENO;
 							sub1_point=0;
 							break;
-						case 6:
+						case 7:
 							current_display = DIS_TIME_SWAP_RUN;
 							break;
-						case 7:
+						case 8:
 							current_display = DIS_NUMBER_CELL_SWAP;
 							break;
-						case 8:
+						case 9:
 							current_display = DIS_CELL_MORE;
 							break;
-						case 9:
-							current_display = DIS_NUMBER_CELL_MORE_EMPTY;
-							break;
-						case 10:
+//						case 9:
+//							current_display = DIS_NUMBER_CELL_MORE_EMPTY;
+//							break;
+						case 3:
 							current_display = DIS_DEL_CELL_ERROR;
-							break;						
+							break;
+						case 12:	////////////
+							current_display = DIS_ONOFF_HUMIDITY;
+							break;
+						case 11:
+							current_display = DIS_PRICE_SET;
+							break;
 					}
-				}
-				if(old_point!= point)
-				{
-					if(point%3!=1 || point ==10)	GLcd_FillRect(0, 10, 127, 48, BLACK);
-					GLcd_DrawBitmap(img_del_arrow_bmp, 0, (old_point%3)*15 + 15);
-					old_point =point;
-					GLcd_DrawBitmap(img_arrow_bmp, 0, (point%3)*15 + 15);
-					for(int n=0; n<3; n++)
-					{
-						if((point/3)*3 +n >10)	break;
-						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT+(point/3)*3 +n),10, 10 + n*15, WHITE);
-					}
-				}
+				}				
 				break;
 			case DIS_TimeSetup:
 				if(key_pressed>='0' && key_pressed<='9')
@@ -1878,33 +2083,13 @@ void Menu_draw_TFT(void)
 					GLcd_DrawLine(point_pos[point],33,5+point_pos[point],33,WHITE);
 				}
 				break;
-			case DIS_TOTAL_MONEY:
-				if(key_pressed=='0')
-				{
-					sub1_point++;
-					if(sub1_point>2)	sub1_point=0;
-				}
-				if(key_pressed=='8')
-				{
-					if(sub1_point==0)	sub1_point=2;
-					else	sub1_point--;
-				}
+			case DIS_TOTAL:
 				if(key_pressed== CANCEL)
-					current_display = DIS_Setup;
-				if(key_pressed == ENTER)
-				{
-					current_display = sub1_point + DIS_DAY;
-				}
-				if(old_point!= sub1_point)
-				{
-					old_point	= sub1_point;
-					GLcd_FillRect(0, 15, 5, 45, BLACK);
-					GLcd_DrawBitmap(img_arrow_bmp, 0, sub1_point*15 + 15);
-				}
+					current_display = DIS_SETUP_TECH;				
 				break;
 			case DIS_DAY:
 				if(key_pressed==CANCEL)
-					current_display = DIS_TOTAL_MONEY;
+					current_display = DIS_SETUP_TECH;//DIS_TOTAL_MONEY;
 				unsigned char monthday[14] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 				if(key_pressed == UP)
 				{
@@ -1942,19 +2127,32 @@ void Menu_draw_TFT(void)
 				}
 				if(key_pressed == UP || key_pressed == DOWN)
 				{
-					sprintf(s,"%02d/%02d/%4d",TimeSetting.day,TimeSetting.month, TimeSetting.year);
-					GLcd_DrawString(s, 35, 10,WHITE);
-					GLcd_FillRect(60,30,67,25,BLACK);
+//					TimeSetting = currentTime;
+					sprintf(s,"%02d/%02d/%4d",TimeSetting.day, TimeSetting.month,TimeSetting.year);
+//					FontMakerPutString((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN, BLUE);
+					drawRoundRect(100,180,300, 30,10, color_blue, true);
+					FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN);
+					
+					LCD_background(color_blue);
 					reven = get_revenue_day(TimeSetting.day,TimeSetting.month, TimeSetting.year);
-					sprintf(s,"%d000", reven.money);
-					GLcd_DrawString(s, 60, 45,WHITE);
-					sprintf(s,"%d", reven.number);
-					GLcd_DrawString(s, 60, 30,WHITE);
+					sprintf(s,"%7d000", reven.money);
+					TFT_DrawString_option(s,150, 210, color_green, false, 3);
+					sprintf(s,"%7d", reven.number);
+					TFT_DrawString_option(s,150, 270, color_green, false, 3);		
+					
+//					sprintf(s,"%02d/%02d/%4d",TimeSetting.day,TimeSetting.month, TimeSetting.year);
+//					GLcd_DrawString(s, 35, 10,WHITE);
+//					GLcd_FillRect(60,30,67,25,BLACK);
+//					reven = get_revenue_day(TimeSetting.day,TimeSetting.month, TimeSetting.year);
+//					sprintf(s,"%d000", reven.money);
+//					GLcd_DrawString(s, 60, 45,WHITE);
+//					sprintf(s,"%d", reven.number);
+//					GLcd_DrawString(s, 60, 30,WHITE);
 				}
 				break;
 			case DIS_MONTH:
 				if(key_pressed==CANCEL)
-					current_display = DIS_TOTAL_MONEY;
+					current_display = DIS_SETUP_TECH;//DIS_TOTAL_MONEY;
 				if(key_pressed == UP)
 				{
 					TimeSetting.month ++;
@@ -1976,19 +2174,20 @@ void Menu_draw_TFT(void)
 				}
 				if(key_pressed == UP || key_pressed == DOWN)
 				{
-					sprintf(s,"%02d/%4d",TimeSetting.month, TimeSetting.year);
-					GLcd_DrawString(s, 40, 10,WHITE);
-					GLcd_FillRect(60,30,67,25,BLACK);
+					sprintf(s,"%02d/%4d", TimeSetting.month,TimeSetting.year);
+					drawRoundRect(100,180,300, 30,10, color_blue, true);
+					FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN);
+					LCD_background(color_blue);				
 					reven = get_revenue_month(TimeSetting.month, TimeSetting.year);
-					sprintf(s,"%d000", reven.money);
-					GLcd_DrawString(s, 60, 45,WHITE);
-					sprintf(s,"%d", reven.number);
-					GLcd_DrawString(s, 60, 30,WHITE);						
+					sprintf(s,"%7d000", reven.money);
+					TFT_DrawString_option(s,150, 210, color_green, false, 3);
+					sprintf(s,"%7d", reven.number);
+					TFT_DrawString_option(s,150, 270, color_green, false, 3);						
 				}
 				break;
 			case DIS_YEAR:
 				if(key_pressed==CANCEL)
-					current_display = DIS_TOTAL_MONEY;
+					current_display = DIS_SETUP_TECH;//DIS_TOTAL_MONEY;
 				if(key_pressed == UP)
 				{
 					TimeSetting.year ++;
@@ -1999,37 +2198,30 @@ void Menu_draw_TFT(void)
 				}
 				if(key_pressed == UP || key_pressed == DOWN)
 				{
-					sprintf(s,"%4d",TimeSetting.year);
-					GLcd_DrawString(s, 45, 10,WHITE);
-					GLcd_FillRect(60,30,67,25,BLACK);
+					sprintf(s,"%4d", TimeSetting.year);
+					drawRoundRect(100,180,300, 30,10, color_blue, true);
+					FontMakerPutStringTRANPARENT((450-FontMakerGetWidth(s,&ufont_16))/2 +10,180,s,&font_16,GREEN);
+					LCD_background(color_blue);				
 					reven = get_revenue_year(TimeSetting.year);
-					sprintf(s,"%d000", reven.money);
-					GLcd_DrawString(s, 60, 45,WHITE);
-					sprintf(s,"%d", reven.number);
-					GLcd_DrawString(s, 60, 30,WHITE);
+					sprintf(s,"%7d000", reven.money);
+					TFT_DrawString_option(s,150, 210, color_green, false, 3);
+					sprintf(s,"%7d", reven.number);
+					TFT_DrawString_option(s,150, 270, color_green, false, 3);	
 				}				
 				break;
-			case DIS_TOTAL:
-				if(key_pressed==CANCEL)
-					current_display = DIS_TOTAL_MONEY;			
-				break;
+//			case DIS_TOTAL:
+//				if(key_pressed==CANCEL)
+//					current_display = DIS_TOTAL_MONEY;			
+//				break;
 			case DIS_CELL_EACH_TIME:
 				if(key_pressed>='0' && key_pressed<='9')
 				{
 					temp_data_Menu = (temp_data_Menu%100) *10 + (key_pressed-'0');
 					if(temp_data_Menu >100)	temp_data_Menu =temp_data_Menu%100;
 					sprintf(s, "%3d ", temp_data_Menu);
-					GLcd_DrawString(s, 64, 30, WHITE);					
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,200, 200, COLOR_CHANGE, false, 3);					
 				}
-//				if(key_pressed=='0')
-//					if(temp_data_Menu>0)	temp_data_Menu --;
-//				if(key_pressed=='8')
-//					if(temp_data_Menu<30)	temp_data_Menu ++;
-//				if(key_pressed=='0' || key_pressed=='8')
-//				{
-//					sprintf(s, "%2d ", temp_data_Menu);
-//					GLcd_DrawString(s, 64, 30, WHITE);
-//				}
 				if(key_pressed == ENTER)
 				{
 					IDM.NumberInsenseBuy=temp_data_Menu;
@@ -2103,12 +2295,23 @@ void Menu_draw_TFT(void)
 				break;
 				
 			case DIS_ONOFF_HUMIDITY:
-				if(key_pressed=='8' || key_pressed=='0') 
+				if(key_pressed=='8' || key_pressed=='0' || get_touch(TOUCH_UP, 120,200, 150,80)==true)
 				{
 					if(sub1_point)
 						sub1_point =0;	// bat
 					else
 						sub1_point=1;		// tat
+					
+					if(sub1_point==1)
+					{
+					drawRoundRect(150,220,100, 30,15, color_gray, true);
+					drawRoundRect(152,222,30, 26,12, color_white, true);
+					}
+					else
+					{
+						drawRoundRect(150,220,100, 30,15, color_green, true);
+						drawRoundRect(218,222,30, 26,12, color_white, true);					
+					}					
 				}
 				if(key_pressed== CANCEL)
 					current_display = DIS_Setup;
@@ -2117,30 +2320,19 @@ void Menu_draw_TFT(void)
 					if(sub1_point)	IDM.EnableHumidity = 0;
 					else	IDM.EnableHumidity = 1;
 					Write_config();
+					current_display = DIS_Setup;
 					show_Messenger(vdm_language_get_text(VDM_LANG_FINISH), 2);
 				}
-				if(key_pressed!=255)
-				{
-					GLcd_FillRect(0, 15, 5, 35, BLACK);
-					GLcd_DrawBitmap(img_arrow_bmp, 0, sub1_point*15 + 15);					
-				}
+
 				break;
 			case DIS_HUMIDITY_SET:
-//				if(key_pressed=='0')
-//					if(temp_data_Menu>5)	(temp_data_Menu%5==0) ? (temp_data_Menu -=5) : (temp_data_Menu -= temp_data_Menu%5);
-//				if(key_pressed=='8')
-//					if(temp_data_Menu<30)	(temp_data_Menu%5==0) ? (temp_data_Menu +=5) : (temp_data_Menu += 5 - temp_data_Menu%5);
-//				if(key_pressed=='0' || key_pressed=='8')
-//				{
-//					sprintf(s, "%2d%%", temp_data_Menu);
-//					GLcd_DrawString(s, 50, 30, WHITE);
-//				}
 				if(key_pressed>='0' && key_pressed<='9')
 				{
 					temp_data_Menu = (temp_data_Menu%100) *10 + (key_pressed-'0');
 					if(temp_data_Menu >100)	temp_data_Menu =temp_data_Menu%100;		// Max
 					sprintf(s, "%3d%% ", temp_data_Menu);
-					GLcd_DrawString(s, 50, 30, WHITE);
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,200, 200, COLOR_CHANGE, false, 3);	
 				}				
 				if(key_pressed==ENTER)
 				{
@@ -2156,66 +2348,76 @@ void Menu_draw_TFT(void)
 					current_display = DIS_Setup;
 				if(key_pressed == UP)
 				{
-					if(sub1_point==0)	sub1_point = m_setup_req.NumberOfChannels -1;
-					else	sub1_point--;
-					GLcd_FillRect(0,10,10,48, BLACK);
-					GLcd_DrawBitmap(img_arrow_bmp, 0, (sub1_point%5)*10 + 10);
+					if(point==0)	point = m_setup_req.NumberOfChannels -1;
+					else	point--;
 				}
 				if(key_pressed == DOWN)
 				{
-					sub1_point++;
-					if(sub1_point >=m_setup_req.NumberOfChannels)	sub1_point =0;
-					GLcd_FillRect(0,10,10,48, BLACK);
-					GLcd_DrawBitmap(img_arrow_bmp, 0, (sub1_point%5)*10 + 10);
+					point++;
+					if(point >=m_setup_req.NumberOfChannels)	point =0;
 				}
 				if(key_pressed== ENTER)
 				{
-					if((temp_data_Menu>>sub1_point)&0x01) temp_data_Menu&=~(1<<sub1_point);
-					else	temp_data_Menu|=(1<<sub1_point);
+					if((temp_data_Menu>>point)&0x01) temp_data_Menu&=~(1<<point);
+					else	temp_data_Menu|=(1<<point);
+				}
+				
+//				if(get_touch(TOUCH_DOWN, 15, 170, 460, 250)== true)
+//				{
+//					struct _ts_event touch_mouse = get_mouse();
+//					if((touch_mouse.x1-15)%230 <220 && (touch_mouse.y1-170)%50 <40)
+//						point = ((touch_mouse.x1-10)/250)*5 + (touch_mouse.y1-170)/50;
+//				}
+				if(get_touch(TOUCH_UP, 15, 170, 460, 250)== true)
+				{
+					struct _ts_event touch_mouse = get_mouse();
+					if((touch_mouse.x1-15)%230 <220 && (touch_mouse.y1-170)%50 <40)
+					{
+						point = ((touch_mouse.x1-10)/230)*5 + (touch_mouse.y1-170)/50;
+						if(point < m_setup_req.NumberOfChannels)
+						{
+							if((temp_data_Menu>>point)&0x01) temp_data_Menu&=~(1<<point);
+							else	temp_data_Menu|=(1<<point);
+						}
+						Buzz_On(10);
+					}
+				}			
+					
+				if(old_point!= point && point < m_setup_req.NumberOfChannels)
+				{
+					drawRoundRect(12+(old_point/5)*230,170+(old_point%5)*50,200, 40,10, color_blue, false);	
+					drawRoundRect(12+(point/5)*230,170+(point%5)*50,200, 40,10, color_green, false);	
+					old_point = point;
+				}
+				if(m_device_config.accept_cash_max != temp_data_Menu)
+				{
 					m_device_config.accept_cash_max = temp_data_Menu;
 					Buzz_On(100);
 					save_device_config();
-					NV11_SetAcceptNote(temp_data_Menu, 0);
-				}
-				if(key_pressed != 255)
-				{
-					if(sub1_point == 0 || sub1_point == 4 || sub1_point == 5 || sub1_point >=7)
-							GLcd_FillRect(10,10,117,52, BLACK);
-					for(int n=0; n< 5; n++)
+					NV11_SetAcceptNote(temp_data_Menu, 0);					
+					for(int n=0; n< m_setup_req.NumberOfChannels; n++)
 					{
-						if((n+(sub1_point/5)*5)>=m_setup_req.NumberOfChannels)	break;						
-						sprintf(s,"%3d.000 %s",m_setup_req.ChannelData[n + (sub1_point/5)*5].value/1000, m_setup_req.ChannelData[n + (sub1_point/5)*5].cc);
-						GLcd_DrawString(s,20, n*10 +10,WHITE);
-						if((temp_data_Menu>>(n + (sub1_point/5)*5))&0x01)
+						sprintf(s,"%3d.000 %s",m_setup_req.ChannelData[n].value/1000, m_setup_req.ChannelData[n].cc);
+						
+						if((temp_data_Menu>>n)&0x01)
 						{
-							GLcd_DrawLine(10, n*10 +12, 12, n*10 +15, WHITE);
-							GLcd_DrawLine(12, n*10 +15, 16, n*10 +10, WHITE);
+							TFT_DrawString_option(s,10+n/5*250, (n%5)*50 +170, color_green, true, 2);
 						}
 						else
-						{
-							GLcd_DrawLine(10, n*10 +12, 12, n*10 +15, BLACK);
-							GLcd_DrawLine(12, n*10 +15, 16, n*10 +10, BLACK);
+						{	
+							TFT_DrawString_option(s,10+n/5*250, (n%5)*50 +170, color_gray, true, 2);					
 						}
-					}					
+					}				
 				}
 				break;
 			case DIS_TIME_SWAP_RUN:
-//				if(key_pressed=='0')	
-//					if(temp_data_Menu>20)	(temp_data_Menu%10==0) ? (temp_data_Menu -=10) : (temp_data_Menu -= temp_data_Menu%10);;
-//				if(key_pressed=='8')
-//					if(temp_data_Menu<120)	(temp_data_Menu%10==0) ? (temp_data_Menu +=10) : (temp_data_Menu += 10 -temp_data_Menu%10);;
-//				if(key_pressed=='0' || key_pressed =='8')
-//				{
-//					sprintf(s, "%3ds", temp_data_Menu);
-//					GLcd_DrawString(s, 50, 30, WHITE);
-//				}
 				if(key_pressed>='0' && key_pressed<='9')
 				{
 					temp_data_Menu = (temp_data_Menu%100) *10 + (key_pressed-'0');
 					if(temp_data_Menu >100)	temp_data_Menu =temp_data_Menu%100;		// Max
-//					if(temp_data_Menu<10)	temp_data_Menu = temp_data_Menu%10+10;
 					sprintf(s, "%3ds ", temp_data_Menu);
-					GLcd_DrawString(s, 50, 30, WHITE);					
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,200, 200, COLOR_CHANGE, false, 3);					
 				}				
 				if(key_pressed ==ENTER)
 				{
@@ -2232,7 +2434,8 @@ void Menu_draw_TFT(void)
 					temp_data_Menu = (temp_data_Menu%1000) *10 + (key_pressed-'0');
 					if(temp_data_Menu >1000)	temp_data_Menu =temp_data_Menu%1000;		// Max
 					sprintf(s, "%4d ", temp_data_Menu);
-					GLcd_DrawString(s, 50, 30, WHITE);
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,200, 200, COLOR_CHANGE, false, 3);
 				}				
 				if(key_pressed ==ENTER)
 				{
@@ -2245,21 +2448,14 @@ void Menu_draw_TFT(void)
 					current_display = DIS_Setup;
 				break;
 			case DIS_CELL_MORE:
-//				if(key_pressed=='0')	
-//					if(temp_data_Menu>100)	(temp_data_Menu%50==0) ? (temp_data_Menu -=50) : (temp_data_Menu -= temp_data_Menu%50);
-//				if(key_pressed=='8')
-//					if(temp_data_Menu<1000)	(temp_data_Menu%50==0) ? (temp_data_Menu +=50) : (temp_data_Menu += 50 -temp_data_Menu%50);
-//				if(key_pressed=='0' || key_pressed =='8')
-//				{
-//					sprintf(s, "%4d ", temp_data_Menu);
-//					GLcd_DrawString(s, 50, 30, WHITE);
-//				}
+
 				if(key_pressed>='0' && key_pressed<='9')
 				{
 					temp_data_Menu = (temp_data_Menu%1000) *10 + (key_pressed-'0');
 					if(temp_data_Menu >1000)	temp_data_Menu =temp_data_Menu%1000;		// Max
 					sprintf(s, "%4d ", temp_data_Menu);
-					GLcd_DrawString(s, 50, 30, WHITE);
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,200, 200, COLOR_CHANGE, false, 3);
 				}
 				if(key_pressed ==ENTER)
 				{
@@ -2310,35 +2506,67 @@ void Menu_draw_TFT(void)
 			case DIS_SETUP_TECH:
 				if(key_pressed == UP)
 				{
-					if(point==0)	point =1;
+					if(point==0)	point =21;
 					else	point --;
 				}
 				if(key_pressed == DOWN)
 				{
 					point ++;
-					if(point>1)	point=0;
+					if(point>21)	point=0;
 				}
-				if(old_point != point)
+				
+				if(get_touch(TOUCH_DOWN, 55, 70, 705, 280)== true)
 				{
-					old_point = point;
-					GLcd_FillRect(0, 15, 127, 48, BLACK);
-					GLcd_DrawBitmap(img_arrow_bmp, 0, (point%3)*15 + 15);
-					for(int n=0; n<3; n++)
-					{
-						if((point/3)*3 +n >1)	break;
-						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ID_MACHINE+(point/3)*3 +n),10, 10 + n*15, WHITE);
-					}
+					struct _ts_event touch_mouse = get_mouse();
+					if((touch_mouse.x1-55)%235 <230 && (touch_mouse.y1-70)%40 <35)
+						point = ((touch_mouse.x1-55)/235)*7 + (touch_mouse.y1-70)/40;
 				}
-				if(key_pressed == ENTER)
+					
+				if(old_point!= point)
+				{
+					if(old_point<255)
+					{	
+						drawRoundRect(55+(old_point/7)*235,70+(old_point%7)*40,220, 30,10, color_black, false);
+						drawRoundRect(56+(old_point/7)*235,71+(old_point%7)*40,218, 28,8, color_black, false);
+					}
+					drawRoundRect(55+(point/7)*235,70+(point%7)*40,220, 30,10, color_green, false);
+					drawRoundRect(56+(point/7)*235,71+(point%7)*40,218, 28,8, color_green, false);
+					old_point =point;
+					Buzz_On(10);
+#ifdef debug_display_info
+					sprintf(s,"P: %2d", point);
+					TFT_DrawString(s, 20, 430, color_green);	
+#endif						
+				}	
+				
+				if(key_pressed == ENTER || get_touch(TOUCH_UP, 55, 70, 705, 280)== true)
 				{
 					sub1_point =0;
 					switch(point)
 					{
 						case 0:
-							current_display = DIS_SET_ID_MACHINE;
+							current_display = DIS_TOTAL;
+							Buzz_On(100);
 							break;
 						case 1:
+							current_display = DIS_DAY;
+							Buzz_On(100);
+							break;
+						case 2:
+							current_display = DIS_MONTH;
+							Buzz_On(100);
+							break;		
+						case 3:
+							current_display = DIS_YEAR;
+							Buzz_On(100);
+							break;						
+						case 17:
+							current_display = DIS_SET_ID_MACHINE;
+							Buzz_On(100);						
+							break;
+						case 18:
 							current_display = DIS_SET_IP;
+							Buzz_On(100);	
 							break;
 					}
 				}
@@ -2349,7 +2577,8 @@ void Menu_draw_TFT(void)
 				{
 					if(sub2_point/3 <4)
 					{
-						temp_menu_char[sub2_point/3] = (temp_menu_char[sub2_point/3]%100)*10 + key_pressed-'0';
+						temp_menu_int[sub2_point/3] = (temp_menu_int[sub2_point/3]%100)*10 + key_pressed-'0';
+						if(temp_menu_int[sub2_point/3]%1000>255)	temp_menu_int[sub2_point/3]%=100;
 					}
 					else
 						temp_data_Menu = (temp_data_Menu%1000)*10 + key_pressed-'0';
@@ -2359,27 +2588,26 @@ void Menu_draw_TFT(void)
 				if(old_point!= sub2_point)
 				{
 					old_point= sub2_point;
-					sprintf(s,"ID: %03d.%03d.%03d.%03d", temp_menu_char[0], temp_menu_char[1], temp_menu_char[2], temp_menu_char[3]);
-					GLcd_DrawString(s, 0, 20, WHITE);
+					sprintf(s,"IP:%03d.%03d.%03d.%03d", temp_menu_int[0], temp_menu_int[1], temp_menu_int[2], temp_menu_int[3]);
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,20, 200, COLOR_CHANGE, false, 3);
 				
 					sprintf(s,"PORT: %04d", temp_data_Menu);
-					GLcd_DrawString(s, 0, 40, WHITE);
+					TFT_DrawString_option(s,20, 250, COLOR_CHANGE, false, 3);	
 					
-					GLcd_DrawLine(17, 30, 110, 30, BLACK);
-					GLcd_DrawLine(17, 50, 60, 50, BLACK);
 					if((sub2_point/3)<4)
 					{
-						GLcd_DrawLine(23+ (sub2_point/3)*24, 30, 35+ (sub2_point/3)*24, 30, WHITE);
+						drawRoundRect(92+ (sub2_point/3)*96,205,71, 40,4, color_green, false);						
 					}
 					else
-						GLcd_DrawLine(36, 50, 56, 50, WHITE);
+						drawRoundRect(116+ 40,255,104, 40,4, COLOR_CHANGE, false);	
 				}
 				if(key_pressed == ENTER)
 				{
-					m_device_config.server.addr = (uint32_t)temp_menu_char[0];
-					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_char[1];
-					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_char[2];
-					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_char[3];
+					m_device_config.server.addr = (uint32_t)temp_menu_int[0];
+					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_int[1];
+					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_int[2];
+					m_device_config.server.addr = (m_device_config.server.addr<<8) + (uint32_t)temp_menu_int[3];
 					m_device_config.server.port = temp_data_Menu;
 					save_device_config();
 					show_Messenger(vdm_language_get_text(VDM_LANG_FINISH), 2);
@@ -2395,11 +2623,14 @@ void Menu_draw_TFT(void)
 				}
 				if(old_point!= sub2_point)
 				{
+//					GLcd_DrawLine(17, 30, 110, 30, BLACK);
+//					GLcd_DrawLine(23+ (sub2_point)*6, 30, 27+ (sub2_point)*6, 30, WHITE);	
+					drawRoundRect(116+ old_point*24,205,24, 40,4, color_blue, false);
+					sprintf(s,"ID: %s ", temp_menu_char);
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,20, 200, COLOR_CHANGE, false, 3);
+					drawRoundRect(116+ sub2_point*24,205,24, 40,4, COLOR_CHANGE, false);									
 					old_point= sub2_point;
-					GLcd_DrawLine(17, 30, 110, 30, BLACK);
-					GLcd_DrawLine(23+ (sub2_point)*6, 30, 27+ (sub2_point)*6, 30, WHITE);					
-					sprintf(s,"ID: %s", temp_menu_char);
-					GLcd_DrawString(s, 0, 20, WHITE);
 				}
 				if(key_pressed == ENTER)
 				{
@@ -2410,12 +2641,30 @@ void Menu_draw_TFT(void)
 					vdm_app_gsm_set_device_id(m_device_config.peripheral.machine_id);
 				}
 				if(key_pressed == CANCEL)	current_display = DIS_SETUP_TECH;
-				break;			
+				break;		
+				case DIS_PRICE_SET:
+					if(key_pressed>='0' && key_pressed<='9')
+					{
+						temp_data_Menu = (temp_data_Menu%100000) *10 + (key_pressed-'0');
+						if(temp_data_Menu >100000)	temp_data_Menu =temp_data_Menu%100000;		// Max
+						sprintf(s, "%6d(VND) ", temp_data_Menu);
+						LCD_background(color_blue);
+						TFT_DrawString_option(s,180, 200, COLOR_CHANGE, false, 3);
+					}
+					if(key_pressed ==ENTER)
+					{
+						m_device_config.item[0].price = temp_data_Menu;
+						save_device_config();
+						show_Messenger(vdm_language_get_text(VDM_LANG_FINISH), 2);
+					}
+					if(key_pressed== CANCEL)
+						current_display = DIS_Setup;					
+					break;
 			default:
 				current_display = DIS_Home;
 				break;
 		}
-		if(key_pressed!=255) GLcd_Flush();		
+//		if(key_pressed!=255) GLcd_Flush();		
 	}
 }
 

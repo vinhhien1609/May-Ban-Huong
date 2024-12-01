@@ -1,0 +1,22 @@
+Removed Pin From Net: NetName=8M_IN Pin=Y2-1
+Removed Pin From Net: NetName=DGND Pin=Y2-2
+Removed Pin From Net: NetName=8M_OUT Pin=Y2-3
+Removed Pin From Net: NetName=DGND Pin=Y2-4
+Change Component Footprint: Designator=Y2 Old Footprint=Crystal 4SMD 32x25MM New Footprint=xtal_5032
+Change Component Comment : Designator=Y2 Old Comment=24MHz New Comment=8MHz
+Change Component Designator: OldDesignator=R? NewDesignator=R80
+Change Component Designator: OldDesignator=U? NewDesignator=U5
+Change component parameters: Designator = "Y2" ("Y2"); Footprint = "Crystal 4SMD 32x25MM"; UniqueID = "\QBDQGQTY" ("\QBDQGQTY")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Abracon LLC"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "ABM3-8.000MHZ-J4Q-T"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "https://banlinhkien.com/thach-anh-8mhz-smd5032-p6653646.html"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Crystal, Thru-Hole; 2 Leads; Body 3.1 x 8.2 mm (Dia.xH)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "R38"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "8MHz"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=8M_OUT Pin=Y2-1
+Added Pin To Net: NetName=8M_IN Pin=Y2-2

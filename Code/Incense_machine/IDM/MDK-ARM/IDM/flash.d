@@ -1,7 +1,6 @@
 idm\flash.o: ..\Core\User_Driver\Flash.c
 idm\flash.o: ..\Core\User_Driver\flash.h
 idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-idm\flash.o: ../Core/Inc/main.h
 idm\flash.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 idm\flash.o: ../Core/Inc/stm32f1xx_hal_conf.h
 idm\flash.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
@@ -36,6 +35,7 @@ idm\flash.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 idm\flash.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 idm\flash.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\flash.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+idm\flash.o: ../Core/Inc/main.h
 idm\flash.o: ..\Core\User_Driver\IDM.h
 idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
 idm\flash.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

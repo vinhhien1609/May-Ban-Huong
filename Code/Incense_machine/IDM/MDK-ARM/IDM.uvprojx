@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core/User_Driver;../Core/User_Driver/SPI_SD_Card;../Core/User_Driver/SPI;../FATFS/Target;../FATFS/App;../Middlewares/Third_Party/FatFs/src;../Middlewares/Third_Party/FatFs/src/drivers;..\Core\TFT;..\Core\uCGUIConfig</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../Core/User_Driver;../Core/User_Driver/SPI_SD_Card;../Core/User_Driver/SPI;../FATFS/Target;../FATFS/App;../Middlewares/Third_Party/FatFs/src;../Middlewares/Third_Party/FatFs/src/drivers;../Core/TFT;../Core/uCGUIConfig;../Core/User_Driver/draw_font</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -819,6 +819,46 @@
               <FileName>TFT_GLCD.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\User_Driver\TFT_GLCD.c</FilePath>
+            </File>
+            <File>
+              <FileName>TOUCH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\User_Driver\TOUCH.h</FilePath>
+            </File>
+            <File>
+              <FileName>TOUCH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\User_Driver\TOUCH.c</FilePath>
+            </File>
+            <File>
+              <FileName>gslx680.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\User_Driver\gslx680.h</FilePath>
+            </File>
+            <File>
+              <FileName>w25qxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\User_Driver\w25qxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>keyboard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\User_Driver\keyboard.c</FilePath>
+            </File>
+            <File>
+              <FileName>Fontmaker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\User_Driver\draw_font\Fontmaker.c</FilePath>
+            </File>
+            <File>
+              <FileName>graphic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\User_Driver\draw_font\graphic.c</FilePath>
+            </File>
+            <File>
+              <FileName>IOT47_VN_font.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\User_Driver\draw_font\IOT47_VN_font.c</FilePath>
             </File>
           </Files>
         </Group>

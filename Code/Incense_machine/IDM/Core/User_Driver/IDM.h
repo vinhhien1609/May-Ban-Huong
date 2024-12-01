@@ -33,7 +33,8 @@ typedef enum
 		SETTING_2,
 		DONATE,	
 		WAIT_INSENCE,
-		STOP_SERVICE,	
+		STOP_SERVICE,
+		SALES_SERVICE,
 } idm_state_cell_t;
 
 typedef struct {

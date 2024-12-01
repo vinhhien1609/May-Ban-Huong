@@ -1,0 +1,23 @@
+Added Component: Designator=R15(res 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DESCCRIPTION"; Value = "RES SMD 1K OHM 5% 1/10W 0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = "140100083"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF06031K00JNEAC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J1KTG"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=DGND Pin=J7-1
+Added Pin To Net: NetName=3V3 Pin=J7-3
+Added Pin To Net: NetName=3V3 Pin=R15-2
+Added Pin To Net: NetName=NetJ7_2 Pin=J7-2
+Added Pin To Net: NetName=NetJ7_2 Pin=R15-1
+Added Pin To Net: NetName=NetJ7_2 Pin=U6-46
+Added Net: Name=NetJ7_2
+Added Member To Class: ClassName=02-Insence_interface Member=Component R15 1K

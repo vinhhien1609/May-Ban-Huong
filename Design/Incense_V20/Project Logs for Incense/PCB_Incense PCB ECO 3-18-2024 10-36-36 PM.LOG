@@ -1,0 +1,24 @@
+Removed Pin From Net: NetName=NetC34_2 Pin=Q5-3
+Removed Pin From Net: NetName=SWap_motor_OUT Pin=Q8-3
+Removed Pin From Net: NetName=Solenoid_out Pin=Q11-3
+Change Component Comment : Designator=Q5 Old Comment=MOSFET-P New Comment=AOD409
+Change Component Comment : Designator=Q8 Old Comment=MOSFET-P New Comment=AOD409
+Change Component Comment : Designator=Q11 Old Comment=MOSFET-P New Comment=AOD409
+Added Pin To Net: NetName=NetC34_2 Pin=Q5-2
+Added Pin To Net: NetName=+24V_SYS Pin=Q5-3
+Added Pin To Net: NetName=SWap_motor_OUT Pin=Q8-2
+Added Pin To Net: NetName=+24V_SYS Pin=Q8-3
+Added Pin To Net: NetName=Solenoid_out Pin=Q11-2
+Added Pin To Net: NetName=+24V_SYS Pin=Q11-3
+Added Pin To Net: NetName=NetQ5_1 Pin=Q5-1
+Added Pin To Net: NetName=NetQ5_1 Pin=Q6-3
+Added Pin To Net: NetName=NetQ5_1 Pin=R45-2
+Added Net: Name=NetQ5_1
+Added Pin To Net: NetName=NetQ8_1 Pin=Q8-1
+Added Pin To Net: NetName=NetQ8_1 Pin=Q9-3
+Added Pin To Net: NetName=NetQ8_1 Pin=R57-2
+Added Net: Name=NetQ8_1
+Added Pin To Net: NetName=NetQ11_1 Pin=Q11-1
+Added Pin To Net: NetName=NetQ11_1 Pin=Q12-3
+Added Pin To Net: NetName=NetQ11_1 Pin=R62-2
+Added Net: Name=NetQ11_1

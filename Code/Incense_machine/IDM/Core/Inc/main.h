@@ -62,6 +62,8 @@ void Error_Handler(void);
 #define MOTOR_CURRENT_GPIO_Port GPIOC
 #define SWAP_CURRENT_Pin GPIO_PIN_1
 #define SWAP_CURRENT_GPIO_Port GPIOC
+#define Flash_SS_Pin GPIO_PIN_2
+#define Flash_SS_GPIO_Port GPIOC
 #define BUZZER_Pin GPIO_PIN_3
 #define BUZZER_GPIO_Port GPIOC
 #define DHT21_Pin GPIO_PIN_0
@@ -72,14 +74,8 @@ void Error_Handler(void);
 #define MCU_NV9_TX_GPIO_Port GPIOA
 #define MCU_NV9_RX_Pin GPIO_PIN_3
 #define MCU_NV9_RX_GPIO_Port GPIOA
-#define Flash_MOSI_Pin GPIO_PIN_4
-#define Flash_MOSI_GPIO_Port GPIOA
-#define Flash_MISO_Pin GPIO_PIN_5
-#define Flash_MISO_GPIO_Port GPIOA
-#define Flash_SCK_Pin GPIO_PIN_6
-#define Flash_SCK_GPIO_Port GPIOA
-#define Flash_SS_Pin GPIO_PIN_7
-#define Flash_SS_GPIO_Port GPIOA
+#define FLASH_CS_Pin GPIO_PIN_4
+#define FLASH_CS_GPIO_Port GPIOA
 #define Empty_Pin GPIO_PIN_4
 #define Empty_GPIO_Port GPIOC
 #define Drop_Pin GPIO_PIN_5
@@ -155,9 +151,18 @@ void Error_Handler(void);
 #define SWAP_MOTOR_GPIO_Port GPIOB
 #define CONVEYER_MOTOR_Pin GPIO_PIN_7
 #define CONVEYER_MOTOR_GPIO_Port GPIOB
+#define TOUCH_SCL_Pin GPIO_PIN_8
+#define TOUCH_SCL_GPIO_Port GPIOB
+#define TOUCH_SDA_Pin GPIO_PIN_9
+#define TOUCH_SDA_GPIO_Port GPIOB
+#define TOUCH_INT_Pin GPIO_PIN_0
+#define TOUCH_INT_GPIO_Port GPIOE
+#define TOUCH_INT_EXTI_IRQn EXTI0_IRQn
+#define TOUCH_RST_Pin GPIO_PIN_1
+#define TOUCH_RST_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
-
+#define _W25QXX_SPI hspi1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

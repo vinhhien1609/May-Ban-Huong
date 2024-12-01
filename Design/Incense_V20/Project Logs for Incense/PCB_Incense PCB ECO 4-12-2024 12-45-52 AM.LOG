@@ -1,0 +1,21 @@
+Removed Pin From Net: NetName=LCD_DI Pin=HD1-3
+Removed Pin From Net: NetName=LCD_INT Pin=HD1-4
+Removed Pin From Net: NetName=LCD_RST Pin=HD1-9
+Removed Pin From Net: NetName=LCD_VDD Pin=HD1-10
+Removed Pin From Net: NetName=LCD_VDD Pin=HD1-11
+Removed Pin From Net: NetName=LCD_CS Pin=HD1-12
+Removed Pin From Net: NetName=LCD_CLK Pin=HD1-13
+Removed Pin From Net: NetName=LCD_DO Pin=HD1-14
+Change Component Comment : Designator=HD1 Old Comment=IDE20 New Comment=Header 10X2H
+Change component parameters: Designator = "HD1" ("HD1"); Footprint = "IDE_20-RA"; UniqueID = "\XWVMTKJC" ("\XWVMTKJC")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=LCD_VDD Pin=HD1-2
+Added Pin To Net: NetName=LCD_CS Pin=HD1-4
+Added Pin To Net: NetName=LCD_DI Pin=HD1-5
+Added Pin To Net: NetName=LCD_CLK Pin=HD1-6
+Added Pin To Net: NetName=LCD_INT Pin=HD1-7
+Added Pin To Net: NetName=LCD_DO Pin=HD1-8
+Added Pin To Net: NetName=LCD_RST Pin=HD1-17
+Added Pin To Net: NetName=LCD_VDD Pin=HD1-19

@@ -1,0 +1,5 @@
+Added Pin To Net: NetName=+24V_SYS Pin=P2-4
+Added Pin To Net: NetName=+24V_SYS Pin=P3-1
+Added Pin To Net: NetName=+24V_SYS Pin=P3-2
+Added Pin To Net: NetName=+24V_SYS Pin=P3-3
+Added Member To Class: ClassName=03_Incense_4G Member=Component U9 LTE CAT4

@@ -1,0 +1,2 @@
+Removed Pin From Net: NetName=GND Pin=IC1-6
+Added Pin To Net: NetName=DGND Pin=IC1-6

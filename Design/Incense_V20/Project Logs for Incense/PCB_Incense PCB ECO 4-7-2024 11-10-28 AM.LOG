@@ -1,0 +1,13 @@
+Change Component Footprint: Designator=P1 Old Footprint=IDE-10 New Footprint=IDE-10-RA
+Change Component Footprint: Designator=HD1 Old Footprint=SHDR20W65P254_2X10_3302X900X900P New Footprint=IDE_20-RA
+Change component parameters: Designator = "P1" ("P1"); Footprint = "IDE-10"; UniqueID = "\DSGPLJHD" ("\DSGPLJHD")
+Change component parameters (AddParameter): Name = "Category"; Value = "CONNECTOR"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_CODE"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "CNC Tech"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "3020-10-0100-00"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "BOOMELE(Boom Precision Elec)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "C5665"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PITCH"; Value = "2.54mm"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Newark"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "19P1268"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "IDE-10"; VariantName = "[No Variations]"

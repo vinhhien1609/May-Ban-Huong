@@ -1,0 +1,221 @@
+Removed Pin From Net: NetName=DGND Pin=J8-1
+Removed Member From Class: ClassName=02-Insence_interface Member=J8
+Removed Member From Class: ClassName=02-Insence_interface Member=R21
+Removed Member From Class: ClassName=02-Insence_interface Member=R24
+Change Component Comment : Designator=R21 Old Comment=100R New Comment=22R
+Change Component Comment : Designator=R24 Old Comment=100R New Comment=470R
+Change component parameters: Designator = "R21" ("R21"); Footprint = "res 0603"; UniqueID = "\DFZBFETY" ("\DFZBFETY")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Yageo"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RC0603JR-0722RL"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "RMCF0603JT22R0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "22R"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R24" ("R24"); Footprint = "res 0603"; UniqueID = "\HLIZFNME" ("\HLIZFNME")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Current"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "KOA Speer Electronics, Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RK73B1JTTD471J"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "Stackpole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "RMCF0603JT470R"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "470R"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=C77(CAP 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "CAP-CER"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Samsung Electro-Mechanics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "CL10B104KB8NNNC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "M0603X104K050TAX"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material"; Value = "X7R"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB FOOTPRINT"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "0.1uF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=C78(CAP 0805)
+Add component (AddParameter): Name = "CATEGORY"; Value = "CAP_CER"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Taiyo Yuden"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "TMK212BBJ106KG-T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Samsung"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "CL21A106KAYNNNG"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material"; Value = "X5R"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0805"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10µF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "25V"; VariantName = "[No Variations]"
+Added Component: Designator=C79(CAP 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "CAP-CER"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Samsung Electro-Mechanics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "CL10B104KB8NNNC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "M0603X104K050TAX"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material"; Value = "X7R"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB FOOTPRINT"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "0.1uF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=C80(CAP 0805)
+Add component (AddParameter): Name = "CATEGORY"; Value = "CAP_CER"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Taiyo Yuden"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "TMK212BBJ106KG-T"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Samsung"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "CL21A106KAYNNNG"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Material"; Value = "X5R"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0805"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10µF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "25V"; VariantName = "[No Variations]"
+Added Component: Designator=J1(AMPHENOL_10155435-00011LF)
+Add component (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Amphenol ICC (FCI)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "10155435-00011LF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=L7(FB 0603)
+Add component (AddParameter): Name = "Category"; Value = "Inductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current"; Value = "1.7A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DESCRIPTION_"; Value = "FERRITE BEAD 330 OHM 0603 1LN"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "TDK Corporation"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MPZ1608S331ATA00"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Murata Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "BLM18KG331SN1D"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "330 Ohms @ 100MHz"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=R17(res 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Current"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "KOA Speer Electronics, Inc."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RK73B1JTTD471J"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Stackpole"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "RMCF0603JT470R"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "470R"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=R118(res 0603)
+Add component (AddParameter): Name = "CATEGORY"; Value = "RES SMD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Yageo"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RC0603JR-0722RL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "RMCF0603JT22R0"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "22R"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=DGND Pin=C77-1
+Added Pin To Net: NetName=DGND Pin=C78-1
+Added Pin To Net: NetName=DGND Pin=C79-2
+Added Pin To Net: NetName=DGND Pin=C80-2
+Added Pin To Net: NetName=DGND Pin=J1-A1_B12
+Added Pin To Net: NetName=DGND Pin=J1-B1_A12
+Added Pin To Net: NetName=DGND Pin=J1-SH1
+Added Pin To Net: NetName=DGND Pin=J1-SH2
+Added Pin To Net: NetName=DGND Pin=J1-SH3
+Added Pin To Net: NetName=DGND Pin=J1-SH4
+Added Pin To Net: NetName=5V_USB Pin=C78-2
+Added Pin To Net: NetName=5V_USB Pin=C79-1
+Added Pin To Net: NetName=5V_USB Pin=L7-2
+Added Net: Name=5V_USB
+Added Pin To Net: NetName=MCU_DEBUG_RX Pin=R17-1
+Added Pin To Net: NetName=MCU_DEBUG_RX Pin=U6-26
+Added Net: Name=MCU_DEBUG_RX
+Added Pin To Net: NetName=MCU_DEBUG_TX Pin=R24-1
+Added Pin To Net: NetName=MCU_DEBUG_TX Pin=U6-25
+Added Net: Name=MCU_DEBUG_TX
+Added Pin To Net: NetName=NetIC2_1 Pin=R17-2
+Added Net: Name=NetIC2_1
+Added Pin To Net: NetName=NetIC2_5 Pin=R24-2
+Added Net: Name=NetIC2_5
+Added Pin To Net: NetName=U3V3 Pin=C80-1
+Added Net: Name=U3V3
+Added Pin To Net: NetName=USB1_CON_D_N Pin=J1-A7
+Added Pin To Net: NetName=USB1_CON_D_N Pin=J1-B7
+Added Pin To Net: NetName=USB1_CON_D_N Pin=R21-1
+Added Net: Name=USB1_CON_D_N
+Added Pin To Net: NetName=USB1_CON_D_P Pin=J1-A6
+Added Pin To Net: NetName=USB1_CON_D_P Pin=J1-B6
+Added Pin To Net: NetName=USB1_CON_D_P Pin=R118-1
+Added Net: Name=USB1_CON_D_P
+Added Pin To Net: NetName=USB1_D_N Pin=R21-2
+Added Net: Name=USB1_D_N
+Added Pin To Net: NetName=USB1_D_P Pin=R118-2
+Added Net: Name=USB1_D_P
+Added Pin To Net: NetName=VBUS Pin=C77-2
+Added Pin To Net: NetName=VBUS Pin=J1-A4_B9
+Added Pin To Net: NetName=VBUS Pin=J1-B4_A9
+Added Pin To Net: NetName=VBUS Pin=L7-1
+Added Net: Name=VBUS
+Added Differential Pair: Name=USB1_CON_D
+Added Differential Pair: Name=USB1_D
+Added Member To Class: ClassName=04_Incense_MCU Member=Component C77 0.1uF
+Added Member To Class: ClassName=04_Incense_MCU Member=Component C78 10µF
+Added Member To Class: ClassName=04_Incense_MCU Member=Component C79 0.1uF
+Added Member To Class: ClassName=04_Incense_MCU Member=Component C80 10µF
+Added Member To Class: ClassName=04_Incense_MCU Member=Component J1 10155435-00011LF
+Added Member To Class: ClassName=04_Incense_MCU Member=Component L7 330 Ohms @ 100MHz
+Added Member To Class: ClassName=04_Incense_MCU Member=Component R17 470R
+Added Member To Class: ClassName=04_Incense_MCU Member=Component R21 22R
+Added Member To Class: ClassName=04_Incense_MCU Member=Component R24 470R
+Added Member To Class: ClassName=04_Incense_MCU Member=Component R118 22R

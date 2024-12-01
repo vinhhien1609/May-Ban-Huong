@@ -39,9 +39,9 @@ void LCD_init(void)
 	uint8_t temp=0;
 	
 	HAL_GPIO_WritePin(LCD_RESET_GPIO_Port, LCD_RESET_Pin, GPIO_PIN_RESET);
-	HAL_Delay(100);
+	HAL_Delay(500);
 	HAL_GPIO_WritePin(LCD_RESET_GPIO_Port, LCD_RESET_Pin, GPIO_PIN_SET);	
-	HAL_Delay(30);
+	HAL_Delay(500);
 	
 	LCD_CmdWrite(0x88);      
 	LCD_DataWrite(0x0C);
@@ -51,15 +51,15 @@ void LCD_init(void)
 	printf("Read_lcd: %d\r\n",temp);
 	if(temp == 0x0C)
 	{
-		printf("LCD_COLOR_DETECTED\r\n");
 		LCD_TFT_Init();
 		isLCD_COLOR =1;
+		printf("LCD_COLOR_DETECTED\r\n");		
 	}
 	else
 	{
-		printf((const char*)"LCD_MONO_DETECTED\r\n");
 		GLcd_Init();
 		isLCD_COLOR =0;
+		printf("LCD_MONO_DETECTED\r\n");		
 	}
 }
 
@@ -143,6 +143,17 @@ void LCD_DataWrite(uint8_t Data)
 	 HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET); 
 }
 
+//void LCD_DataWrite_2(uint16_t Data)
+//{ 
+//	 //HAL_SPI_Init(&hspi2);
+//	 uint8_t  buff[2];
+//   buff[0] = (Data>>8)&0xFF;
+//   buff[1] = Data;
+//	 HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_RESET);
+//	 HAL_SPI_Transmit(&hspi2, &buff[0], 2, 50);
+//	 HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET); 
+//}
+
 
 ////////////////Write command and parameter
 void Write_Dir(uint8_t Cmd,uint8_t Data)
@@ -155,8 +166,10 @@ void Write_Dir(uint8_t Cmd,uint8_t Data)
 void LCD_ColorWrite(uint16_t _color)
 {
 	 uint8_t data[2];
+//	 uint16_t color = ((_color&0x3800)>>6) | ((_color&0xE0)>>3) | (_color&0x03);
 		data[0] = (_color >>8)&0xFF;
 		data[1] = _color &0xFF;
+
 	 HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_RESET);
 	 HAL_SPI_Transmit(&hspi2, data, 2, 20);
 	 HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);	
@@ -264,6 +277,7 @@ uint8_t  LCD_StatusRead(void)
  return Data;
 }
 
+
 ///////////////check busy
 void Chk_Busy(void)
 {
@@ -273,6 +287,8 @@ void Chk_Busy(void)
 	temp=LCD_StatusRead();
 	}while((temp&0x80)==0x80);		   
 }
+
+
 ///////////////check bte busy
 void Chk_BTE_Busy(void)
 {
@@ -285,12 +301,14 @@ void Chk_BTE_Busy(void)
 ///////////////check dma busy
 void Chk_DMA_Busy(void)
 {
+	unsigned int timeout=2000;
 	uchar temp; 	
 	do
 	{
-	LCD_CmdWrite(0xBF);	
-	temp =LCD_DataRead();	
-	}while((temp&0x01)==0x01);   
+		LCD_CmdWrite(0xBF);	
+		temp =LCD_DataRead();	
+		timeout--;
+	}while((temp&0x01)==0x01 && timeout>0);   
 }
 ///////////////check dma busy
 void Chk_FLASH_Busy(void)
@@ -493,7 +511,7 @@ void FontWrite_Position(uint X,uint Y)
 void String(uchar *str)
 {   
     Write_Dir(0x40,0x80);//Set the character mode
-	  Write_Dir(0x41,0x01);//Set the character mode
+	  Write_Dir(0x41,0x00);//Set the character mode
 	LCD_CmdWrite(0x02);
 	while(*str != '\0')
 	{
@@ -615,6 +633,63 @@ void  Draw_Circle(uint X,uint Y,uint R)
     LCD_CmdWrite(0x9d);
 	LCD_DataWrite(temp);
 } 
+
+void  Draw_Circle_FILL(uint X,uint Y,uint R, uint b_color)
+{
+			Draw_Circle(X, Y, R);
+			Text_Foreground_Color1(b_color);//Color Settings
+//			Write_Dir(0X90,0X00);//Setting parameters
+		  Write_Dir(0X90,0X60);//Start drawing
+}
+
+void drawRoundRect(uint x,uint y,uint w, uint h, uint r, uint color, bool fill)
+{
+  /* Set X */
+  LCD_CmdWrite(0x91);
+  LCD_DataWrite(x);
+  LCD_CmdWrite(0x92);
+  LCD_DataWrite(x >> 8);
+
+  /* Set Y */
+  LCD_CmdWrite(0x93);
+  LCD_DataWrite(y);
+  LCD_CmdWrite(0x94);
+  LCD_DataWrite(y >> 8);
+
+  /* Set X1 */
+  LCD_CmdWrite(0x95);
+  LCD_DataWrite(x+w);
+  LCD_CmdWrite(0x96);
+  LCD_DataWrite((x+w) >> 8);
+
+  /* Set Y1 */
+  LCD_CmdWrite(0x97);
+  LCD_DataWrite(y+h);
+  LCD_CmdWrite(0x98);
+  LCD_DataWrite((y+h) >> 8);
+
+  LCD_CmdWrite(0xA1);
+  LCD_DataWrite(r);
+  LCD_CmdWrite(0xA2);
+  LCD_DataWrite((r) >> 8);
+
+  LCD_CmdWrite(0xA3);
+  LCD_DataWrite(r);
+  LCD_CmdWrite(0xA4);
+  LCD_DataWrite((r) >> 8);
+
+  /* Set Color */
+  LCD_CmdWrite(0x63);
+  LCD_DataWrite((color & 0xf800) >> 11);
+  LCD_CmdWrite(0x64);
+  LCD_DataWrite((color & 0x07e0) >> 5);
+  LCD_CmdWrite(0x65);
+  LCD_DataWrite((color & 0x001f));
+	if(fill)
+		Write_Dir(0XA0,0XE0);//Start drawing
+	else
+		Write_Dir(0XA0,0XA0);//Start drawing
+}
 
 ///////////drawing elliptic curve
 void  Draw_Ellipse(uint X,uint Y,uint R1,uint R2)
@@ -766,6 +841,19 @@ void Text_Mode(void)
 	LCD_DataWrite(temp);
 }
 
+//--------------------------------------------//
+//REG[41h]
+void Access_layer(uchar layer)
+{	uchar temp;
+	LCD_CmdWrite(0x41);//MWCR0
+	temp = LCD_DataRead();
+	if(layer>1)	layer =1;
+	if(layer) temp |=0x01;
+	else	temp &=0xFE;
+	LCD_DataWrite(temp);
+}
+
+
 /*******************************************************************************
 * Function Name  : LCD_SetCursor
 * Description    : Sets the cursor position.
@@ -822,9 +910,9 @@ void Memory_Clear(void)
 {
 	uchar temp;
 	LCD_CmdWrite(0x8e);//MCLR
-	temp = LCD_DataRead();
-	temp |= 0x7F ;
-	LCD_DataWrite(0xFF); 		// clear active wwindow
+//	temp = LCD_DataRead();
+//	temp |= 0x7F ;
+	LCD_DataWrite(0xC0); 		// clear active window clear full window
 	Chk_Busy(); 
 	Stop_Memory_Clear();
 }
@@ -864,12 +952,16 @@ void Read_flash(uchar picnum)
 void Displaypicture(uchar picnum)
 {  
 //	Read_flash(1);
-	 Select_Layers_One();
+//	printf("lcd_dma Starting\n\r");
+//	 Select_Layers_Two();
+	Write_Dir(0x41,0x01);//Set the character mode
+//		 Select_Layers_One();
    Active_Window(0,code_BINARY_INFO[picnum].img_width-1,0,code_BINARY_INFO[picnum].img_height-1); 
    MemoryWrite_Position(0,0);//Memory write position	
 //	Graphic_Mode();	
    Write_Dir(0X06,0X00);//FLASH frequency setting
-   Write_Dir(0X05,0X87);//FLASH setting flash 1, DMA_mode, 
+//   Write_Dir(0X05,0X87);//FLASH setting flash 1, DMA_mode, 
+	   Write_Dir(0X05,0XA6);//FLASH setting flash 1, DMA_mode, 
 //	 Write_Dir(0XE0,0X00);//Direct Access Mode 
 
 	Write_Dir(0XBF,0X02);//Stop DMA
@@ -882,41 +974,167 @@ void Displaypicture(uchar picnum)
 //	LCD_WriteRAM_Prepare(); // Prepare to write GRAM 
 //   Write_Dir(0XBF,0x02);//FLASH setting DMA Block
    Write_Dir(0XBF,0x03);//FLASH setting
-//	HAL_Delay(1000);
+//	HAL_Delay(50);
 	Chk_DMA_Busy();
+//	printf("lcd_dma _finish\n\r");
+//	Select_Layers_One();
+//	HAL_Delay(1);
+		Access_layer(0);				
+		LCD_background(color_black);		
+		Memory_Clear();
 }
 
 void TFT_DrawString(char* str, int16_t x, int16_t y, int16_t color)
-{
-		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 			
+{			
 		Write_Dir(0x40,0x80);//text mode	
 		Write_Dir(0x21,0x20);//Select the external character
+//		Write_Dir(0x21,0x00);//Select the external character
 		Write_Dir(0x06,0x03);//Set the frequency
+	
+		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 	
+//		Write_Dir(0x05,0x2C);// The waveform 3   2 byte dummy Cycle) 	
 		Write_Dir(0x2E,0x80);//Font Write Type Setting Register Set up 24 x24 character mode     spacing   0 
 		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
+//		Write_Dir(0x2F,0x8D);//Serial Font ROM Setting GT23L32S4W normal
 		Text_Foreground_Color1(color);
 		Write_Dir(0x22,0x80);//Full alignment is enable.The text background color
 		FontWrite_Position(x,y);//Text written to the position
 		Write_Dir(0x40,0x80);//Set the character mode
 		LCD_CmdWrite(0x02);//start write data
 		String((uint8_t*)str);
+	
+}
+
+
+void COLOR_mono(uint16_t point_x, uint16_t point_y, uint16_t w, uint16_t h)
+{
+	uint8_t temp;
+	uint16_t n;
+	Write_Dir(0x58,point_x &0xFF);//
+	Write_Dir(0x59,(point_x>>8)&0x03);//
+	Write_Dir(0x5A,point_y &0xFF);//
+	Write_Dir(0x5B,(point_y>>8)&0x01);//	layer1
+	
+	BTE_Size(w,h);
+//	Write_Dir(0x5C,w&0xFF);//width
+//	Write_Dir(0x5D,(w>>8)&0xFF);//
+//	
+//	Write_Dir(0x5E,h&0xFF);//high
+//	Write_Dir(0x5F,(h>>8)&0xFF);//	
+
+	Text_Background_Color1(color_white);	
+	Text_Foreground_Color1(color_red);
+	
+	Write_Dir(0x51,0x08);//
+	
+	LCD_CmdWrite(0x50);//start write data
+	temp= LCD_DataRead();
+	temp |= 0x80;		//bit 7 ~1
+	LCD_DataWrite(temp);//
+	
+	LCD_CmdWrite(0x02);//start write data
+	for(n=0; n<128; n++)
+	{
+		Chk_Busy();
+		HAL_Delay(500);
+//		LCD_DataWrite_2(0x003C);
+		LCD_DataWrite(1<<((n/2)%7));
+	}
+}
+
+void test_TFT_DrawString(int16_t x, int16_t y, int16_t color)
+{			
+		Write_Dir(0x40,0x80);//text mode	
+		Write_Dir(0x21,0x20);//Select the external font
+	
+		Write_Dir(0x06,0x03);//Set the frequency
+		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 	
+//		Write_Dir(0x05,0x2C);// The waveform 3   2 byte dummy Cycle) 	
+	
+		Write_Dir(0x2E,0x40);//Font Write Type Setting Register Set up 24 x24 character mode     spacing   0 
+//		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
+		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
+		Text_Foreground_Color1(color);
+		Write_Dir(0x22,0xC0);//Full alignment is enable.The text background color
+		FontWrite_Position(x,y);//Text written to the position
+		LCD_CmdWrite(0x02);//start write data
+		for(int n=0; n<=255; n++)
+		{
+			LCD_DataWrite(n);
+			HAL_Delay(5);
+		}
+		
+//		//CGRAM
+//		Write_Dir(0x40,0x00);
+//		Write_Dir(0x23,0x1);
+//		Write_Dir(0x21,0x00);
+//		Write_Dir(0x41,0x04);
+//		LCD_CmdWrite(0x02);//start write data
+//		for(int n=0; n<16; n++)
+//			LCD_DataWrite(0xFF);
+////		for(int n=0; n<g_vnfont_8x15[vnfontFindPosition(0x81)]; n++)
+////			LCD_DataWrite(g_vnfont_8x15[vnfontFindPosition(0x81)]+n+1);
+////		for(int n=0; n<g_vnfont_8x15[vnfontFindPosition(0x82)]; n++)
+////			LCD_DataWrite(g_vnfont_8x15[vnfontFindPosition(0x82)]+n+1);		
+//		
+//		Write_Dir(0x40,0x80);//text mode	
+//		Write_Dir(0x21,0x80);
+////		Write_Dir(0x41,0x00);
+//		FontWrite_Position(10,200);
+//		LCD_CmdWrite(0x02);
+//		LCD_DataWrite(0x00);
+//		LCD_DataWrite(0x00);
+//		LCD_DataWrite(0x00);
+//		String((uint8_t*)str);
+	
 }
 
 void TFT_DrawString_X4(char* str, int16_t x, int16_t y, int16_t color)
 {
 		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 			
 		Write_Dir(0x40,0x80);//text mode	
-		Write_Dir(0x21,0x20);//Select the external character
+		Write_Dir(0x21,0x00);//Select the external character
 		Write_Dir(0x06,0x03);//Set the frequency
 		Write_Dir(0x2E,0x80);//Font Write Type Setting Register Set up 24 x24 character mode     spacing   0 
 		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
 		Text_Foreground_Color1(color);
-		Write_Dir(0x22,0xC5);//Full alignment is enable.The text background color
+		Write_Dir(0x22,0xCA);//Full alignment is enable.The text background color
 		FontWrite_Position(x,y);//Text written to the position
-		Write_Dir(0x40,0x80);//Set the character mode
+//		Write_Dir(0x40,0x80);//Set the character mode
 		LCD_CmdWrite(0x02);//start write data
 		String((uint8_t*)str);
 }
+
+void TFT_DrawString_option(char* str, int16_t x, int16_t y, int16_t color, bool trans, uint8_t zoom)
+{
+		uint8_t byte;
+		Write_Dir(0x05,0x28);// The waveform 3   2 byte dummy Cycle) 			
+		Write_Dir(0x40,0x80);//text mode	
+		Write_Dir(0x21,0x00);//Select the external character
+		Write_Dir(0x06,0x03);//Set the frequency
+		Write_Dir(0x2E,0x80);//Font Write Type Setting Register Set up 24 x24 character mode     spacing   0 
+		Write_Dir(0x2F,0x81);//Serial Font ROM Setting GT23L32S4W normal
+		Text_Foreground_Color1(color);
+		if(zoom>4)	zoom =4;
+		if(zoom==0)	zoom =1;
+		zoom--;
+		byte = 0x80 + (zoom<<2|zoom);
+		if(trans)	byte|= (1<<6);
+		Write_Dir(0x22,byte);//Full alignment is enable.The text background color
+		FontWrite_Position(x,y);//Text written to the position
+//		Write_Dir(0x40,0x80);//Set the character mode
+		LCD_CmdWrite(0x02);//start write data
+		String((uint8_t*)str);
+}
+
+void RA8875_drawpixel(int16_t x,int16_t y,uint16_t color)
+{
+		Write_Dir(0x40,0x00);
+		LCD_SetCursor(x,y); 
+		LCD_CmdWrite(0x02); /* Prepare to write GRAM */		
+		LCD_ColorWrite(color);
+}
+
 
 typedef struct BmpFileHeader {
    char bfType[2];	// 2 byte
@@ -1030,6 +1248,8 @@ void drawBITMAP(void)
 		else
 			printf("SD_init_FAIL\r\n");	
 }
+
+
 
 void draw_BG(void)
 {
@@ -1153,7 +1373,8 @@ void test_lcd()
 			HAL_Delay(1);
 		    Write_Dir(0XA0,0X92);//Start drawing
 			HAL_Delay(1);
-		    Write_Dir(0XA0,0X93);//Start drawing			
+		    Write_Dir(0XA0,0X93);//Start drawing						
+			
 			
 			HAL_Delay(1000);			
 			Displaypicture(3);
@@ -1220,23 +1441,26 @@ void test_lc(void)
 void LCD_PLL_ini(void)
 {
     LCD_CmdWrite(0x88);      
-    LCD_DataWrite(0x0C);
-    HAL_Delay(1);    
+//		LCD_DataWrite(0x0C);
+    LCD_DataWrite(0x0A);
+    HAL_Delay(50);    
     LCD_CmdWrite(0x89);        
     LCD_DataWrite(0x01);  
-    HAL_Delay(1);
+//    LCD_DataWrite(0x05);  	
+    HAL_Delay(50);
+		printf("LCD PLL_inint\r\n");
 }
 
 void LCD_TFT_Init(void)
 {
 	LCD_PLL_ini();
 	LCD_CmdWrite(0x10);  //SYSR   bit[4:3]=00 256 color  bit[2:1]=  00 8bit MPU interface
-  LCD_DataWrite(0x03);   // if 8bit MCU interface   and 256 color display						    
-	HAL_Delay(1);
-	
-LCD_CmdWrite(0x04);  //PCLK inverse
- LCD_DataWrite(0x81);		//pixel = sys/2
- HAL_Delay(1);
+  LCD_DataWrite(0x02);   // if 16bit MCU interface   and 256 color display						    
+	HAL_Delay(10);
+	printf("LCD inint\r\n");
+	LCD_CmdWrite(0x04);  //PCLK inverse
+ LCD_DataWrite(0x82);		//pixel = sys/2
+ HAL_Delay(10);
  
  //Horizontal set
  LCD_CmdWrite(0x14); //HDWR//Horizontal Display Width Setting Bit[6:0]                      
@@ -1286,8 +1510,6 @@ LCD_CmdWrite(0x04);  //PCLK inverse
     LCD_CmdWrite(0x37); //Vertical End Point of Active Window 1 (VEAW1)	   
     LCD_DataWrite(0x01); //Vertical End Point of Active Window [8]
 
-//		LCD_CmdWrite(0x20);
-//		LCD_DataWrite(0x00);
 		LCD_background(0x0000);
 		
 //	  Select_Layers_Two();
@@ -1297,11 +1519,19 @@ LCD_CmdWrite(0x04);  //PCLK inverse
 		LCD_DataWrite(0x87);//open PWM
 		
 		LCD_CmdWrite(0x8b);//Backlight brightness setting
-		LCD_DataWrite(15);//Brightness parameter 0xff-0x00
-//			printf("LCD_COLOR--\r\n");
+		LCD_DataWrite(80);//Brightness parameter 0xff-0x00
+		
+		Select_Layers_Two();
+		LCD_CmdWrite(0x52);
+		LCD_DataWrite(0x23);
+		LCD_CmdWrite(0x53);
+		LCD_DataWrite(0x00);
+		LCD_background_Transparent(color_black);
+//		Select_Layers_One();
 		Display_ON();
 		Memory_Clear();
 //		test_lcd();
+	printf("LCD inint_FINISH\r\n");
 }
 
 void Display_ON(void)
@@ -1326,6 +1556,17 @@ void LCD_background(uint16_t color)
   LCD_CmdWrite(0x61);
 	LCD_DataWrite((color&0x07e0)>>5);
 	LCD_CmdWrite(0x62);
+	LCD_DataWrite((color&0x001f));
+}
+
+////Cor de fundo com 65k colors
+void LCD_background_Transparent(uint16_t color)
+{
+	LCD_CmdWrite(0x67);
+	LCD_DataWrite((color&0xf800)>>11);
+  LCD_CmdWrite(0x68);
+	LCD_DataWrite((color&0x07e0)>>5);
+	LCD_CmdWrite(0x69);
 	LCD_DataWrite((color&0x001f));
 }
 

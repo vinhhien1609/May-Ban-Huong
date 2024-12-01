@@ -63,3 +63,8 @@ idm\user_gui.o: ..\Core\User_Driver\nv11.h
 idm\user_gui.o: ..\Core\User_Driver\flash.h
 idm\user_gui.o: ..\Core\User_Driver\vdm_device_config.h
 idm\user_gui.o: ..\Core\User_Driver\vdm_app_gsm.h
+idm\user_gui.o: ..\Core\User_Driver\touch.h
+idm\user_gui.o: ..\Core\User_Driver\keyboard.h
+idm\user_gui.o: ../Core/User_Driver/draw_font/graphic.h
+idm\user_gui.o: ../Core/User_Driver/draw_font/IOT47_VN_font.h
+idm\user_gui.o: ../Core/User_Driver/draw_font/Fontmaker.h

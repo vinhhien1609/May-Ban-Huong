@@ -73,3 +73,10 @@ idm\main.o: ../Core/User_Driver/flash.h
 idm\main.o: ../Core/User_Driver/vdm_app_gsm.h
 idm\main.o: ../Core/User_Driver/vdm_fw.h
 idm\main.o: ../Core/User_Driver/vdm_device_config.h
+idm\main.o: ../Core/User_Driver/TOUCH.h
+idm\main.o: ../Core/User_Driver/w25qxx.h
+idm\main.o: ../Core/User_Driver/SPI/spi.h
+idm\main.o: ../Core/User_Driver/keyboard.h
+idm\main.o: ../Core/User_Driver/draw_font/graphic.h
+idm\main.o: ../Core/User_Driver/draw_font/IOT47_VN_font.h
+idm\main.o: ../Core/User_Driver/draw_font/Fontmaker.h

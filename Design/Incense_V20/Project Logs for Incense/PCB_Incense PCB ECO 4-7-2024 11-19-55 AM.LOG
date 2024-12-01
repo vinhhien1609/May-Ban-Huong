@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=I_M_SENSE Pin=U8-1
+Removed Pin From Net: NetName=NetC81_2 Pin=U8-2
+Removed Pin From Net: NetName=NetR122_1 Pin=U8-3
+Removed Pin From Net: NetName=DGND Pin=U8-4
+Removed Pin From Net: NetName=5V_OUT Pin=U8-8
+Removed Member From Class: ClassName=02-Insence_interface Member=U9
+Change Component Comment : Designator=U9 Old Comment=LM358BAIDR New Comment=LM358BIDGKR
+Change Component Designator: OldDesignator=U9 NewDesignator=U8
+Added Pin To Net: NetName=I_M_SENSE Pin=U8-1
+Added Pin To Net: NetName=NetC81_2 Pin=U8-2
+Added Pin To Net: NetName=NetR122_1 Pin=U8-3
+Added Pin To Net: NetName=DGND Pin=U8-4
+Added Pin To Net: NetName=5V_OUT Pin=U8-8

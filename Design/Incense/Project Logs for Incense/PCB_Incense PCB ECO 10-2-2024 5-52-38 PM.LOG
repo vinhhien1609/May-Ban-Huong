@@ -1,0 +1,617 @@
+Removed Pin From Net: NetName=DGND Pin=C25-1
+Removed Pin From Net: NetName=DGND Pin=C26-1
+Removed Pin From Net: NetName=DGND Pin=C27-1
+Removed Pin From Net: NetName=DGND Pin=C41-1
+Removed Pin From Net: NetName=MCU_IN1 Pin=C41-2
+Removed Pin From Net: NetName=DGND Pin=C42-1
+Removed Pin From Net: NetName=MCU_IN4 Pin=C42-2
+Removed Pin From Net: NetName=DGND Pin=C43-1
+Removed Pin From Net: NetName=MCU_IN2 Pin=C43-2
+Removed Pin From Net: NetName=DGND Pin=C44-1
+Removed Pin From Net: NetName=MCU_IN5 Pin=C44-2
+Removed Pin From Net: NetName=DGND Pin=C45-1
+Removed Pin From Net: NetName=MCU_IN3 Pin=C45-2
+Removed Pin From Net: NetName=DOOR Pin=D3-2
+Removed Pin From Net: NetName=DROP Pin=D6-2
+Removed Pin From Net: NetName=EMPTY Pin=D7-2
+Removed Pin From Net: NetName=INPUT1 Pin=D11-2
+Removed Pin From Net: NetName=INPUT4 Pin=D12-2
+Removed Pin From Net: NetName=INPUT2 Pin=D16-2
+Removed Pin From Net: NetName=INPUT5 Pin=D17-2
+Removed Pin From Net: NetName=INPUT3 Pin=D18-2
+Removed Pin From Net: NetName=DGND Pin=R10-2
+Removed Pin From Net: NetName=DOOR Pin=R11-1
+Removed Pin From Net: NetName=3V3 Pin=R18-1
+Removed Pin From Net: NetName=DGND Pin=R22-2
+Removed Pin From Net: NetName=DROP Pin=R23-1
+Removed Pin From Net: NetName=3V3 Pin=R27-1
+Removed Pin From Net: NetName=DGND Pin=R30-2
+Removed Pin From Net: NetName=EMPTY Pin=R31-1
+Removed Pin From Net: NetName=3V3 Pin=R64-1
+Removed Pin From Net: NetName=3V3 Pin=R65-1
+Removed Pin From Net: NetName=MCU_IN1 Pin=R66-1
+Removed Pin From Net: NetName=MCU_IN4 Pin=R67-1
+Removed Pin From Net: NetName=DGND Pin=R68-2
+Removed Pin From Net: NetName=DGND Pin=R69-2
+Removed Pin From Net: NetName=INPUT1 Pin=R70-1
+Removed Pin From Net: NetName=INPUT4 Pin=R71-1
+Removed Pin From Net: NetName=3V3 Pin=R72-1
+Removed Pin From Net: NetName=MCU_IN2 Pin=R74-1
+Removed Pin From Net: NetName=MCU_IN5 Pin=R75-1
+Removed Pin From Net: NetName=DGND Pin=R79-2
+Removed Pin From Net: NetName=DGND Pin=R80-2
+Removed Pin From Net: NetName=INPUT2 Pin=R81-1
+Removed Pin From Net: NetName=INPUT5 Pin=R82-1
+Removed Pin From Net: NetName=3V3 Pin=R83-1
+Removed Pin From Net: NetName=MCU_IN3 Pin=R84-1
+Removed Pin From Net: NetName=DGND Pin=R85-2
+Removed Pin From Net: NetName=INPUT3 Pin=R86-1
+Removed Pin From Net: NetName=DGND Pin=Z1-2
+Removed Pin From Net: NetName=DGND Pin=Z2-2
+Removed Pin From Net: NetName=DGND Pin=Z3-2
+Removed Pin From Net: NetName=MCU_IN1 Pin=Z4-1
+Removed Pin From Net: NetName=DGND Pin=Z4-2
+Removed Pin From Net: NetName=MCU_IN4 Pin=Z5-1
+Removed Pin From Net: NetName=DGND Pin=Z5-2
+Removed Pin From Net: NetName=MCU_IN2 Pin=Z6-1
+Removed Pin From Net: NetName=DGND Pin=Z6-2
+Removed Pin From Net: NetName=MCU_IN5 Pin=Z7-1
+Removed Pin From Net: NetName=DGND Pin=Z7-2
+Removed Pin From Net: NetName=MCU_IN3 Pin=Z8-1
+Removed Pin From Net: NetName=DGND Pin=Z8-2
+Removed Member From Class: ClassName=02-Insence_interface Member=C25
+Removed Member From Class: ClassName=02-Insence_interface Member=C26
+Removed Member From Class: ClassName=02-Insence_interface Member=C27
+Removed Member From Class: ClassName=02-Insence_interface Member=C41
+Removed Member From Class: ClassName=02-Insence_interface Member=C42
+Removed Member From Class: ClassName=02-Insence_interface Member=C43
+Removed Member From Class: ClassName=02-Insence_interface Member=C44
+Removed Member From Class: ClassName=02-Insence_interface Member=C45
+Removed Member From Class: ClassName=02-Insence_interface Member=D3
+Removed Member From Class: ClassName=02-Insence_interface Member=D6
+Removed Member From Class: ClassName=02-Insence_interface Member=D7
+Removed Member From Class: ClassName=02-Insence_interface Member=D11
+Removed Member From Class: ClassName=02-Insence_interface Member=D12
+Removed Member From Class: ClassName=02-Insence_interface Member=D16
+Removed Member From Class: ClassName=02-Insence_interface Member=D17
+Removed Member From Class: ClassName=02-Insence_interface Member=D18
+Removed Member From Class: ClassName=02-Insence_interface Member=R79
+Removed Member From Class: ClassName=02-Insence_interface Member=R80
+Removed Member From Class: ClassName=02-Insence_interface Member=R81
+Removed Member From Class: ClassName=02-Insence_interface Member=R82
+Removed Member From Class: ClassName=02-Insence_interface Member=R83
+Removed Member From Class: ClassName=02-Insence_interface Member=R84
+Removed Member From Class: ClassName=02-Insence_interface Member=R85
+Removed Member From Class: ClassName=02-Insence_interface Member=R86
+Removed Member From Class: ClassName=02-Insence_interface Member=Z1
+Removed Member From Class: ClassName=02-Insence_interface Member=Z2
+Removed Member From Class: ClassName=02-Insence_interface Member=Z3
+Removed Member From Class: ClassName=02-Insence_interface Member=Z4
+Removed Member From Class: ClassName=02-Insence_interface Member=Z5
+Removed Member From Class: ClassName=02-Insence_interface Member=Z6
+Removed Member From Class: ClassName=02-Insence_interface Member=Z7
+Removed Member From Class: ClassName=02-Insence_interface Member=Z8
+Change Component Comment : Designator=R8 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R20 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R22 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R28 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R30 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R66 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R67 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R68 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R75 Old Comment=1K New Comment=10K
+Change Component Comment : Designator=R10 Old Comment=1K New Comment=100k, 0603
+Change Component Comment : Designator=R69 Old Comment=1K New Comment=100k, 0603
+Change Component Comment : Designator=R74 Old Comment=1K New Comment=100k, 0603
+Change Component Comment : Designator=R11 Old Comment=10K New Comment=100k, 0603
+Change Component Comment : Designator=R23 Old Comment=10K New Comment=100k, 0603
+Change Component Comment : Designator=R31 Old Comment=10K New Comment=100k, 0603
+Change Component Comment : Designator=R64 Old Comment=10K New Comment=100k, 0603
+Change Component Comment : Designator=R71 Old Comment=10K New Comment=100k, 0603
+Change component parameters: Designator = "R27" ("R27"); Footprint = "res 0603"; UniqueID = "\XZCWIXVP" ("\XZCWIXVP")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R65" ("R65"); Footprint = "res 0603"; UniqueID = "\SNIAJKAJ" ("\SNIAJKAJ")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R70" ("R70"); Footprint = "res 0603"; UniqueID = "\JQDTFWDL" ("\JQDTFWDL")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R72" ("R72"); Footprint = "res 0603"; UniqueID = "\JVXFPMJG" ("\JVXFPMJG")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R73" ("R73"); Footprint = "res 0603"; UniqueID = "\USGRHQXW" ("\USGRHQXW")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R8" ("R8"); Footprint = "res 0603"; UniqueID = "\NDHKYBXS" ("\NDHKYBXS")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R20" ("R20"); Footprint = "res 0603"; UniqueID = "\DRLVHKFY" ("\DRLVHKFY")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R28" ("R28"); Footprint = "res 0603"; UniqueID = "\KEADXZQR" ("\KEADXZQR")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R66" ("R66"); Footprint = "res 0603"; UniqueID = "\YZAQBUJB" ("\YZAQBUJB")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R67" ("R67"); Footprint = "res 0603"; UniqueID = "\UWIDMKQS" ("\UWIDMKQS")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R75" ("R75"); Footprint = "res 0603"; UniqueID = "\DYVCSZTS" ("\DYVCSZTS")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R22" ("R22"); Footprint = "res 0603"; UniqueID = "\FOORZOJI" ("\FOORZOJI")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R30" ("R30"); Footprint = "res 0603"; UniqueID = "\VOTLBMUY" ("\VOTLBMUY")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R68" ("R68"); Footprint = "res 0603"; UniqueID = "\XGBXWARG" ("\XGBXWARG")
+Change component parameters (AddParameter): Name = "CATEGORY"; Value = "RES-SMD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LOH_Code"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603JT10K0"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2"; Value = "UWA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "R0603J10KKDX"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PACKING"; Value = "Tape & Reel (TR)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PCB Footprint"; Value = "0603"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Process Type"; Value = "SM"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "±5%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Unit"; Value = "PCS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R74" ("R74"); Footprint = "res 0603"; UniqueID = "\MFUJDEMF" ("\MFUJDEMF")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R10" ("R10"); Footprint = "res 0603"; UniqueID = "\BSTAQAJQ" ("\BSTAQAJQ")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R69" ("R69"); Footprint = "res 0603"; UniqueID = "\RKGSYOHS" ("\RKGSYOHS")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R23" ("R23"); Footprint = "res 0603"; UniqueID = "\ZPQTGNPM" ("\ZPQTGNPM")
+Change component parameters (AddParameter): Name = "Assembly"; Value = "NI"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R31" ("R31"); Footprint = "res 0603"; UniqueID = "\TPVDQSMY" ("\TPVDQSMY")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R11" ("R11"); Footprint = "res 0603"; UniqueID = "\YHNEJTWH" ("\YHNEJTWH")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R64" ("R64"); Footprint = "res 0603"; UniqueID = "\KCCKRGZF" ("\KCCKRGZF")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R71" ("R71"); Footprint = "res 0603"; UniqueID = "\CZTPVCLY" ("\CZTPVCLY")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1"; Value = "Stackpole Electronics Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "RMCF0603FT100K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100k"; VariantName = "[No Variations]"
+Added Component: Designator=C23(0805)
+Add component (AddParameter): Name = "=Value"; Value = "0.1uF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Cal-Chip Electronics, Inc."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "GMC21X7R104M50NT"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "RAD-0.3"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=Q25(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q26(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q27(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q28(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q29(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q30(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q31(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Component: Designator=Q32(SOT-23)
+Add component (AddParameter): Name = "Category"; Value = "TRANSISTOR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Guangdong Hottech"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "HT(Shenzhen Jinyu Semicon)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "NI_MARK"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PACKAGE"; Value = "SOT23"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PROCESS_TYPE"; Value = "SM"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "MMBT3904"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=DGND Pin=C23-1
+Added Pin To Net: NetName=5V0 Pin=C23-2
+Added Pin To Net: NetName=DGND Pin=Q25-2
+Added Pin To Net: NetName=DGND Pin=Q26-2
+Added Pin To Net: NetName=DGND Pin=Q27-2
+Added Pin To Net: NetName=DGND Pin=Q28-2
+Added Pin To Net: NetName=MCU_IN1 Pin=Q28-3
+Added Pin To Net: NetName=DGND Pin=Q29-2
+Added Pin To Net: NetName=MCU_IN4 Pin=Q29-3
+Added Pin To Net: NetName=DGND Pin=Q30-2
+Added Pin To Net: NetName=MCU_IN2 Pin=Q30-3
+Added Pin To Net: NetName=DGND Pin=Q31-2
+Added Pin To Net: NetName=MCU_IN5 Pin=Q31-3
+Added Pin To Net: NetName=DGND Pin=Q32-2
+Added Pin To Net: NetName=MCU_IN3 Pin=Q32-3
+Added Pin To Net: NetName=3V3 Pin=R8-1
+Added Pin To Net: NetName=3V3 Pin=R10-2
+Added Pin To Net: NetName=3V3 Pin=R11-2
+Added Pin To Net: NetName=DOOR Pin=R18-1
+Added Pin To Net: NetName=DROP Pin=R20-1
+Added Pin To Net: NetName=3V3 Pin=R22-1
+Added Pin To Net: NetName=3V3 Pin=R23-2
+Added Pin To Net: NetName=EMPTY Pin=R27-1
+Added Pin To Net: NetName=3V3 Pin=R28-1
+Added Pin To Net: NetName=MCU_IN1 Pin=R28-2
+Added Pin To Net: NetName=3V3 Pin=R30-1
+Added Pin To Net: NetName=MCU_IN4 Pin=R30-2
+Added Pin To Net: NetName=3V3 Pin=R31-2
+Added Pin To Net: NetName=3V3 Pin=R64-2
+Added Pin To Net: NetName=INPUT1 Pin=R65-1
+Added Pin To Net: NetName=INPUT4 Pin=R66-1
+Added Pin To Net: NetName=3V3 Pin=R67-1
+Added Pin To Net: NetName=MCU_IN2 Pin=R67-2
+Added Pin To Net: NetName=3V3 Pin=R68-1
+Added Pin To Net: NetName=MCU_IN5 Pin=R68-2
+Added Pin To Net: NetName=3V3 Pin=R69-2
+Added Pin To Net: NetName=INPUT2 Pin=R70-1
+Added Pin To Net: NetName=3V3 Pin=R71-2
+Added Pin To Net: NetName=INPUT5 Pin=R72-1
+Added Pin To Net: NetName=MCU_IN3 Pin=R73-2
+Added Pin To Net: NetName=3V3 Pin=R74-2
+Added Pin To Net: NetName=INPUT3 Pin=R75-1
+Added Pin To Net: NetName=NetQ25_1 Pin=Q25-1
+Added Pin To Net: NetName=NetQ25_1 Pin=R10-1
+Added Pin To Net: NetName=NetQ25_1 Pin=R18-2
+Added Net: Name=NetQ25_1
+Added Pin To Net: NetName=NetQ25_3 Pin=Q25-3
+Added Pin To Net: NetName=NetQ25_3 Pin=R6-2
+Added Pin To Net: NetName=NetQ25_3 Pin=U6-35
+Added Net: Name=NetQ25_3
+Added Pin To Net: NetName=NetQ26_1 Pin=Q26-1
+Added Pin To Net: NetName=NetQ26_1 Pin=R11-1
+Added Pin To Net: NetName=NetQ26_1 Pin=R20-2
+Added Net: Name=NetQ26_1
+Added Pin To Net: NetName=NetQ26_3 Pin=Q26-3
+Added Pin To Net: NetName=NetQ26_3 Pin=R8-2
+Added Pin To Net: NetName=NetQ26_3 Pin=U6-34
+Added Net: Name=NetQ26_3
+Added Pin To Net: NetName=NetQ27_1 Pin=Q27-1
+Added Pin To Net: NetName=NetQ27_1 Pin=R23-1
+Added Pin To Net: NetName=NetQ27_1 Pin=R27-2
+Added Net: Name=NetQ27_1
+Added Pin To Net: NetName=NetQ27_3 Pin=Q27-3
+Added Pin To Net: NetName=NetQ27_3 Pin=R22-2
+Added Pin To Net: NetName=NetQ27_3 Pin=U6-33
+Added Net: Name=NetQ27_3
+Added Pin To Net: NetName=NetQ28_1 Pin=Q28-1
+Added Pin To Net: NetName=NetQ28_1 Pin=R31-1
+Added Pin To Net: NetName=NetQ28_1 Pin=R65-2
+Added Net: Name=NetQ28_1
+Added Pin To Net: NetName=NetQ29_1 Pin=Q29-1
+Added Pin To Net: NetName=NetQ29_1 Pin=R64-1
+Added Pin To Net: NetName=NetQ29_1 Pin=R66-2
+Added Net: Name=NetQ29_1
+Added Pin To Net: NetName=NetQ30_1 Pin=Q30-1
+Added Pin To Net: NetName=NetQ30_1 Pin=R69-1
+Added Pin To Net: NetName=NetQ30_1 Pin=R70-2
+Added Net: Name=NetQ30_1
+Added Pin To Net: NetName=NetQ31_1 Pin=Q31-1
+Added Pin To Net: NetName=NetQ31_1 Pin=R71-1
+Added Pin To Net: NetName=NetQ31_1 Pin=R72-2
+Added Net: Name=NetQ31_1
+Added Pin To Net: NetName=NetQ32_1 Pin=Q32-1
+Added Pin To Net: NetName=NetQ32_1 Pin=R74-1
+Added Pin To Net: NetName=NetQ32_1 Pin=R75-2
+Added Net: Name=NetQ32_1
+Added Member To Class: ClassName=01-Insence_Power Member=Component C23 Cap
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q25 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q26 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q27 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q28 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q29 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q30 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q31 MMBT3904
+Added Member To Class: ClassName=02-Insence_interface Member=Component Q32 MMBT3904
+Added Room: Name=01-Insence_Power
+Added Room: Name=02-Insence_interface
+Added Room: Name=04_Incense_MCU

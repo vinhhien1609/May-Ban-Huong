@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=SIM_RST Pin=D23-6
+Removed Pin From Net: NetName=SIM_RST Pin=J5-C2
+Removed Pin From Net: NetName=SIM_RST Pin=U9-18
+Change Net Name : Old Net Name=SIM_RST New Net Name=NetD23_3
+Added Pin To Net: NetName=SIM_RST Pin=D23-6
+Added Pin To Net: NetName=SIM_RST Pin=J5-C2
+Added Pin To Net: NetName=SIM_RST Pin=U9-18
+Added Net: Name=SIM_RST

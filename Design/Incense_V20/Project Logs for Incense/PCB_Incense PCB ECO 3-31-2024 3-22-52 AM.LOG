@@ -1,0 +1,36 @@
+Removed Pin From Net: NetName=LED_3 Pin=U6-62
+Removed Pin From Net: NetName=LED_2 Pin=U6-63
+Removed Pin From Net: NetName=LED_1 Pin=U6-64
+Added Component: Designator=D4(SOT-23-3)
+Add component (AddParameter): Name = "Category"; Value = "TVS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "CURRENT"; Value = "23A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Micro Commercial Co"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "HSM05-TP"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Diodes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "SM05-7"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "POWER"; Value = "320W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VOLTAGE"; Value = "5V"; VariantName = "[No Variations]"
+Added Component: Designator=D5(SOT-23-3)
+Add component (AddParameter): Name = "Category"; Value = "TVS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "CURRENT"; Value = "23A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "Micro Commercial Co"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "HSM05-TP"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Diodes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "SM05-7"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "POWER"; Value = "320W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VOLTAGE"; Value = "5V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=LCD_CLK Pin=D4-1
+Added Pin To Net: NetName=LCD_RST Pin=D4-2
+Added Pin To Net: NetName=DGND Pin=D4-3
+Added Pin To Net: NetName=LCD_CS Pin=D5-1
+Added Pin To Net: NetName=LCD_DI Pin=D5-2
+Added Pin To Net: NetName=DGND Pin=D5-3
+Added Pin To Net: NetName=LED_3 Pin=U6-73
+Added Pin To Net: NetName=LED_2 Pin=U6-77
+Added Pin To Net: NetName=LED_1 Pin=U6-81
+Added Member To Class: ClassName=02-Insence_interface Member=Component D4 HSM05-TP
+Added Member To Class: ClassName=02-Insence_interface Member=Component D5 HSM05-TP

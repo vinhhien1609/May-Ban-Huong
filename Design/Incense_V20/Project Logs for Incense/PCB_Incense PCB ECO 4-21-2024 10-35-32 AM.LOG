@@ -1,0 +1,5 @@
+Change Component Comment : Designator=U3 Old Comment=LM1117MPX-5.0V New Comment=LM1117MPX-3.3V
+Change Component Library : Designator=U1 Old Library=Hiendv_schlib.SchLib New Library=lib.SchLib
+Change Component Library : Designator=U3 Old Library=Hiendv_schlib.SchLib New Library=lib.SchLib
+Added Pin To Net: NetName=3V3 Pin=U1-4
+Added Pin To Net: NetName=5V0 Pin=U3-4

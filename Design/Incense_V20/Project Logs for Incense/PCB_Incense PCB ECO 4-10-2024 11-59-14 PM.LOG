@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=MCU_IN1 Pin=U6-33
+Removed Pin From Net: NetName=MCU_IN2 Pin=U6-34
+Removed Pin From Net: NetName=MCU_IN3 Pin=U6-35
+Removed Pin From Net: NetName=MCU_IN4 Pin=U6-36
+Removed Pin From Net: NetName=MCU_IN5 Pin=U6-37
+Removed Pin From Net: NetName=NetR63_2 Pin=U6-38
+Removed Pin From Net: NetName=NetR61_2 Pin=U6-39
+Added Pin To Net: NetName=NetR61_2 Pin=U6-84
+Added Pin To Net: NetName=NetR63_2 Pin=U6-85
+Added Pin To Net: NetName=MCU_IN5 Pin=U6-86
+Added Pin To Net: NetName=MCU_IN4 Pin=U6-87
+Added Pin To Net: NetName=MCU_IN3 Pin=U6-88
+Added Pin To Net: NetName=MCU_IN2 Pin=U6-89
+Added Pin To Net: NetName=MCU_IN1 Pin=U6-90

@@ -26,11 +26,10 @@
 
 
 /* Private function prototypes -----------------------------------------------*/
-unsigned char scan_BT(void);
-void scan_switch(void);
 void Menu_draw(void);
 void Menu_draw_MONO(void);
 void Menu_draw_TFT(void);
+
 
 /* Private variables ---------------------------------------------------------*/
 typedef enum displayType{
@@ -67,6 +66,8 @@ typedef enum displayType{
 	DIS_SETUP_TECH,
 		DIS_SET_ID_MACHINE,
 		DIS_SET_IP,
+	DIS_KEYBOARD,
+	DIS_PRICE_SET,
 } Display_Typedef;
 #endif
 

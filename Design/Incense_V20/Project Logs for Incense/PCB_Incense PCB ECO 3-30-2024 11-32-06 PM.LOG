@@ -1,0 +1,16 @@
+Added Component: Designator=D24(SOT-416)
+Add component (AddParameter): Name = "CAPACITANCE"; Value = "0.5pF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Category"; Value = "TVS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "CURRENT"; Value = "1A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LOH_CODE"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1"; Value = "ON Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER1_PART#"; Value = "ESDR0502BT1G"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2"; Value = "Toshiba"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MANUFACTURER2_PART#"; Value = "DF3D6.8MS,LF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "POWER"; Value = "320W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "ESDR0502BT1G"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VOLTAGE"; Value = "5V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=USB1_CON_D_N Pin=D24-1
+Added Pin To Net: NetName=USB1_CON_D_P Pin=D24-2
+Added Pin To Net: NetName=DGND Pin=D24-3
+Added Member To Class: ClassName=04_Incense_MCU Member=Component D24 ESDR0502BT1G
