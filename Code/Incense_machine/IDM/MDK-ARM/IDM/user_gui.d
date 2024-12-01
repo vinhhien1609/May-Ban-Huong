@@ -68,3 +68,4 @@ idm\user_gui.o: ..\Core\User_Driver\keyboard.h
 idm\user_gui.o: ../Core/User_Driver/draw_font/graphic.h
 idm\user_gui.o: ../Core/User_Driver/draw_font/IOT47_VN_font.h
 idm\user_gui.o: ../Core/User_Driver/draw_font/Fontmaker.h
+idm\user_gui.o: ..\Core\User_Driver\vdm_fw.h

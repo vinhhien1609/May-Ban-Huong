@@ -37,6 +37,7 @@
 #include "touch.h"
 #include "keyboard.h"
 #include "graphic.h"
+#include "vdm_fw.h"
 
 unsigned char temp_menu_char[30];
 unsigned int temp_menu_int[5];
@@ -1802,13 +1803,15 @@ void Menu_draw_TFT(void)
 						sprintf(s,"%s %02d/%02d %02d:%02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
 					else
 						sprintf(s,"%s %02d/%02d %02d %02d ", day[currentTime.weekday], currentTime.day, currentTime.month, currentTime.hour, currentTime.minute);
-					TFT_DrawString(s, 550, 440, color_green);					
+					TFT_DrawString(s, 550, 440, color_green);
 					draw_signal_gsm();
 					sprintf(s,"%2d%%", (int)Humidity);
 					TFT_DrawString(s, 400, 20, color_green);
 					sprintf(s,"%2dC",(int)Temperature);
 					TFT_DrawString(s, 250, 20, color_green);
 					
+					sprintf(s,"%s",VDM_FIRMWARE_VERSION);
+					TFT_DrawString(s, 600, 20, color_green);
 
 					if(get_touch(TOUCH_UP, 300, 200, 200, 200)== true && m_device_config.item[0].price >0)
 					{
