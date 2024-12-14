@@ -175,10 +175,6 @@ static uint8_t m_device_id[10];
 static void send_frame(vdm_app_gsm_server_type_t server_type, uint8_t cmd, uint8_t *data, uint32_t length)
 {
 	TCP_send(data, length);
-	printf("GSM>>");
-	for(int n=0; n<length; n++)
-		printf(" %02X",data[n]);
-	printf("\r\n");
 }
 
 //static void send_frame(vdm_app_gsm_server_type_t server_type, uint8_t cmd, uint8_t *data, uint32_t length)

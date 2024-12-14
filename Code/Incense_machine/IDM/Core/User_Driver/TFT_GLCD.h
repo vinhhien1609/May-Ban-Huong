@@ -5,6 +5,7 @@
 #include "main.h"
 #include "All_75_Pic_256.h"
 #include <stdbool.h>
+#include "fontmaker.h"
 
 #define uchar uint8_t
 #define uint uint16_t
@@ -15,6 +16,7 @@
 #define color_white   0xffff
 #define color_red     0xf800
 #define color_green   0x00C0//0x07e0
+#define color_green_bright   0x07e0
 #define color_blue    0x001f
 #define color_dark_blue    0x0011
 #define color_gray		0x8C95
@@ -52,6 +54,10 @@ void Select_Layers_One(void);
 void Select_Layers_Two(void);
 void Access_layer(uchar layer);
 
+void test_custom(void);
+
 void COLOR_mono(uint16_t point_x, uint16_t point_y, uint16_t w, uint16_t h);
+unsigned char PutChar(int16_t x,int16_t y,uint16_t txt,const Font *my_font,uint32_t color);
+void TFT_putString(int16_t x, int16_t y, const char *s, const Font *my_font, uint32_t color);
 
 #endif /* GLCD_H */

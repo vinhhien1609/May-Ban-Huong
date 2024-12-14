@@ -78,6 +78,11 @@ void TCP_send(uint8_t *data, uint32_t length)
 {
 	if(GSM.Connect4G)
 	{
+		printf("GSM>>");
+		for(int n=0; n<length; n++)
+			printf(" %02X",data[n]);
+		printf("\r\n");
+		
 						sprintf(s, "AT+CIPSEND=1,\r\n");
 						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));		
 						HAL_Delay(500);
@@ -86,6 +91,8 @@ void TCP_send(uint8_t *data, uint32_t length)
 						HAL_Delay(500);
 						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)"\x1A",1);
 	}
+	else
+		printf("GSM>> NO Connect to server\r\n");
 }
 
 void TCP_reconnect(void)

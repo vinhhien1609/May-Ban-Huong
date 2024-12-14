@@ -20,6 +20,7 @@
 #include "main.h"
 #include "flash.h"
 #include "nv11.h"
+#include "vdm_device_config.h"
 IDM_PARA IDM;
 IDM_HARDWARE IDM_Status;
 BUY_PARA buy;
@@ -28,6 +29,8 @@ LED Led1, Led2, Led3;
 float Humidity, Temperature;
 unsigned char havemoney=0, IDM_state=0, State=0xFF;
 extern unsigned char isTouch;
+extern vdm_device_config_t m_device_config;
+extern int quantity_buy;
 
 /* Private define ------------------------------------------------------------*/
 uint32_t count=0;
@@ -53,6 +56,24 @@ void IDM_init(void)
 
 
 uint8_t time_blink_led_error_cell =0;
+
+unsigned char set_mode(unsigned char mode)
+{
+//			FIX_MODE = 0x00,						/* cap phat co dinh so huong */	
+//    MERIT_MODE,				   /* cong duc */
+//    SALES_MODE,   /* ban hang*/	
+	if((m_device_config.item[0].price>0 && IDM.NumberInsenseBuy>0) || mode == MERIT_MODE)	return mode;
+	else
+	{
+		if(m_device_config.item[0].price==0 && IDM.NumberInsenseBuy>0)
+			return FIX_MODE;
+		if(m_device_config.item[0].price>0 && IDM.NumberInsenseBuy==0)
+			return SALES_MODE;	//so huong co dinh
+		if(m_device_config.item[0].price==0 && IDM.NumberInsenseBuy==0)
+			return MERIT_MODE;
+	}
+	
+}
 
 void Scan_IDM(void)
 {
@@ -129,7 +150,10 @@ void Scan_IDM(void)
 				{
 					havemoney =0;
 					count=MAXTimeDropRespone-10;
-					buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
+					if(m_device_config.run_mode ==SALES_MODE)
+						buy.TotalIsenseDroped = quantity_buy;
+					if(m_device_config.run_mode ==FIX_MODE)
+						buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
 					buy.numberRetry =0;		// time retry when conveyer no out insense
 	//						buy.StateBuy = WAIT_INSENCE;
 					IDM_state = 2;
@@ -148,6 +172,7 @@ void Scan_IDM(void)
 				Led_init(&Led2,0,10,2000);
 				Led_init(&Led3,0,10,2000);
 				count =0;
+				printf("CELL>> %d\r\n", IDM_state);
 			}
 			else
 			{
@@ -165,6 +190,7 @@ void Scan_IDM(void)
 		case 3:		// qua thoi gian ma khong thay huong--> Dao huong
 			if(State!=IDM_state)
 			{
+				printf("CELL>> %d\r\n", IDM_state);
 				count=0;
 				State = IDM_state;
 				if(buy.numberRetry<2)
@@ -202,6 +228,7 @@ void Scan_IDM(void)
 		case 4:		//CELL_SUCCESS
 			if(State!=IDM_state)
 			{
+				printf("CELL>> %d\r\n", IDM_state);
 				count=0;
 				IDM_Status.Motor_conveyer.isRun =0;
 				IDM_Status.Motor_swap.isRun =0;
@@ -226,6 +253,7 @@ void Scan_IDM(void)
 		case 5:		// Chu ky dao huong
 			if(State!=IDM_state)
 			{
+				printf("CELL>> %d\r\n", IDM_state);
 				State = IDM_state;				
 				count=0;
 				IDM_Status.Motor_swap.isRun =1;
@@ -245,6 +273,7 @@ void Scan_IDM(void)
 		case 6:	// INSENCE IMPTY
 			if(State != IDM_state)
 			{
+				printf("CELL>> %d\r\n", IDM_state);
 				State = IDM_state;
 				Led_init(&Led3,250,500,1000);		//2 chu ky on/off
 				Led_init(&Led1,0,10,2000);		//led1 off
@@ -300,7 +329,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			if(buy.TotalIsenseDroped==0)	IDM_Status.Motor_conveyer.isRun=0;
 			count =0;		// chong rung			
 		}
-
 	}
 	if(GPIO_Pin == TOUCH_INT_Pin)
 	{

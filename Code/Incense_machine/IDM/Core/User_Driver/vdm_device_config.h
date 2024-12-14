@@ -59,6 +59,15 @@
 //    VDM_LANG_ENGLISH = 0x01,   /* English */
 //    VDM_LANG_MAX    /* The end of languages */
 //} vdm_language_t;
+
+typedef enum
+{
+		FIX_MODE = 0x00,						/* cap phat co dinh so huong */	
+    MERIT_MODE,				   /* cong duc */
+    SALES_MODE,   /* ban hang*/	
+    VDM_MODE_MAX    /* The end of languages */
+} vdm_run_mode_t;
+
 typedef union
 {
     struct
@@ -229,6 +238,7 @@ typedef struct
     vdm_device_config_peripheral_uv_t uv;
     uint8_t qrm_supplier;
     vdm_device_config_motor_calibrate_t motor_calib;
+		vdm_run_mode_t run_mode;
     uint8_t reserve[10]; // Reverse for feature use
 } __attribute__((packed)) vdm_device_config_t;
 

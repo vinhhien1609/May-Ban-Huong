@@ -100,6 +100,7 @@ typedef struct {
 void IDM_init(void);
 void Scan_IDM(void);
 void check_stopService(void);
+unsigned char set_mode(unsigned char mode);
 
 /* Private variables ---------------------------------------------------------*/
 

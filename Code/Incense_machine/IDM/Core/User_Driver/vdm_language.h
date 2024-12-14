@@ -77,6 +77,7 @@ typedef enum
 		VDM_LANG_QUANLITY,
 		VDM_LANG_BALANCE,
 		VDM_LANG_MISSING_AMOUNT,
+		VDM_LANG_PHONE_NUMBER,
     VDM_LANG_ID_MAX,		
 } vdm_language_id_t;
 

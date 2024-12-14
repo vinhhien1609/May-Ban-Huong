@@ -21,9 +21,9 @@ INFO code_BINARY_INFO[9]=
   {4,800,480,384000,1152000},          /*     Insense_out , element 3     */
   {5,800,480,384000,1536000},          /*     Setting_Sell , element 4     */
   {6,800,480,384000,1920000},          /*     Setting_Tech , element 5     */
-  {7,800,480,384000,2304000},          /*     Thanks , element 6     */
-  {8,800,480,384000,2688000},          /*     Wait_insense , element 7     */
-	{9,800,480,384000,384000},          /*     Stop_service , element 7     */
+  {7,800,480,384000,2304000},          /*     STOP_Service , element 6     */
+  {8,800,480,384000,2688000},          /*     Thanks , element 7     */
+  {9,800,480,384000,3072000},          /*     Wait_insense , element 8     */
 };
 
 
@@ -921,6 +921,77 @@ void LCD_WriteRAM_Prepare(void)
 {
   LCD_CmdWrite(0x02); //
 }
+
+////////////////////////////////////////
+
+
+void Load_Char(unsigned char loc, unsigned char *data)
+{
+ char z;
+ Write_Dir(0x40,0x00); //Graphics Mode
+ Write_Dir(0x23,loc); //CGRAM Space Select
+ Write_Dir(0x21,0x00); //Select CGRAM
+ Write_Dir(0x41,0x04); //Write to CGRAM
+ LCD_CmdWrite(0x02); //Begin Write
+ for(z=0;z<16;z++)
+	LCD_DataWrite(*data++);
+}
+
+void Load_Char_(unsigned char loc, unsigned char *data, unsigned char lenth)
+{
+ char z;
+ Write_Dir(0x40,0x00); //Graphics Mode
+ Write_Dir(0x23,loc); //CGRAM Space Select
+ Write_Dir(0x21,0x00); //Select CGRAM
+ Write_Dir(0x41,0x04); //Write to CGRAM
+ LCD_CmdWrite(0x02); //Begin Write
+ for(z=0;z<16;z++)
+	{
+		if(z<lenth)
+			LCD_DataWrite(*data++);
+		else
+			LCD_DataWrite(0x00);
+	}
+}
+
+void Load_Font(unsigned char *buff,unsigned char start, unsigned char len)
+{
+ int z;
+ int count = start;
+ for(z=start;z<(len+start);z++)
+ {
+ Load_Char(count, (buff+(count*16)));
+ count++;
+ }
+ Write_Dir(0x41,0x00); //Write to LAYERS
+}
+
+
+extern uint16_t Microsoft_Sans_Serif26917_MAP[];
+//(C) 2020 By Dao Nguyen IOT47.com
+extern const uint8_t Microsoft_Sans_Serif26917[];
+
+void test_custom(void)
+{
+		unsigned char batt[16] = {0,0,0,24,24,126,126,126,126,126,126,126,126,126,0,0};
+		unsigned char batt2[16] = {0,0,0,24,24,126,66,66,66,114,126,126,126,126,0,0};
+		Load_Char(0x00,batt);
+		Load_Char(0x01,batt2);	
+		for(int n=0; n<236; n++)
+					Load_Char_(n, (unsigned char *)Microsoft_Sans_Serif26917 + Microsoft_Sans_Serif26917_MAP[n], Microsoft_Sans_Serif26917[Microsoft_Sans_Serif26917_MAP[n]-3]);
+	Write_Dir(0x40,0x80); //Set the character mode
+	Write_Dir(0x21,0x80); //Select the internal CGRAM
+//	Write_Dir(0x22,0x8F); //	
+	Write_Dir(0x41,0x00); //
+	LCD_background(color_white);
+	Text_Foreground_Color1(color_red);
+	FontWrite_Position(10,10);
+	LCD_CmdWrite(0x02); //Character-Text MODE
+	for(int n=0; n<236; n++)
+	LCD_DataWrite(n); //Draw Character from POSITION 0
+	//LCD_DataWrite(1); //Draw Character from POSITION 1	
+}
+
 ////////////Show the picture of the flash
 void Read_flash(uchar picnum)
 {
@@ -954,13 +1025,12 @@ void Displaypicture(uchar picnum)
 //	Read_flash(1);
 //	printf("lcd_dma Starting\n\r");
 //	 Select_Layers_Two();
-	Write_Dir(0x41,0x01);//Set the character mode
+	Write_Dir(0x41,0x01);//set layer 2
 //		 Select_Layers_One();
    Active_Window(0,code_BINARY_INFO[picnum].img_width-1,0,code_BINARY_INFO[picnum].img_height-1); 
    MemoryWrite_Position(0,0);//Memory write position	
 //	Graphic_Mode();	
    Write_Dir(0X06,0X00);//FLASH frequency setting
-//   Write_Dir(0X05,0X87);//FLASH setting flash 1, DMA_mode, 
 	   Write_Dir(0X05,0XA6);//FLASH setting flash 1, DMA_mode, 
 //	 Write_Dir(0XE0,0X00);//Direct Access Mode 
 
@@ -1005,11 +1075,74 @@ void TFT_DrawString(char* str, int16_t x, int16_t y, int16_t color)
 	
 }
 
+extern const uint16_t Arial94853_MAP[];
+//(C) 2020 By Dao Nguyen IOT47.com
+extern const uint8_t Arial94853[];
+
+
+unsigned char PutChar(int16_t x,int16_t y,uint16_t txt,const Font *my_font,uint32_t color)
+{
+    unsigned int str = my_font->font_map[txt];
+		unsigned char z=1;
+	 uint8_t temp;	
+		int w = my_font->font[str-4]; //lấy chiều rộng Font
+    int size_w = (((my_font->font[str-4]-1)/8)+1)*8; //lấy chiều rộng Font
+    int size_h = my_font->font[str-3]; //lấy chiều cao Font 
+    int start_y=my_font->font[str-1];
+	
+		Write_Dir(0x58,x &0xFF);//
+		Write_Dir(0x59,(x>>8)&0x03);//
+		Write_Dir(0x5A,y &0xFF);//
+		Write_Dir(0x5B,(y>>8)&0x01);//	layer1	
+		BTE_Size(size_w,size_h+ start_y);
+		LCD_CmdWrite(0x50);//start write data
+		temp= LCD_DataRead();
+		temp |= 0x80;		//bit 7 ~1
+		LCD_DataWrite(temp);//	
+	
+	LCD_CmdWrite(0x02);//start write data	
+	for(int n=0; n<start_y *size_w/8; n++)
+	{
+		LCD_DataWrite(0x00);
+	}
+	
+	for(int n=0; n<size_h*size_w/8; n++)
+	{
+		Chk_Busy();
+//		HAL_Delay(500);
+//		LCD_DataWrite(1<<((n/2)%7));
+		LCD_DataWrite(my_font->font[str+n]);
+	}
+   return w;
+} 
+
+
+void TFT_putString(int16_t x, int16_t y, const char *s, const Font *my_font, uint32_t color)
+{
+   unsigned char offset=0;
+   uint16_t utf8_addr;
+
+//		Text_Background_Color1(color_blue);
+		Text_Foreground_Color1(color);	
+		Write_Dir(0x51,0x78);//		
+	
+   while(*s)
+   {
+      utf8_addr=FontMakerUTF8_GetAddr((unsigned char *)s,&offset);
+      x +=PutChar(x,y,utf8_addr,my_font,color)+1;
+      s+=offset;
+   }	
+}
 
 void COLOR_mono(uint16_t point_x, uint16_t point_y, uint16_t w, uint16_t h)
 {
 	uint8_t temp;
 	uint16_t n;
+	char s[100];
+	char _ch =1;
+	w = ((Arial94853[Arial94853_MAP[_ch]-4]/8)+1)*8;
+	h = (Arial94853[Arial94853_MAP[_ch]-3]);// * (Arial94853[Arial94853_MAP[_ch]-2]);//test_MAP[_ch]-3;
+	
 	Write_Dir(0x58,point_x &0xFF);//
 	Write_Dir(0x59,(point_x>>8)&0x03);//
 	Write_Dir(0x5A,point_y &0xFF);//
@@ -1022,10 +1155,10 @@ void COLOR_mono(uint16_t point_x, uint16_t point_y, uint16_t w, uint16_t h)
 //	Write_Dir(0x5E,h&0xFF);//high
 //	Write_Dir(0x5F,(h>>8)&0xFF);//	
 
-	Text_Background_Color1(color_white);	
+	Text_Background_Color1(color_black);	
 	Text_Foreground_Color1(color_red);
 	
-	Write_Dir(0x51,0x08);//
+	Write_Dir(0x51,0x78);//
 	
 	LCD_CmdWrite(0x50);//start write data
 	temp= LCD_DataRead();
@@ -1033,13 +1166,19 @@ void COLOR_mono(uint16_t point_x, uint16_t point_y, uint16_t w, uint16_t h)
 	LCD_DataWrite(temp);//
 	
 	LCD_CmdWrite(0x02);//start write data
-	for(n=0; n<128; n++)
+	for(n=0; n<h*w/8; n++)
 	{
 		Chk_Busy();
-		HAL_Delay(500);
-//		LCD_DataWrite_2(0x003C);
-		LCD_DataWrite(1<<((n/2)%7));
+//		HAL_Delay(500);
+//		LCD_DataWrite(1<<((n/2)%7));
+		LCD_DataWrite(Arial94853[Arial94853_MAP[_ch]+n]);
 	}
+	for(temp=0; temp<18; temp++)
+	{
+		sprintf(s,"SỐ LƯỢNG: %d",temp);
+		TFT_putString(55 +(temp/6)*235 , 70 + (temp%6)*40,s,&font_16,color_red);
+	}
+	
 }
 
 void test_TFT_DrawString(int16_t x, int16_t y, int16_t color)
@@ -1455,7 +1594,9 @@ void LCD_TFT_Init(void)
 {
 	LCD_PLL_ini();
 	LCD_CmdWrite(0x10);  //SYSR   bit[4:3]=00 256 color  bit[2:1]=  00 8bit MPU interface
-  LCD_DataWrite(0x02);   // if 16bit MCU interface   and 256 color display						    
+//  LCD_DataWrite(0x00);   // if 8bit MCU interface   and 256 color display
+	LCD_DataWrite(0x00);   // if 8bit MCU interface   and 256 color display
+	
 	HAL_Delay(10);
 	printf("LCD inint\r\n");
 	LCD_CmdWrite(0x04);  //PCLK inverse
@@ -1519,9 +1660,10 @@ void LCD_TFT_Init(void)
 		LCD_DataWrite(0x87);//open PWM
 		
 		LCD_CmdWrite(0x8b);//Backlight brightness setting
-		LCD_DataWrite(80);//Brightness parameter 0xff-0x00
+		LCD_DataWrite(150);//Brightness parameter 0xff-0x00
 		
 		Select_Layers_Two();
+//		Select_Layers_One();
 		LCD_CmdWrite(0x52);
 		LCD_DataWrite(0x23);
 		LCD_CmdWrite(0x53);

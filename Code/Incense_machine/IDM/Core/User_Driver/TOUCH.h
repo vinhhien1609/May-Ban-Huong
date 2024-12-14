@@ -35,8 +35,20 @@ struct _ts_event
 		touch_event_t   touch_event;
 };
 
+#define GSLX_IC_TOUCH
+
+
+#ifdef GSLX_IC_TOUCH
+
 #define WRITE_ADD	0x80  
 #define READ_ADD	0x81  
+
+#else
+
+#define WRITE_ADD	0x82  
+#define READ_ADD	0x83
+
+#endif
 
 void WAKE(unsigned char x);
 void TOUCH_Init(void);

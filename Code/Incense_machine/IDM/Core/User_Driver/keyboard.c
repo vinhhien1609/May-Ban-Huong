@@ -196,9 +196,9 @@ void show_Vitual_key(void)
 //						n = (ts_event.y1-100)/65;
 //						key_tick = key_matrix[n*3 + m];
 						key_tick = key_matrix[pen];
-						sprintf(s,"%c",key_tick);
-						LCD_background(color_white);
-						TFT_DrawString(s,point_x+gap +(b_w-24)/2, point_y+gap+(b_h - 48)/2,color_red);
+//						sprintf(s,"%c",key_tick);
+//						LCD_background(color_white);
+//						TFT_DrawString(s,point_x+gap +(b_w-24)/2, point_y+gap+(b_h - 48)/2,color_red);
 						
 						if(key_tick =='#')
 						{

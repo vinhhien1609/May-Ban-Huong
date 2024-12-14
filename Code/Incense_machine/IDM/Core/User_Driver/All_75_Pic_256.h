@@ -75,9 +75,9 @@ typedef enum
   Insense_out,          /*     3     */
   Setting_Sell,          /*     4     */
   Setting_Tech,          /*     5     */
-  Thanks,          /*     6     */
-  Wait_insense,          /*     7     */
-	Stop_Service,
+  Stop_Service,          /*     6     */
+  Thanks,          /*     7     */
+  Wait_insense,          /*     8     */
 }PICTURE_NAME;
 
 

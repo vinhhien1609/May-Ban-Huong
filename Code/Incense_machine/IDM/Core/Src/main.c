@@ -235,15 +235,23 @@ int main(void)
 //		Active_Window(10,750, 0, 479);
 //		test_TFT_DrawString(0,20,color_yellow);
 		IOT47_GFX_connectToDriver(&RA8875_drawpixel);
-
+		
+//		test_custom();
+//		Displaypicture(1);
 //		while(1)
-//		{
+		{
+//			Displaypicture(3);
+//			HAL_Delay(100);
+//			Displaypicture(4);
+//			HAL_Delay(100);
+//			Displaypicture(Back_ground);		
+//			HAL_Delay(1000);			
 //			for(int n=0; n<5; n++)
 //			{
 //				COLOR_mono(32+(n*128),32,32,32);
 //				HAL_Delay(500);
 //			}
-//		}
+		}
 	}
 	else
 	{
@@ -352,6 +360,7 @@ int main(void)
 		}
 		else
 			nv11_timeout_count =0;
+		
 		checkGPSCommand();
 		Scan_IDM();
 		Menu_draw();
@@ -429,12 +438,13 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE;
-  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV2;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -455,7 +465,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_ADC;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
   PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV8;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
@@ -721,7 +731,7 @@ if(isLCD_COLOR)
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16	;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -990,13 +1000,16 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, LED1_Pin|GSM_RESET_Pin|GSM_PWKEY_Pin|EN_PWR_GSM_Pin
                           |RELAY5_Pin|RELAY4_Pin|RELAY3_Pin|RELAY2_Pin
-                          |RELAY1_Pin|TOUCH_RST_Pin, GPIO_PIN_RESET);
+                          |RELAY1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, LCD_RESET_Pin|KEY_COL3_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : Flash_SS_Pin */
   GPIO_InitStruct.Pin = Flash_SS_Pin;
@@ -1041,7 +1054,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : Drop_Pin */
   GPIO_InitStruct.Pin = Drop_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(Drop_GPIO_Port, &GPIO_InitStruct);
 
@@ -1122,7 +1135,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : TOUCH_RST_Pin */
   GPIO_InitStruct.Pin = TOUCH_RST_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(TOUCH_RST_GPIO_Port, &GPIO_InitStruct);
 

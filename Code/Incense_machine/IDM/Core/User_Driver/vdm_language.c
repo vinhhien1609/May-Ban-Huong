@@ -121,6 +121,7 @@ const char *m_lang_txt[VDM_LANG_ID_MAX][VDM_LANG_MAX] =
 		{		"NHẬP SỐ LƯỢNG MUA", "QUANLITY"},				//VDM_LANG_QUANLITY
 		{		"SỐ DƯ TÀI KHOẢN", "BALANCE CLOSING"},		//VDM_LANG_BALANCE
 		{		"SỐ TIỀN CÒN THIẾU", "MISSING AMOUNT"},		//VDM_LANG_MISSING_AMOUNT
+		{		"SỐ ĐIỆN THOẠI LIÊN HỆ", "PHONE NUMBER"},
 };
 
 static vdm_language_t m_current_language = VDM_LANG_VNI; /* Ngon ngu khai bao ban dau: Tieng Viet*/

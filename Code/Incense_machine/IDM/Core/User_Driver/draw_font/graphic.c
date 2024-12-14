@@ -574,6 +574,8 @@ uint16_t FontMakerGetWidth(const char *s,const uFont *my_font)
    }
 	 return x_max;
 }
+
+
 void uFontMakerPutString(int16_t x,int16_t y,const char *s,const uFont *my_font,uint32_t color,uint32_t backcolor)
 {
    unsigned char offset=0;

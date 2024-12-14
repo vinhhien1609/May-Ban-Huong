@@ -68,6 +68,7 @@ typedef enum displayType{
 		DIS_SET_IP,
 	DIS_KEYBOARD,
 	DIS_PRICE_SET,
+	DIS_PHONE_NUMBER,
 } Display_Typedef;
 #endif
 

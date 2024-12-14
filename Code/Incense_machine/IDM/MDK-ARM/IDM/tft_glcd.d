@@ -38,6 +38,7 @@ idm\tft_glcd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 idm\tft_glcd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 idm\tft_glcd.o: ..\Core\User_Driver\All_75_Pic_256.h
 idm\tft_glcd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+idm\tft_glcd.o: ../Core/User_Driver/draw_font/fontmaker.h
 idm\tft_glcd.o: ..\Core\User_Driver\glcd.h
 idm\tft_glcd.o: ..\Core\User_Driver\platform.h
 idm\tft_glcd.o: ..\Core\User_Driver\glcd_font.h

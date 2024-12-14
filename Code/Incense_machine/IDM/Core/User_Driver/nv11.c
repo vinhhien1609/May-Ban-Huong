@@ -682,6 +682,7 @@ bool nv11_enable(bool lock)
     if (!m_nv11_initialized)
     {
         retval = false;
+//				DEBUG_WARN("NV11 >> m_nv11_Enable\r\n");
         goto exit;
     }
 
@@ -723,7 +724,7 @@ int32_t NV11_Disable(bool lock)
     if (!m_nv11_initialized)
     {
         retval = 1;
-				DEBUG_WARN("NV11 >> m_nv11_initialized\r\n");
+//				DEBUG_WARN("NV11 >> m_nv11_Disable\r\n");
         return retval;
     }
 
@@ -1719,7 +1720,7 @@ int8_t vdm_NV11_Init(void)
     uint32_t i = 0;
     sspC->PortNumber = 1;
     sspC->SSPAddress = 0;
-    sspC->Timeout = 300;
+    sspC->Timeout = 100;
     sspC->EncryptionStatus = NO_ENCRYPTION;
     sspC->RetryLevel = 3;
     sspC->BaudRate = 9600;

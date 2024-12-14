@@ -423,6 +423,8 @@ static void _GSLX680_startup_chip(void)
 //GSLX680_Initial
 void TOUCH_Init(void)
 {
+	
+	
 	SCL_out();	
 	WAKE(1);	
 	HAL_Delay(20);

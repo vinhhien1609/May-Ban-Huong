@@ -22,6 +22,8 @@ vdm_device_config_t m_device_config;
 static vdm_device_memory_callback_t m_callback;
 static bool m_store_current_data = false;
 
+
+
 void vdm_device_config_initialize(void)
 {
 //    if (m_mutex_lock == NULL)

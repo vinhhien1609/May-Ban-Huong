@@ -61,6 +61,7 @@ idm\main.o: ../Core/User_Driver/platform.h
 idm\main.o: ../Core/User_Driver/glcd_font.h
 idm\main.o: ../Core/User_Driver/TFT_glcd.h
 idm\main.o: ../Core/User_Driver/All_75_Pic_256.h
+idm\main.o: ../Core/User_Driver/draw_font/fontmaker.h
 idm\main.o: ../Core/User_Driver/RTC_time.h
 idm\main.o: ../Core/User_Driver/GSM_drv.h
 idm\main.o: ../Core/User_Driver/GSM_app.h
@@ -79,4 +80,3 @@ idm\main.o: ../Core/User_Driver/SPI/spi.h
 idm\main.o: ../Core/User_Driver/keyboard.h
 idm\main.o: ../Core/User_Driver/draw_font/graphic.h
 idm\main.o: ../Core/User_Driver/draw_font/IOT47_VN_font.h
-idm\main.o: ../Core/User_Driver/draw_font/Fontmaker.h

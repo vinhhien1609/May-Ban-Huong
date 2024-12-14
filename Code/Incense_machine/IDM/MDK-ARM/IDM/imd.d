@@ -42,3 +42,4 @@ idm\imd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 idm\imd.o: ../Core/Inc/main.h
 idm\imd.o: ..\Core\User_Driver\flash.h
 idm\imd.o: ..\Core\User_Driver\nv11.h
+idm\imd.o: ..\Core\User_Driver\vdm_device_config.h
