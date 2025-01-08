@@ -282,6 +282,9 @@ vdm_device_config_t *vdm_get_device_config(void);
 /**
  * @brief			Store error code to FRAM
  */
+ 
+vdm_run_mode_t vdm_device_get_mode(void);
+	 
 void vdm_device_config_sync_error_to_fram(void);
 
 /**

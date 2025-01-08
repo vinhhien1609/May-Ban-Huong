@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "main.h"
+#include "vdm_language.h"
 
 #define KEY_HOLE_TIME 50
 #define KEY_REPEAT_TIME 1500
@@ -16,7 +17,7 @@ bool sta_up=false;
 
 
 void show_Vitual_key(void);
-
+void show_Vitual_confirm_key(void);
 
 static void small_delay()		// not importance function
 {
@@ -78,6 +79,28 @@ void scan_switch(void)
 
 }
 
+void active_keyboard(bool act)
+{
+	key_board.act = act;
+}
+
+//vitual keyboard
+void Enable_Vitual_Confirm_key(bool act)
+{
+	if(act)
+	{
+		key_board.act = true;
+		sta_up=false;
+	}
+	else
+	{
+		key_board.act = false;
+		sta_up=false;
+	}
+	key_board.type = CONFIRM_KEY;	
+}
+
+
 //vitual keyboard
 void Enable_Vitual_key(bool act)
 {
@@ -91,6 +114,7 @@ void Enable_Vitual_key(bool act)
 		key_board.act = false;
 		sta_up=false;
 	}
+	key_board.type = NUMBER_KEY;
 }
 
 touch_event_t get_touch_env()
@@ -117,7 +141,15 @@ struct _ts_event get_mouse(void)
 
 void scan_vitual_key(void)
 {
-	if(key_board.act)	show_Vitual_key();	
+	if(key_board.act)
+	{
+		if(	key_board.type == NUMBER_KEY)
+			show_Vitual_key();
+		if(	key_board.type == CONFIRM_KEY)
+			show_Vitual_confirm_key();
+	}
+//	else
+//		ts_event.touch_event = NO_TOUCH;
 }
 
 unsigned char get_vitual_key()
@@ -127,6 +159,36 @@ unsigned char get_vitual_key()
 	return key;
 }
 
+void show_Vitual_confirm_key(void)
+{
+	uint16_t n, m, point_x= 470, point_y= 140, b_w = 270, b_h= 90;
+	char s[20], key_matrix[12] = {'1','2','3','4','5','6','7','8','9','*','0','#'};	
+	if(sta_up==false)
+	{
+		sta_up=true;
+	
+//		drawRoundRect(point_x+gap, point_y+gap, b_w*3+gap*2, b_h, 10, color_white, true);	//Text box
+		drawRoundRect(point_x, point_y, 320, 330, 10, color_blue, true);	// frame
+		drawRoundRect(point_x, point_y, 320,330, 10, color_brown, false);	// frame
+		drawRoundRect(point_x+1, point_y+1, 318, 328, 9, color_brown, false);
+		drawRoundRect(point_x + (320 - b_w)/2, point_y + (330 - b_h)/2, b_w, b_h, 10, color_green, true);		//drawRoundRect button
+		sprintf(s, "%s", vdm_language_text(VDM_LANG_ACCEPT));
+		LCD_background(color_green);
+		TFT_putString(point_x + (320 - b_w)/2 + 20,point_y + (330 - b_h)/2 + 20,s,&Arial_32,color_red);
+	}
+	else
+	{
+		if(ts_event.x1>point_x + (320 - b_w)/2 && ts_event.x1<point_x + (320 - b_w)/2 + b_w && point_y + (330 - b_h)/2 && ts_event.y1<point_y + (330 - b_h)/2 + b_h)
+		{
+		
+			if(ts_event.touch_event == TOUCH_DOWN)
+			{
+				key_tick = ENTER;
+				Buzz_On(50);
+			}
+		}
+	}	
+}
 
 void show_Vitual_key(void)
 {
@@ -200,12 +262,12 @@ void show_Vitual_key(void)
 //						LCD_background(color_white);
 //						TFT_DrawString(s,point_x+gap +(b_w-24)/2, point_y+gap+(b_h - 48)/2,color_red);
 						
-						if(key_tick =='#')
-						{
-							key_board.res = KEY_CANCEL;
-							Enable_Vitual_key(false);
-						}
-						else
+//						if(key_tick =='#')
+//						{
+//							key_board.res = KEY_CANCEL;
+//							Enable_Vitual_key(false);
+//						}
+//						else
 							key_board.res = key_tick;
 			}
 		}

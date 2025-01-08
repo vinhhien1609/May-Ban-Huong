@@ -383,6 +383,8 @@ void vdm_app_gsm_send_door_frame(bool door_close)
             //	    	m_door_close_frame.item_price[i] = vdm_device_config_get_item_price(i+1)/1000;
             m_door_close_frame.item_price[i] = (vdm_device_config_get_item_price(i) / 1000)&0xFF;
         }
+				
+				if(vdm_device_get_mode()!= SALES_MODE)	m_door_close_frame.item_price[0] =0;		// cong duc va cap phat thi price =0
 
         /* Number of item per rack */
         for (uint32_t i = 0; i < sizeof(m_door_close_frame.nb_of_items_rack); i++)

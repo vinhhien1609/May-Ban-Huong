@@ -570,7 +570,7 @@ uint16_t FontMakerGetWidth(const char *s,const uFont *my_font)
    {
       utf8_addr=UserMakerUTF8_GetAddr((unsigned char *)s,&offset,my_font);
       s+=offset;
-		  x_max += my_font->font[my_font->font_map[utf8_addr]-4] +1;
+		  x_max += my_font->font[my_font->font_map[utf8_addr]-4] +2;
    }
 	 return x_max;
 }

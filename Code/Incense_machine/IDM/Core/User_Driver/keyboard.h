@@ -14,7 +14,7 @@
 
 typedef enum keyboardType{
 	NUMBER_KEY = 0U,
-	CHAR_KEY,
+	CONFIRM_KEY,
 } Keyboard_Typedef;
 
 typedef enum keyboardRespone{
@@ -37,8 +37,12 @@ typedef struct _vitual_keyboard
 unsigned char scan_BT(void);
 void scan_switch(void);
 void scan_vitual_key(void);
+//void scan_vitual_key(Keyboard_Typedef type,...);
 unsigned char get_vitual_key();
+//void Enable_Vitual_key(bool act);
+void active_keyboard(bool act);
 void Enable_Vitual_key(bool act);
+void Enable_Vitual_Confirm_key(bool act);
 bool get_touch(touch_event_t t_ev, unsigned int x, unsigned y, unsigned int w, unsigned h);
 touch_event_t get_touch_env(void);
 struct _ts_event get_mouse(void);

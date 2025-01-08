@@ -44,3 +44,4 @@ idm\keyboard.o: ..\Core\User_Driver\touch.h
 idm\keyboard.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 idm\keyboard.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 idm\keyboard.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+idm\keyboard.o: ..\Core\User_Driver\vdm_language.h

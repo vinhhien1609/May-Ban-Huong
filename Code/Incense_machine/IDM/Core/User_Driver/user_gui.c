@@ -41,7 +41,8 @@
 
 unsigned char temp_menu_char[30];
 unsigned int temp_menu_int[5], quantity_buy=0;
-unsigned char point=0, old_point=0, sub1_point, sub2_point, Old_cell_state, show_time=0, last_DIS=0, stt_door;
+unsigned char point=0, old_point=0, sub1_point, sub2_point, Old_cell_state, last_DIS=0, stt_door;
+unsigned int show_time=0;
 
 //#define debug_display_info
 #define COLOR_CHANGE	color_red
@@ -126,10 +127,10 @@ uint8_t csq=255;
 void draw_signal_gsm(void)
 {
 	uint8_t t=0, n;
-	if(csq != GSM.CSQ)
+//	if(csq != GSM.CSQ)
 			csq = GSM.CSQ;
-	else
-		return;
+//	else
+//		return;
 	if(isLCD_COLOR)
 	{
 //		GSM.CSQ =20;
@@ -1346,20 +1347,16 @@ void Menu_draw_TFT(void)
 	if(current_display!= old_display)		//init etc display
 	{
 		old_display = current_display;
-
-//		point =sub1_point;
-//		old_point =0;
-//		if(current_display!=DIS_SHOW_MESSENGER)
-//			GLcd_ClearScreen(BLACK);
 		switch(current_display)
 		{
 			case DIS_SHOW_MESSENGER:
 				show_time=0;
 				break;
-			case DIS_KEYBOARD:
+			case DIS_SALE:
 					drawRoundRect(10,140,450, 330,10, color_blue, true);
 					drawRoundRect(10,140,450, 330,10, color_brown, false);
-					Enable_Vitual_key(true);
+//					Enable_Vitual_key(true);
+					Enable_Vitual_Confirm_key(true);
 					LCD_background(color_blue);
 					
 					sprintf(s, "%s", vdm_language_text(VDM_LANG_BALANCE));
@@ -1368,22 +1365,33 @@ void Menu_draw_TFT(void)
 					sprintf(s, "%6d", m_device_config.closing_balance.closing_balance);
 					TFT_DrawString_option(s,65, 185, color_green, false, 3);
 					
-					sprintf(s, "%s(vnd)", vdm_language_text(VDM_LANG_UNIT_PRICE));
+					sprintf(s, "%s (VND)", vdm_language_text(VDM_LANG_UNIT_PRICE));
 					TFT_putString((200-FontMakerGetWidth(s,&ufont_16))/2 +235,145,s,&font_16,color_green_bright);
 					drawRoundRect(235,180,200, 60,10, color_brown, false);
 					sprintf(s, "%6d", m_device_config.item[0].price);
 					TFT_DrawString_option(s,265, 185, color_green, false, 3);						
 
-					sprintf(s, "%s(vnd)", vdm_language_text(VDM_LANG_MISSING_AMOUNT));
+					sprintf(s, "%s", vdm_language_text(VDM_LANG_MISSING_AMOUNT));
 					TFT_putString((450-FontMakerGetWidth(s,&ufont_16))/2 +10,375,s,&font_16,color_green_bright);
 					drawRoundRect(50,405,350, 60,10, color_brown, false);
+					LCD_background(color_blue);
 					if(m_device_config.item[0].price > m_device_config.closing_balance.closing_balance)
 					{
-						sprintf(s, "%3d",m_device_config.item[0].price - m_device_config.closing_balance.closing_balance);
+						sprintf(s, "-%6d ",m_device_config.item[0].price - m_device_config.closing_balance.closing_balance);
+						TFT_DrawString_option(s,150, 410, color_red, false, 3);
 					}
 					else
-						sprintf(s, "%3d",0);
-					TFT_DrawString_option(s,250, 410, color_red, false, 3);
+					{
+						sprintf(s, "+%6d ",m_device_config.closing_balance.closing_balance % m_device_config.item[0].price);
+						TFT_DrawString_option(s,150, 410, color_green, false, 3);
+					}			
+//					if(m_device_config.item[0].price > m_device_config.closing_balance.closing_balance)
+//					{
+//						sprintf(s, "%3d",m_device_config.item[0].price - m_device_config.closing_balance.closing_balance);
+//					}
+//					else
+//						sprintf(s, "%3d",0);
+//					TFT_DrawString_option(s,250, 410, color_red, false, 3);
 			
 					sprintf(s, "%s", vdm_language_text(VDM_LANG_QUANLITY));
 					TFT_putString((450-FontMakerGetWidth(s,&ufont_16))/2 +10,260,s,&font_16,color_green_bright);
@@ -1400,9 +1408,20 @@ void Menu_draw_TFT(void)
 				Access_layer(0);				
 				LCD_background(color_black);		
 				Memory_Clear();
-			
+				if(vdm_device_get_mode()== MERIT_MODE)
+					sprintf(s,"CD");
+				if(vdm_device_get_mode()== SALES_MODE)
+					sprintf(s,"BH");
+				if(vdm_device_get_mode()== FIX_MODE)
+					sprintf(s,"CP");				
+				TFT_putString(100, 28,s,&font_16,color_green_bright);
+				
+				sprintf(s,"%s",VDM_FIRMWARE_VERSION);
+				TFT_putString(600, 28,s,&font_16,color_green_bright);			
 				Enable_Vitual_key(false);
-				csq = 255;
+//				csq = 255;
+				show_time=0;
+				Old_cell_state =HELLO_CUSTOM;
 				if(buy.StateBuy==STOP_SERVICE)
 				{
 					Displaypicture(Stop_Service);
@@ -1422,9 +1441,10 @@ void Menu_draw_TFT(void)
 				{
 					Displaypicture(Wait_insense);
 					LCD_background(color_white);
-					sprintf(s,"%3d.000", m_lastest_note/1000);
+
+//					sprintf(s,"%3d.000", m_lastest_note/1000);
 //					TFT_DrawString(s, 400, 200, color_red);
-					TFT_putString((400-FontMakerGetWidth(s,&uArial_32))/2 +200,210,s,&Arial_32,color_red);					
+//					TFT_putString((400-FontMakerGetWidth(s,&uArial_32))/2 +200,210,s,&Arial_32,color_red);					
 					NV11_Disable(true);
 				}				
 				if(buy.StateBuy ==INSENCE_EMPTY)
@@ -1457,9 +1477,10 @@ void Menu_draw_TFT(void)
 				
 				break;
 			case DIS_Password:
+				LCD_background(color_black);
+				Memory_Clear();				
 				Displaypicture(Setting_Sell);		
 				LCD_background(color_blue);
-
 				drawRoundRect(10,140,450, 330,10, color_blue, true);
 				drawRoundRect(10,140,450, 330,10, color_brown, false);
 				sprintf(s,"%s",vdm_language_text(VDM_LANG_PASSWORD));
@@ -1468,10 +1489,14 @@ void Menu_draw_TFT(void)
 				TFT_DrawString_option("------", 130, 220, color_red,false,4);			
 				memcpy(temp_menu_char, "------", 6);
 				Enable_Vitual_key(true);
+				sprintf(temp_menu_char,"");
 				point=0;
 				break;
 			case DIS_Setup:
+				LCD_background(color_black);
+				Memory_Clear();
 				Displaypicture(Setting_Sell);
+//				TFT_putString(63,280,"Cài số lần bán lỗi",&font_16,color_green_bright);
 				Enable_Vitual_key(false);
 				old_point = 255;
 				break;
@@ -1485,9 +1510,11 @@ void Menu_draw_TFT(void)
 				GLcd_DrawLine(18,33,23,33,WHITE);
 				break;
 			case DIS_SETUP_TECH:
+				LCD_background(color_black);
+				Memory_Clear();				
 				Displaypicture(Setting_Tech);
-						drawRoundRect(55+(old_point/7)*235,70+(old_point%7)*40,220, 30,10, color_black, false);
-						drawRoundRect(56+(old_point/7)*235,71+(old_point%7)*40,218, 28,8, color_black, false);
+				drawRoundRect(55+(old_point/7)*235,70+(old_point%7)*40,220, 30,10, color_black, false);
+				drawRoundRect(56+(old_point/7)*235,71+(old_point%7)*40,218, 28,8, color_black, false);
 				if(m_device_config.run_mode == MERIT_MODE)
 					draw_ON_OFF(450, 75, true);
 				else
@@ -1764,6 +1791,18 @@ void Menu_draw_TFT(void)
 				temp_data_Menu = IDM.HumidityMAX;
 				break;
 			
+			case DIS_NUMBER_CELL_ERROR:
+				drawRoundRect(10,140,450, 330,10, color_blue, true);
+				drawRoundRect(10,140,450, 330,10, color_brown, false);
+				Enable_Vitual_key(true);			
+				sprintf(s, "%s (%d)", vdm_language_text(VDM_LANG_NUMBER_SALE_ERROR), IDM.retryCellEmpty);
+				LCD_background(color_blue);
+				TFT_putString((450-FontMakerGetWidth(s,&ufont_16))/2 +10,150,s,&font_16,color_green_bright);
+				sprintf(s, "%d ", IDM.retryCellEmpty);
+				LCD_background(color_blue);
+				TFT_DrawString_option(s,200, 200, color_green, false, 3);
+				temp_data_Menu = IDM.retryCellEmpty;				
+				break;
 			case DIS_ACCEPT_DENO:
 				temp_data_Menu = m_device_config.accept_cash_max;
 				drawRoundRect(10,140,450, 330,10, color_blue, true);
@@ -1855,9 +1894,14 @@ void Menu_draw_TFT(void)
 				LCD_background(color_blue);
 				TFT_putString(150,160,s,&font_16,color_green_bright);
 			
-				sprintf(s, "%6d(VND)", temp_data_Menu);
+				if(temp_data_Menu>1000)
+					sprintf(s, "%3d %03d (VND)", temp_data_Menu/1000, temp_data_Menu%1000);
+				else	
+					sprintf(s, "%7d (VND)", temp_data_Menu);
 				LCD_background(color_blue);
-				TFT_DrawString_option(s,180, 200, color_green, false, 3);			
+//				TFT_putString(450-FontMakerGetWidth(s,&uArial_32),200,s,&Arial_32,COLOR_MENU);
+				TFT_DrawString_option(s,100, 200, COLOR_MENU, false, 3);			
+			
 				break;
 			default:
 				current_display = DIS_Home;
@@ -1903,13 +1947,21 @@ void Menu_draw_TFT(void)
 				break;
 
 				
-			case DIS_KEYBOARD:
+			case DIS_SALE:
 				if(isSecond_display)
 				{
-					isSecond_display =0;
+					isSecond_display = 0;
+					if(show_time>0)	show_time --;
+					if(show_time==0)
+					{
+						current_display = DIS_Home;
+						Enable_Vitual_key(false);			
+						isSecond_display =0;						
+					}
 					if(timeout_money)	timeout_money--;
 					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED)
 					{
+							show_time =300;
 							m_device_config.closing_balance.closing_balance += m_lastest_note;
 							save_device_config();
 							m_last_n11_event = NV11_EVENT_NONE;
@@ -1917,15 +1969,18 @@ void Menu_draw_TFT(void)
 						reven.money = m_lastest_note/1000;
 						reven.number =0;
 						add_revenue_day(currentTime.day, currentTime.month, currentTime.year, reven);
-						timeout_money = MAX_TIMEOUT_MONEY;
+						timeout_money = 5;//MAX_TIMEOUT_MONEY;
+						LCD_background(color_blue);
 						if(m_device_config.item[0].price > m_device_config.closing_balance.closing_balance)
 						{
-							sprintf(s, "%3d",m_device_config.item[0].price - m_device_config.closing_balance.closing_balance);
+							sprintf(s, "-%6d ",m_device_config.item[0].price - m_device_config.closing_balance.closing_balance);
+							TFT_DrawString_option(s,150, 410, color_red, false, 3);
 						}
 						else
-							sprintf(s, "%3d",0);
-						LCD_background(color_blue);
-						TFT_DrawString_option(s,250, 410, color_red, false, 3);
+						{
+							sprintf(s, "+%6d ",m_device_config.closing_balance.closing_balance % m_device_config.item[0].price);
+							TFT_DrawString_option(s,150, 410, color_green, false, 3);
+						}
 						
 						sprintf(s, "%6d", m_device_config.closing_balance.closing_balance);
 						TFT_DrawString_option(s,65, 185, color_green, false, 3);
@@ -1937,6 +1992,10 @@ void Menu_draw_TFT(void)
 						nv11_enable(true);						
 					}
 				}	
+				if(m_device_config.closing_balance.closing_balance >= m_device_config.item[0].price)
+					active_keyboard(true);
+				else
+					active_keyboard(false);
 				
 				if(key_pressed==ENTER || timeout_money==0)
 				{
@@ -1971,11 +2030,12 @@ void Menu_draw_TFT(void)
 				
 				break;
 			case DIS_Home:
-				if(get_touch(TOUCH_UP, 300, 200, 200, 200)== true && m_device_config.run_mode == SALES_MODE && IDM_state==1 && buy.StateBuy!=STOP_SERVICE)
+				if(get_touch(TOUCH_DOWN, 0, 0, 799, 479)== true && m_device_config.run_mode == SALES_MODE && IDM_state==1 && buy.StateBuy!=STOP_SERVICE)
 				{
 					Buzz_On(100);
 					last_DIS = current_display;
-					current_display = DIS_KEYBOARD;
+					current_display = DIS_SALE;
+					show_time = 300;
 				}
 				if(isSecond_display)
 				{
@@ -1993,18 +2053,13 @@ void Menu_draw_TFT(void)
 
 					TFT_DrawString_option(s,460, 440, color_green, false, 2);
 					draw_signal_gsm();
-					sprintf(s,"%2d%% ", (int)Humidity);
+					sprintf(s,"%02d%% ", (int)Humidity);
 					TFT_putString(400, 28,s,&font_16,color_green_bright);
-					sprintf(s,"%2dC ",(int)Temperature);
+					sprintf(s,"%02dC ",(int)Temperature);
 //					TFT_DrawString(s, 250, 20, color_green);
 //					TFT_DrawString_option(s,250, 20, color_green, false, 2);
 					TFT_putString(250, 28,s,&font_16,color_green_bright);
 					
-					sprintf(s,"%s",VDM_FIRMWARE_VERSION);
-//					TFT_DrawString(s, 600, 20, color_green);
-//					TFT_DrawString_option(s,600, 20, color_green, false, 2);
-					TFT_putString(600, 28,s,&font_16,color_green_bright);					
-
 					
 					if(m_lastest_note>100 && m_last_n11_event == NV11_NOTE_STACKED && buy.StateBuy == HELLO_CUSTOM)
 					{
@@ -2015,7 +2070,8 @@ void Menu_draw_TFT(void)
 							save_device_config();
 							Buzz_On(100);
 							last_DIS = current_display;
-							current_display = DIS_KEYBOARD;							
+							current_display = DIS_SALE;
+							show_time = 300;
 						}
 						else
 						{
@@ -2059,26 +2115,44 @@ void Menu_draw_TFT(void)
 							Displaypicture(Wait_insense);
 							LCD_background(color_white);
 							if(m_device_config.run_mode== SALES_MODE)
-//								sprintf(s,"XIN NHẬN %d THẺ", quantity_buy);
-								sprintf(s,"%6d.000", m_device_config.closing_balance.closing_balance);
+								sprintf(s,"%3d 000", m_device_config.closing_balance.closing_balance/1000);
 							
 							else
-//								sprintf(s,"%6d.000", m_lastest_note/1000);
-								sprintf(s,"%6d.000", m_lastest_note/1000);
-//							TFT_DrawString_X4(s, 200, 200, color_red);
+								sprintf(s,"%3d 000", m_lastest_note/1000);
+
 							LCD_background(color_white);
-							TFT_putString((400-FontMakerGetWidth(s,&uArial_32))/2 +200,210,s,&Arial_32,color_red);
+							TFT_putString(400-FontMakerGetWidth(s,&uArial_32)/2,210,s,&Arial_32,color_red);
 							NV11_Disable(true);
 						}
 						if(buy.StateBuy == HELLO_CUSTOM)
 						{
 							Displaypicture(Hello);
 							nv11_enable(true);
+							if(m_device_config.closing_balance.closing_balance)
+							{
+								show_time =10;
+								current_display = DIS_SALE;
+							}
 						}
 						if(buy.StateBuy ==INSENCE_EMPTY)
 						{
+							if(m_device_config.run_mode== SALES_MODE)
+								show_time =15;
+							else
+								show_time =10;
 							Displaypicture(Empty);
 							buy.StateBuy = HELLO_CUSTOM;
+							sprintf(s,"%s",m_device_config.phone.phone);
+							LCD_background(color_white);
+							TFT_DrawString_option(s,380, 385, color_red, true, 3);
+							
+							if(m_device_config.run_mode== SALES_MODE)
+								sprintf(s,"%3d 000", m_device_config.closing_balance.closing_balance/1000);
+							else
+								sprintf(s,"%3d 000", m_lastest_note/1000);
+							LCD_background(color_white);
+							TFT_putString(400-FontMakerGetWidth(s,&uArial_32)/2,210,s,&Arial_32,color_red);		
+							
 							if(buy.TotalIsenseDroped !=IDM.NumberInsenseBuy)
 							{
 								reven.number = IDM.NumberInsenseBuy - buy.TotalIsenseDroped;
@@ -2091,6 +2165,12 @@ void Menu_draw_TFT(void)
 						{
 							show_time=10;
 							Displaypicture(Insense_out);
+							if(m_device_config.run_mode== SALES_MODE)
+								sprintf(s,"%3d 000", m_device_config.closing_balance.closing_balance/1000);
+							else
+								sprintf(s,"%3d 000", m_lastest_note/1000);
+							LCD_background(color_white);
+							TFT_putString(400-FontMakerGetWidth(s,&uArial_32)/2,210,s,&Arial_32,color_red);								
 							
 							if(m_device_config.run_mode== SALES_MODE)
 								reven.number = quantity_buy;
@@ -2099,7 +2179,7 @@ void Menu_draw_TFT(void)
 							reven.money =0;
 							if(m_device_config.run_mode== SALES_MODE)
 							{
-								m_device_config.closing_balance.closing_balance =0;
+								m_device_config.closing_balance.closing_balance -= quantity_buy * m_device_config.item[0].price;
 								quantity_buy =0;								
 								save_device_config();
 							}
@@ -2116,9 +2196,8 @@ void Menu_draw_TFT(void)
 							Displaypicture(Thanks);
 							buy.StateBuy = HELLO_CUSTOM;
 							LCD_background(color_white);
-							sprintf(s,"%3d.000", m_lastest_note/1000);
-//							TFT_DrawString_X4(s, 400, 200, color_red);							
-							TFT_putString((400-FontMakerGetWidth(s,&uArial_32))/2 +200,210,s,&Arial_32,color_red);
+							sprintf(s,"%3d 000", m_lastest_note/1000);
+							TFT_putString(400-FontMakerGetWidth(s,&uArial_32)/2,210,s,&Arial_32,color_red);	
 							vdm_app_gsm_send_released_item_frame((m_lastest_note/1000)&0xFF, 0x01);
 						}
 					}
@@ -2130,6 +2209,7 @@ void Menu_draw_TFT(void)
 				{
 					temp_menu_char[point] = key_pressed;
 					point++;
+					
 					if(point>=6)
 					{
 						point=0;						
@@ -2151,7 +2231,7 @@ void Menu_draw_TFT(void)
 						Buzz_On(500);
 						sprintf(str,"------");
 					}
-
+					
 					for(int n=0; n<6; n++)
 					{
 						if(n<point) str[n] = '*';
@@ -2161,9 +2241,13 @@ void Menu_draw_TFT(void)
 					LCD_background(color_blue);
 					TFT_DrawString_option(str, 130, 220, color_white,false,4);	
 				}
-				if(key_pressed == CANCEL)
+				if(key_pressed==CANCEL)
 				{
 //					current_display = DIS_Home;
+					point =0;
+					sprintf(str,"------");
+					LCD_background(color_blue);
+					TFT_DrawString_option(str, 130, 220, color_white,false,4);					
 				}
 				if(IDM_Status.isDoorOpen ==false)		// close
 				{
@@ -2211,20 +2295,19 @@ void Menu_draw_TFT(void)
 					sub1_point =0;
 					switch(point)
 					{
-						case 6:////////////////
-							current_display = DIS_CELL_EACH_TIME;
-							break;
 //						case 2:
 //							current_display = DIS_ERROR_INFO;
 //							sub1_point =0;
 //							break;
-						case 13:
-							current_display = DIS_HUMIDITY_SET;
+						case 3:
+							current_display = DIS_DEL_CELL_ERROR;
 							break;
-						case 10:	//////////////////
-							current_display = DIS_ACCEPT_DENO;
-							sub1_point=0;
+						case 5:
+							current_display = DIS_NUMBER_CELL_ERROR;
 							break;
+						case 6:////////////////
+							current_display = DIS_CELL_EACH_TIME;
+							break;						
 						case 7:
 							current_display = DIS_TIME_SWAP_RUN;
 							break;
@@ -2234,18 +2317,19 @@ void Menu_draw_TFT(void)
 						case 9:
 							current_display = DIS_CELL_MORE;
 							break;
-//						case 9:
-//							current_display = DIS_NUMBER_CELL_MORE_EMPTY;
-//							break;
-						case 3:
-							current_display = DIS_DEL_CELL_ERROR;
-							break;
-						case 12:	////////////
-							current_display = DIS_ONOFF_HUMIDITY;
+						case 10:	//////////////////
+							current_display = DIS_ACCEPT_DENO;
+							sub1_point=0;
 							break;
 						case 11:
 							current_display = DIS_PRICE_SET;
+							break;						
+						case 12:	////////////
+							current_display = DIS_ONOFF_HUMIDITY;
 							break;
+						case 13:
+							current_display = DIS_HUMIDITY_SET;
+							break;						
 					}
 				}				
 				break;
@@ -2546,6 +2630,25 @@ void Menu_draw_TFT(void)
 				if(key_pressed== CANCEL)
 					current_display = DIS_Setup;				
 				break;
+			case DIS_NUMBER_CELL_ERROR:
+				if(key_pressed>='0' && key_pressed<='9')
+				{
+					temp_data_Menu = (temp_data_Menu%100) *10 + (key_pressed-'0');
+					if(temp_data_Menu >100)	temp_data_Menu =temp_data_Menu%100;		// Max
+					sprintf(s, "%3d ", temp_data_Menu);
+					LCD_background(color_blue);
+					TFT_DrawString_option(s,200, 200, COLOR_CHANGE, false, 3);	
+				}				
+				if(key_pressed==ENTER)
+				{
+					IDM.retryCellEmpty = temp_data_Menu;
+					IDM.currentRetryCellEmpty = temp_data_Menu;
+					Write_config();
+					show_Messenger(vdm_language_get_text(VDM_LANG_FINISH), 2);
+				}
+				if(key_pressed== CANCEL)
+					current_display = DIS_Setup;				
+				break;
 			case DIS_ACCEPT_DENO:
 				if(key_pressed== CANCEL)
 					current_display = DIS_Setup;
@@ -2696,12 +2799,19 @@ void Menu_draw_TFT(void)
 					
 					IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
 					IDM.currentNumberBuyMore = IDM.NumberBuyMore;
+					
 					Write_config();
 					buy.StateBuy = HELLO_CUSTOM;
 	//				IDM_state = 1;
 					Buzz_On(100);
 					printf("Retry: %d/%d\r\n Buy_state: %d\r\n", IDM.currentRetryCellEmpty, IDM.retryCellEmpty, buy.StateBuy);
+					if(m_device_config.closing_balance.closing_balance)
+					{
+						m_device_config.closing_balance.closing_balance =0;
+						save_device_config();
+					}
 					show_Messenger(vdm_language_get_text(VDM_LANG_FINISH), 2);
+					
 				}
 				if(key_pressed== CANCEL)
 					current_display = DIS_Setup;				
@@ -2915,10 +3025,14 @@ void Menu_draw_TFT(void)
 					if(key_pressed>='0' && key_pressed<='9')
 					{
 						temp_data_Menu = (temp_data_Menu%100000) *10 + (key_pressed-'0');
-						if(temp_data_Menu >100000)	temp_data_Menu =temp_data_Menu%100000;		// Max
-						sprintf(s, "%6d(VND) ", temp_data_Menu);
+						if(temp_data_Menu >500000)	temp_data_Menu =temp_data_Menu%100000;		// Max
+						if(temp_data_Menu>1000)
+							sprintf(s, "%3d %03d (VND)", temp_data_Menu/1000, temp_data_Menu%1000);
+						else	
+							sprintf(s, "%7d (VND)", temp_data_Menu);
 						LCD_background(color_blue);
-						TFT_DrawString_option(s,180, 200, COLOR_CHANGE, false, 3);
+//						TFT_putString(450-FontMakerGetWidth(s,&uArial_32),200,s,&Arial_32,COLOR_CHANGE);
+						TFT_DrawString_option(s,100, 200, COLOR_CHANGE, false, 3);
 					}
 					if(key_pressed ==ENTER)
 					{

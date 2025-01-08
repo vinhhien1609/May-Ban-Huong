@@ -1720,7 +1720,8 @@ int8_t vdm_NV11_Init(void)
     uint32_t i = 0;
     sspC->PortNumber = 1;
     sspC->SSPAddress = 0;
-    sspC->Timeout = 100;
+//    sspC->Timeout = 100;
+	  sspC->Timeout = 300;
     sspC->EncryptionStatus = NO_ENCRYPTION;
     sspC->RetryLevel = 3;
     sspC->BaudRate = 9600;

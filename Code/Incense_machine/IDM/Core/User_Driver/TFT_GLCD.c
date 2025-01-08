@@ -1049,9 +1049,11 @@ void Displaypicture(uchar picnum)
 //	printf("lcd_dma _finish\n\r");
 //	Select_Layers_One();
 //	HAL_Delay(1);
-		Access_layer(0);				
-		LCD_background(color_black);		
+		Access_layer(0);
+		Active_Window(0,799,55,440);
+		LCD_background(color_black);
 		Memory_Clear();
+		Active_Window(0,799,0,479);
 }
 
 void TFT_DrawString(char* str, int16_t x, int16_t y, int16_t color)
@@ -1129,7 +1131,7 @@ void TFT_putString(int16_t x, int16_t y, const char *s, const Font *my_font, uin
    while(*s)
    {
       utf8_addr=FontMakerUTF8_GetAddr((unsigned char *)s,&offset);
-      x +=PutChar(x,y,utf8_addr,my_font,color)+1;
+      x +=PutChar(x,y,utf8_addr,my_font,color)+2;
       s+=offset;
    }	
 }

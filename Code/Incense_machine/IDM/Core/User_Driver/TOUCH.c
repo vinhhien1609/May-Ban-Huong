@@ -40,7 +40,7 @@ void SCL_out()
   GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(TOUCH_RST_GPIO_Port, &GPIO_InitStruct);	
-	DEBUG_INFO("SCL_1\r\n");
+//	DEBUG_INFO("SCL_1\r\n");
 }
 
 void WAKE(unsigned char x)

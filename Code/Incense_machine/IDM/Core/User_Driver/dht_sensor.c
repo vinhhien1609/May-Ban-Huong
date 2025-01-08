@@ -12,7 +12,7 @@
 #define MIN_DELAY_INTERVAL 2000 /**< minimum delay between reads */
 #define WAIT_SIGNAL_US 55
 //#define MAX_WAIT_TIME_US 1000
-#define MAX_WAIT_TIME_US 3000
+#define MAX_WAIT_TIME_US 20000
 #define TIMEOUT MAX_WAIT_TIME_US+10
 long time_test=0;
 bool flag_readDHT12=false;

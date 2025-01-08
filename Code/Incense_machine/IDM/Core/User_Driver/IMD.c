@@ -119,6 +119,11 @@ void Scan_IDM(void)
 					IDM_Status.Motor_swap.isRun =0;
 					IDM_state =1;
 					buy.StateBuy = HELLO_CUSTOM;
+					if((IDM.currentNumberBuyMore==0 || IDM.currentRetryCellEmpty==0) && buy.StateBuy != STOP_SERVICE)
+					{
+						buy.StateBuy = STOP_SERVICE;
+						IDM_state =6;
+					}					
 				}
 			}
 			break;
@@ -154,6 +159,7 @@ void Scan_IDM(void)
 						buy.TotalIsenseDroped = quantity_buy;
 					if(m_device_config.run_mode ==FIX_MODE)
 						buy.TotalIsenseDroped = IDM.NumberInsenseBuy;
+					buy.TotalSale = buy.TotalIsenseDroped;
 					buy.numberRetry =0;		// time retry when conveyer no out insense
 	//						buy.StateBuy = WAIT_INSENCE;
 					IDM_state = 2;
@@ -205,7 +211,7 @@ void Scan_IDM(void)
 					IDM_Status.Motor_conveyer.isRun =0;
 					IDM_state =6;		// INSENCE IMPTY
 					buy.StateBuy = INSENCE_EMPTY;
-				  sync_number_celled(IDM.NumberInsenseBuy - buy.TotalIsenseDroped);		// so que da nha ra
+				  sync_number_celled(buy.TotalSale - buy.TotalIsenseDroped);		// so que da nha ra
 					printf("IDM>> EMPTY INSENCE AND WILL RETRY TIME: %d\r\n",IDM.currentRetryCellEmpty);
 					printf("IDM>> CYCLE CELL INSENCE: %d\r\n",IDM.currentTotalInsenseBuy);
 					Led_init(&Led3,125,250,20000);		//20s

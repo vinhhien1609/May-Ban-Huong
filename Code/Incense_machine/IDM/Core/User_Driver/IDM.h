@@ -90,6 +90,7 @@ typedef struct {
 typedef struct {
 	unsigned int Money;
 	unsigned int TotalIsenseDroped;
+	unsigned int TotalSale;
 	unsigned char numberRetry;
 	idm_state_cell_t	StateBuy;
 } BUY_PARA;

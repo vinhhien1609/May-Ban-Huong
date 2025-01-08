@@ -76,6 +76,10 @@ extern uint16_t count_timeout;
 extern uint16_t dht_error;
 uint8_t isLCD_COLOR;
 extern unsigned char key_tick, key_map[];
+
+int ADC_MOTOR=0, ADC_MOTOR_SWAP=0, ADC_M_OLD, ADC_SWAP_OLD, ADC_M_AVG, ADC_SWAP_AVG;
+int I_MOTOR=0, I_SWAP_M=0;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -222,6 +226,7 @@ int main(void)
 	//END init DHT21
 	HAL_TIM_Base_Start_IT(&htim6);
 	HAL_TIM_Base_Start_IT(&htim3);
+	HAL_ADC_Start_IT(&hadc1);
 	Buzz_On(500);
 //	HAL_GPIO_WritePin(CONVEYER_MOTOR_GPIO_Port, CONVEYER_MOTOR_Pin, GPIO_PIN_RESET);
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart1, rx1_buffer, 256);
@@ -232,10 +237,11 @@ int main(void)
 	if(isLCD_COLOR)
 	{
 		Displaypicture(Back_ground);
+		
 //		Active_Window(10,750, 0, 479);
 //		test_TFT_DrawString(0,20,color_yellow);
 		IOT47_GFX_connectToDriver(&RA8875_drawpixel);
-		
+		Displaypicture(Back_ground);		//write again
 //		test_custom();
 //		Displaypicture(1);
 //		while(1)
@@ -541,7 +547,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
   hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T8_TRGO;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 2;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -549,14 +555,9 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
 
-  /** Enable or disable the remapping of ADC1_ETRGREG:
-  * ADC1 External Event regular conversion is connected to TIM8 TRG0
-  */
-  __HAL_AFIO_REMAP_ADC1_ETRGREG_ENABLE();
-
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_10;
+  sConfig.Channel = ADC_CHANNEL_11;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -566,7 +567,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = ADC_REGULAR_RANK_2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
@@ -988,10 +989,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, BUZZER_Pin|KEY_COL1_Pin|KEY_COL2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|Heater_Pin|MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DHT21_Pin|FLASH_CS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(FLASH_CS_GPIO_Port, FLASH_CS_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, Heater_Pin|MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED3_Pin|LED2_Pin|SOLENOID_Pin|SWAP_MOTOR_Pin
@@ -1027,7 +1028,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : DHT21_Pin */
   GPIO_InitStruct.Pin = DHT21_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(DHT21_GPIO_Port, &GPIO_InitStruct);
@@ -1148,13 +1149,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+unsigned int _adc_sample=0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(htim);
 	if(htim->Instance == htim3.Instance)			//1ms
 	{
-//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);		
+//		HAL_GPIO_TogglePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin);
 	}		
 	if(htim->Instance == htim6.Instance)			//1ms
 	{
@@ -1210,6 +1212,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			}			
 		}
 //		HAL_GPIO_WritePin(MCU_LCD_LIGHT_GPIO_Port, MCU_LCD_LIGHT_Pin, GPIO_PIN_RESET);
+		
+		_adc_sample ++;
+		if(_adc_sample>50 && flag_readDHT12==false)
+		{
+			HAL_ADC_Start_IT(&hadc1);
+			_adc_sample=0;
+		}
 	}
 }
 void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
@@ -1219,10 +1228,39 @@ void HAL_RTCEx_RTCEventCallback(RTC_HandleTypeDef *hrtc)
   /* NOTE : This function Should not be modified, when the callback is needed,
             the HAL_RTCEx_RTCEventCallback could be implemented in the user file
    */
-	isSecond =1;
-	isSecond_display ++;
-	timeInterval++;
+	if(hrtc->Instance ==RTC)
+	{
+		isSecond =1;
+		isSecond_display ++;
+		timeInterval++;
+	}
 	
+}
+
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hadc);
+  /* NOTE : This function should not be modified. When the callback is needed,
+            function HAL_ADC_ConvCpltCallback must be implemented in the user file.
+   */
+	
+	if(hadc->Instance == ADC1)
+	{
+		ADC_MOTOR = HAL_ADC_GetValue(&hadc1);
+		ADC_MOTOR_SWAP = HAL_ADC_GetValue(&hadc1);
+		
+		ADC_M_AVG +=(float)(ADC_MOTOR -ADC_M_OLD)/10.0;
+		ADC_M_OLD = ADC_M_AVG;
+		
+		ADC_SWAP_AVG +=(float)(ADC_MOTOR_SWAP - ADC_SWAP_OLD)/10.0;
+		ADC_SWAP_OLD = ADC_SWAP_AVG;
+		I_MOTOR = (ADC_M_AVG*3300)/2048; 
+		I_SWAP_M = (ADC_SWAP_AVG*3300)/2048;		
+		
+		HAL_ADC_Stop_IT(&hadc1);
+	}
 }
 
 

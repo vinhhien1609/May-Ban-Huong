@@ -4,6 +4,7 @@
 #include "vdm_device_config.h"
 
 extern IDM_HARDWARE IDM_Status;
+extern BUY_PARA buy;
 
 #define Read_SRAM	0x03
 #define Write_SRAM	0x02
@@ -418,8 +419,11 @@ void sync_number_celled(uint16_t number_cell)
 	else
 		IDM.currentNumberBuyMore = IDM.NumberBuyMore;
 	
-	if(number_cell < IDM.NumberInsenseBuy)
+	if(number_cell < buy.TotalSale)
+	{
+		if(m_device_config.run_mode== SALES_MODE)	IDM.currentRetryCellEmpty=0;
 		if(IDM.currentRetryCellEmpty)	IDM.currentRetryCellEmpty --;
+	}
 	Write_config();
 }
 
