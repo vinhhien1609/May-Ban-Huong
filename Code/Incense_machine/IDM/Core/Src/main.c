@@ -167,6 +167,7 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 int stt_DHT=0;
+int NV11_res, nv11_timeout_count=0;
 /* USER CODE END 0 */
 
 /**
@@ -343,43 +344,45 @@ int main(void)
 //	{
 //		Write_Byte_Sram(n, n);
 //	}
-	int res;
-	uint8_t nv11_timeout_count=0;//, GSM_connect_timeout=0;
-	uint8_t n, m, isTouch=0, oldTouch=0;
-	char s[30];
-
+	//, GSM_connect_timeout=0;
+	uint8_t Touched=0;//,n, m, oldTouch=0;
+//	char s[30];
 //isTouch = GSLX680_read_data();
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-		res = vdm_NV11_Process(1000);
-		if(res == ERR_POLL_TIMEOUT)
+//		printf("enter_nv11\r\n");
+		NV11_res = vdm_NV11_Process(1000);
+		if(NV11_res == ERR_POLL_TIMEOUT )
 		{
 			nv11_timeout_count++;
 			if(nv11_timeout_count>20)
 			{
+				nv11_timeout_count=0;
 				vdm_NV11_Init();
 			}
 		}
 		else
-			nv11_timeout_count =0;
-		
+			if(NV11_res !=POLL_IDLE)
+				nv11_timeout_count =0;
+//		printf("enter_gsm\r\n");
 		checkGPSCommand();
+//		printf("enter_idm\r\n");
 		Scan_IDM();
+//		printf("enter_glcd\r\n");
 		Menu_draw();
 //		if(ts_event.touch_event == TOUCH_UP)
 //		{
 //			Buzz_On(100);
 //			ts_event.touch_event = NO_TOUCH;
 //		}
-		if(isTouch==0)
-			isTouch = GSLX680_read_data();	
+		if(Touched==0)
+			Touched = GSLX680_read_data();	
 		if(isSecond)
 		{
-
+//			printf("enter_second\r\n");
 //			if(currentTime.second%2)
 //				HAL_GPIO_WritePin(TOUCH_RST_GPIO_Port, TOUCH_RST_Pin, GPIO_PIN_SET);
 //			else
@@ -401,7 +404,7 @@ int main(void)
 				vdm_app_gsm_send_heartbeat();
 			}
 			count_timeout ++;
-			if(GSM.CSQ>10)
+//			if(GSM.CSQ>10)
 				TCP_connect();
 //			GSM_connect_timeout ++;
 //			if(GSM_connect_timeout>60)

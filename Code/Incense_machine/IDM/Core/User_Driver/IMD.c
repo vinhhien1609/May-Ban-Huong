@@ -242,7 +242,8 @@ void Scan_IDM(void)
 				State = IDM_state;
 				printf("CELL>> %d\r\n", IDM_state);
 				IDM.currentRetryCellEmpty = IDM.retryCellEmpty;
-				sync_number_celled(IDM.NumberInsenseBuy);
+//Hiendv				sync_number_celled(IDM.NumberInsenseBuy);
+				sync_number_celled(buy.TotalSale);
 			  printf("IDM>> CYCLE CELL INSENCE: %d\r\n",IDM.currentTotalInsenseBuy);				
 			}
 			else

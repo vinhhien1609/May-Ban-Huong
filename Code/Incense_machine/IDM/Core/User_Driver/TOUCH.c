@@ -439,6 +439,7 @@ void TOUCH_Init(void)
 //	_GSLX680_startup_chip();
 	_GSLX680_reset_chip();
 	_GSLX680_startup_chip();
+	
 }
 
 

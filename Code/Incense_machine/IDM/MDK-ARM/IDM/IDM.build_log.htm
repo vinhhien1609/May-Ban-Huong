@@ -27,28 +27,62 @@ Project File Date:  01/08/2025
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'IDM'
-compiling main.c...
-../Core/User_Driver/GSM_app.h(37): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/User_Driver/keyboard.h(41): warning:  #1295-D: Deprecated declaration get_vitual_key - give arg types
-  unsigned char get_vitual_key();
-../Core/User_Driver/draw_font/graphic.h(81): warning:  #47-D: incompatible redefinition of macro "BLACK"  (declared at line 16 of "../Core/User_Driver/GLCD.h")
+compiling user_gui.c...
+..\Core\User_Driver\vdm_language.h(104): warning:  #1295-D: Deprecated declaration vdm_language_get_current_lang - give arg types
+  vdm_language_t vdm_language_get_current_lang();
+../Core/User_Driver/draw_font/graphic.h(82): warning:  #47-D: incompatible redefinition of macro "BLACK"  (declared at line 16 of "..\Core\User_Driver\GLCD.h")
   #define BLACK             0x0000      
-../Core/Src/main.c(243): warning:  #167-D: argument of type "void (*)(int16_t, int16_t, uint16_t)" is incompatible with parameter of type "Driver_function"
-  		IOT47_GFX_connectToDriver(&RA8875_drawpixel);
-../Core/Src/main.c(348): warning:  #177-D: variable "n"  was declared but never referenced
-  	uint8_t n, m, isTouch=0, oldTouch=0;
-../Core/Src/main.c(348): warning:  #177-D: variable "m"  was declared but never referenced
-  	uint8_t n, m, isTouch=0, oldTouch=0;
-../Core/Src/main.c(348): warning:  #177-D: variable "oldTouch"  was declared but never referenced
-  	uint8_t n, m, isTouch=0, oldTouch=0;
-../Core/Src/main.c(349): warning:  #177-D: variable "s"  was declared but never referenced
-  	char s[30];
-../Core/Src/main.c: 8 warnings, 0 errors
+..\Core\User_Driver\user_gui.c(53): warning:  #188-D: enumerated type mixed with another type
+  Display_Typedef current_display=DIS_Home, old_display=255, last_DIS=0;
+..\Core\User_Driver\user_gui.c(53): warning:  #188-D: enumerated type mixed with another type
+  Display_Typedef current_display=DIS_Home, old_display=255, last_DIS=0;
+..\Core\User_Driver\user_gui.c(294): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT+(point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(311): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ID_MACHINE+(point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(402): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ERR_MOTOR+(sub1_point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(233): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "reven"  (declared at line 364)
+  		switch(current_display)
+  		^
+..\Core\User_Driver\user_gui.c(751): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_TOTAL_MOUNT+(point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(803): warning:  #188-D: enumerated type mixed with another type
+  					current_display = sub1_point + DIS_DAY;
+..\Core\User_Driver\user_gui.c(957): warning:  #188-D: enumerated type mixed with another type
+  					current_display = DIS_ERROR_MOTOR + sub1_point;
+..\Core\User_Driver\user_gui.c(969): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ERR_MOTOR+(sub1_point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(1228): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ID_MACHINE+(point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(524): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "point_pos"  (declared at line 778)
+            variable "monthday"  (declared at line 815)
+  		switch(current_display)
+  		^
+..\Core\User_Driver\user_gui.c(1762): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ERR_MOTOR+(sub1_point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(1371): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "revenTotal"  (declared at line 1645)
+  		switch(current_display)
+  		^
+..\Core\User_Driver\user_gui.c(2668): warning:  #188-D: enumerated type mixed with another type
+  					current_display = DIS_ERROR_MOTOR + sub1_point;
+..\Core\User_Driver\user_gui.c(2680): warning:  #188-D: enumerated type mixed with another type
+  						GLcd_DrawStringUni(vdm_language_get_text(VDM_LANG_ERR_MOTOR+(sub1_point/3)*3 +n),10, 10 + n*15, WHITE);
+..\Core\User_Driver\user_gui.c(3046): warning:  #188-D: enumerated type mixed with another type
+  							m_device_config.run_mode=temp_data_Menu;						
+..\Core\User_Driver\user_gui.c(2030): warning:  #546-D: transfer of control bypasses initialization of:
+            variable "point_pos"  (declared at line 2491)
+            variable "monthday"  (declared at line 2508)
+  		switch(current_display)
+  		^
+..\Core\User_Driver\user_gui.c: 20 warnings, 0 errors
 linking...
-Program Size: Code=76714 RO-data=82634 RW-data=3124 ZI-data=9724  
+Program Size: Code=79054 RO-data=82762 RW-data=3260 ZI-data=9724  
 FromELF: creating hex file...
-"IDM\IDM.axf" - 0 Error(s), 8 Warning(s).
+"IDM\IDM.axf" - 0 Error(s), 20 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -71,7 +105,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.3.0
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

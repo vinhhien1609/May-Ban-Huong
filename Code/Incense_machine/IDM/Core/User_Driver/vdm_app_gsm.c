@@ -1108,24 +1108,24 @@ void vdm_app_gsm_send_heartbeat()
 #endif
 }
 
-//void vdm_app_gsm_send_qrm_error_frame(void)
-//{
-//    m_error_frame.id = VDM_APP_GSM_ID_QRM_ERROR;
-//    m_error_frame.error_status = VDM_APP_GSM_FIXED_ERROR;
-//    rtc_date_time_t time;
-//    get_time(&time);
+void vdm_app_gsm_send_qrm_error_frame(void)
+{
+    m_error_frame.id = VDM_APP_GSM_ID_QRM_ERROR;
+    m_error_frame.error_status = VDM_APP_GSM_FIXED_ERROR;
+    rtc_date_time_t time;
+    get_time(&time);
 
-//    // Insert timestamp to message
-//    SET_MESSAGE_TIME(m_error_frame, time);
+    // Insert timestamp to message
+    SET_MESSAGE_TIME(m_error_frame, time);
 
-//    uint32_t crc_size = offsetof(vdm_app_gsm_notify_error_frame_t, crc) - offsetof(vdm_app_gsm_notify_error_frame_t, split_0);
+    uint32_t crc_size = offsetof(vdm_app_gsm_notify_error_frame_t, crc) - offsetof(vdm_app_gsm_notify_error_frame_t, split_0);
 
-//    m_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_error_frame.split_0,
-//                                              crc_size);
+    m_error_frame.crc = crc_calculator_xmodem((uint8_t *)&m_error_frame.split_0,
+                                              crc_size);
 
-//    /* Luu du lieu vao ROM */
-//    send_frame(VDM_APP_GSM_MAIN_SERVER, m_error_frame.cmd, (uint8_t *)&m_error_frame, sizeof(m_error_frame));
-//}
+    /* Luu du lieu vao ROM */
+    send_frame(VDM_APP_GSM_MAIN_SERVER, m_error_frame.cmd, (uint8_t *)&m_error_frame, sizeof(m_error_frame));
+}
 
 //void vdm_app_gsm_send_qrm_resume_frame(void)
 //{

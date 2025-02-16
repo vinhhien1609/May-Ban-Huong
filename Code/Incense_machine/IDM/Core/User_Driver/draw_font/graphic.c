@@ -560,6 +560,16 @@ unsigned char uFontMakerPutChar(int16_t x,int16_t y,uint16_t txt,const uFont *my
 //	}
 //}
 
+uint16_t FontGetWidth(const char *s)
+{
+	uint16_t x_max=0;
+	 while(*s)
+   {
+		 s++;
+		 x_max +=21;
+   }
+	 return x_max;
+}
 
 uint16_t FontMakerGetWidth(const char *s,const uFont *my_font)
 {

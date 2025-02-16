@@ -413,7 +413,12 @@ void sync_number_celled(uint16_t number_cell)
 	
 	if(IDM_Status.isEmptyIsenseSW)		// không tác dong
 	{
-		if(IDM.currentNumberBuyMore < number_cell)	IDM.currentNumberBuyMore =0;
+		if(IDM.currentNumberBuyMore < number_cell)
+		{		
+			IDM.currentNumberBuyMore =0;
+			m_device_config.sensor_error.name.payout =1;
+			m_device_config.sensor_error.error =1;
+		}
 		else	IDM.currentNumberBuyMore -=number_cell;
 	}
 	else
@@ -421,8 +426,13 @@ void sync_number_celled(uint16_t number_cell)
 	
 	if(number_cell < buy.TotalSale)
 	{
-		if(m_device_config.run_mode== SALES_MODE)	IDM.currentRetryCellEmpty=0;
-		if(IDM.currentRetryCellEmpty)	IDM.currentRetryCellEmpty --;
+		if(m_device_config.run_mode== SALES_MODE)
+		{
+			IDM.currentRetryCellEmpty=0;
+			m_device_config.sensor_error.name.payout =1;
+			m_device_config.sensor_error.error =1;
+		}
+		if(IDM.currentRetryCellEmpty>0 && m_device_config.run_mode== FIX_MODE)	IDM.currentRetryCellEmpty --;
 	}
 	Write_config();
 }

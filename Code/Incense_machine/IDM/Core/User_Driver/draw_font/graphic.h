@@ -65,6 +65,7 @@ void uFontMakerPutString(int16_t x,int16_t y,const char *s,const uFont *my_font,
 unsigned char uFontMakerPutCharTRANPARENT(int16_t x,int16_t y,uint16_t txt,const uFont *my_font,uint32_t color);
 void uFontMakerPutStringTRANPARENT(int16_t x,int16_t y,const char *s,const uFont *my_font,uint32_t color);
 uint16_t FontMakerGetWidth(const char *s,const uFont *my_font);
+uint16_t FontGetWidth(const char *s);
 //----------------------------------------------------------------------------------------------------
 
 //#define WHITE_             0xFFFF

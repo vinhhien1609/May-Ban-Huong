@@ -320,7 +320,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 //			GSM_buffer_DMA[n]=NULL;
 //		}
 		temp = bottomQueue;
-		bottomQueue =Size;
+		bottomQueue =Size-1;
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart3, GSM_buffer, MAX_QUEUE);
 
 //		if(bottomQueue >=MAX_QUEUE)	bottomQueue-=MAX_QUEUE;

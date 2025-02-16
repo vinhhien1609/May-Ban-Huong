@@ -4,7 +4,7 @@
 #include "vdm_device_config.h"
 
 #define MAX_TIMEOUT_4G	200	//second
-#define MaxCommand_GSM	14	//added 05/07/2010
+#define MaxCommand_GSM	16	//added 05/07/2010
 #define MaxCommand_GSMLength	26	//added 05/07/2010
 
 char APN[20];
@@ -26,6 +26,8 @@ unsigned char commandGSMList[MaxCommand_GSM][MaxCommand_GSMLength]={
 																"45202",	//vinaphone
 																"45207",	//Gmobile
 																"45205",	//vietnammobile	
+																"SIM REMOVED",
+																"+CME ERROR",
 															  };	//added 05/07/2010
 
 //uint8_t queueUART2[];	//receiver queue
@@ -41,6 +43,7 @@ char s[50], ip_server[16];
 
 void GSM_init(void)
 {
+	GSM_Off();
 	topQueue=0;
 	bottomQueue=0;
 	GSM.Connect4G =0;
@@ -98,6 +101,16 @@ void TCP_send(uint8_t *data, uint32_t length)
 void TCP_reconnect(void)
 {
 	TCP_step =0;
+	GSM_Off();
+	topQueue=0;
+	bottomQueue=0;
+	GSM.Connect4G =0;
+	GSM.Connect_State =0;
+	GSM.CSQ =0;
+	GSM.repone =0;
+	GSM.SimReady =255;
+	GSM_UART_init();
+	GSM_On();
 }
 
 void TCP_connect(void)
@@ -108,115 +121,120 @@ void TCP_connect(void)
 		GSM_init();
 		count_timeout =0;
 	}
-	switch(TCP_step)
+	if((GSM.SimReady!=1 || TCP_step==6) && (currentTime.second%5==0))
+		HAL_UART_Transmit_DMA(&huart3,(uint8_t*)"AT+CPIN?\r\n",10);
+	if(GSM.SimReady==1)
 	{
-		case 0:
-			if(current_TCP_step != TCP_step)
-			{
-				current_TCP_step = TCP_step;
-				AT_respone =AT_SENDING;
-				AT_timeout =0;
-				sprintf(s, "AT+COPS?\r\n");
-				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-				GSM.Connect4G =0;
-			}
-			else
-			{
-				if(AT_timeout>2000)
+		switch(TCP_step)
+		{
+			case 0:
+				if(current_TCP_step != TCP_step)
 				{
-					AT_timeout=0;
+					current_TCP_step = TCP_step;
+					AT_respone =AT_SENDING;
+					AT_timeout =0;
+					sprintf(s, "AT+COPS?\r\n");
 					HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-				}				
-			}
-			break;			
-		case 1:
-			if(current_TCP_step != TCP_step)
-			{
-				current_TCP_step = TCP_step;
-				AT_respone =AT_SENDING;
-				AT_timeout =0;
-				sprintf(s, "AT+QICSGP=1,1,\"%s\",\"%s\",\"%s\",1\r\n", APN, USER, PASS);
-				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-			}
-			else
-			{
-				if(AT_respone==OK)
-					TCP_step =2;
+					GSM.Connect4G =0;
+				}
 				else
+				{
 					if(AT_timeout>2000)
 					{
 						AT_timeout=0;
 						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
 					}				
-			}
-			break;
-			
-		case 2:
-			if(current_TCP_step != TCP_step)
-			{
-				current_TCP_step = TCP_step;
-				AT_respone =AT_SENDING;
-				AT_timeout =0;
-				sprintf(s, "AT+QIACT=1\r\n");
-				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-			}
-			else
-			{
-				if(AT_respone==OK)
-					TCP_step =3;
-				else
-					if(AT_timeout>2000)
-					{
-						AT_timeout=0;
-						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-					}
-			}
-			break;
-		case 3:
-			if(current_TCP_step != TCP_step)
-			{
-				current_TCP_step = TCP_step;
-				AT_respone =AT_SENDING;
-				AT_timeout =0;
-				sprintf(s, "AT+NETOPEN\r\n");
-				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-			}
-			else
-			{
-				if(AT_respone==OK)
-					TCP_step =5;
+				}
+				break;			
+			case 1:
+				if(current_TCP_step != TCP_step)
+				{
+					current_TCP_step = TCP_step;
+					AT_respone =AT_SENDING;
+					AT_timeout =0;
+					sprintf(s, "AT+QICSGP=1,1,\"%s\",\"%s\",\"%s\",1\r\n", APN, USER, PASS);
+					HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+				}
 				else
 				{
-					if(AT_timeout>2000)
-					{
-						AT_timeout=0;						
-						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
-					}	
-				}					
-			}
-			break;
-		case 5:
-			if(current_TCP_step != TCP_step)
-			{
-				current_TCP_step = TCP_step;
-				AT_respone =AT_SENDING;
-				AT_timeout =0;
-				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"%s\",%d\r\n", ip_server, Port);
-//				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"14.231.219.132\",9201\r\n");
-				HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
-			}
-			else
-			{
-				if(AT_respone==OK)
-					TCP_step =6;
+					if(AT_respone==OK)
+						TCP_step =2;
+					else
+						if(AT_timeout>2000)
+						{
+							AT_timeout=0;
+							HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+						}				
+				}
+				break;
+				
+			case 2:
+				if(current_TCP_step != TCP_step)
+				{
+					current_TCP_step = TCP_step;
+					AT_respone =AT_SENDING;
+					AT_timeout =0;
+					sprintf(s, "AT+QIACT=1\r\n");
+					HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+				}
 				else
-					if(AT_timeout>2000)
+				{
+					if(AT_respone==OK)
+						TCP_step =3;
+					else
+						if(AT_timeout>2000)
+						{
+							AT_timeout=0;
+							HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+						}
+				}
+				break;
+			case 3:
+				if(current_TCP_step != TCP_step)
+				{
+					current_TCP_step = TCP_step;
+					AT_respone =AT_SENDING;
+					AT_timeout =0;
+					sprintf(s, "AT+NETOPEN\r\n");
+					HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+				}
+				else
+				{
+					if(AT_respone==OK)
+						TCP_step =5;
+					else
 					{
-						AT_timeout=0;						
-						HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
-					}						
-			}
-			break;
+						if(AT_timeout>2000)
+						{
+							AT_timeout=0;						
+							HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
+						}	
+					}					
+				}
+				break;
+			case 5:
+				if(current_TCP_step != TCP_step)
+				{
+					current_TCP_step = TCP_step;
+					AT_respone =AT_SENDING;
+					AT_timeout =0;
+					sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"%s\",%d\r\n", ip_server, Port);
+	//				sprintf(s, "AT+CIPOPEN=1,\"TCP\",\"14.231.219.132\",9201\r\n");
+					HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));
+				}
+				else
+				{
+					if(AT_respone==OK)
+						TCP_step =6;
+					else
+						if(AT_timeout>2000)
+						{
+							AT_timeout=0;						
+							HAL_UART_Transmit_DMA(&huart3,(uint8_t*)s,strlen(s));	
+						}						
+				}
+				break;
+		}
 	}
 }	
  
@@ -259,8 +277,13 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 					switch (i)
 					{
 						case	0:	// position data (including position, velocity and time).
-							GSM.SimReady =1;
-							HAL_UART_Transmit_DMA(&huart3,"AT+AUTOCSQ=1,0\r\n",17);
+							if(GSM.SimReady!=1)
+							{
+								TCP_step =0;
+								current_TCP_step=255;
+								GSM.SimReady =1;
+								HAL_UART_Transmit_DMA(&huart3,"AT+AUTOCSQ=1,0\r\n",17);
+							}
 						break;
 							
 							//GGA
@@ -318,7 +341,15 @@ unsigned char checkGPSCommand(void)		//check all in commandGPSList	added in 05/0
 						sprintf(USER,"");
 						sprintf(PASS,"");			
 						TCP_step =1;		//start connect TCP/IP
-						break;					
+						break;
+					case 14:
+						GSM.SimReady = 0;
+						GSM.CSQ =0;
+						break;
+					case 15:
+						GSM.SimReady = 0;
+						GSM.CSQ =0;				
+						break;
 					case 5:
 						AT_respone = NETOPEN_READY;
 						TCP_step = 5;

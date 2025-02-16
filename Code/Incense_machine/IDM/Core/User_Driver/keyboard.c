@@ -161,8 +161,8 @@ unsigned char get_vitual_key()
 
 void show_Vitual_confirm_key(void)
 {
-	uint16_t n, m, point_x= 470, point_y= 140, b_w = 270, b_h= 90;
-	char s[20], key_matrix[12] = {'1','2','3','4','5','6','7','8','9','*','0','#'};	
+	uint16_t point_x= 470, point_y= 140, b_w = 270, b_h= 90;
+	char s[20];//, key_matrix[12] = {'1','2','3','4','5','6','7','8','9','*','0','#'};	
 	if(sta_up==false)
 	{
 		sta_up=true;

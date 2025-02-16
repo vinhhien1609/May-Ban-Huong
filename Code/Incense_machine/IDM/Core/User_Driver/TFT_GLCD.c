@@ -1085,7 +1085,7 @@ extern const uint8_t Arial94853[];
 unsigned char PutChar(int16_t x,int16_t y,uint16_t txt,const Font *my_font,uint32_t color)
 {
     unsigned int str = my_font->font_map[txt];
-		unsigned char z=1;
+//		unsigned char z=1;
 	 uint8_t temp;	
 		int w = my_font->font[str-4]; //lấy chiều rộng Font
     int size_w = (((my_font->font[str-4]-1)/8)+1)*8; //lấy chiều rộng Font

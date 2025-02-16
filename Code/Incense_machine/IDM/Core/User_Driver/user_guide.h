@@ -70,6 +70,8 @@ typedef enum displayType{
 	DIS_PRICE_SET,
 	DIS_PHONE_NUMBER,
 	DIS_NUMBER_CELL_ERROR,
+	DIS_VERSION_INFO,
+	DIS_MOTOR_PROTECT,
 	TOTAL_DISPLAY,
 } Display_Typedef;
 #endif

@@ -2050,11 +2050,13 @@ static void vdm_parse_poll(SSP_COMMAND *sspC, SSP_POLL_DATA6 *poll, bool lock)
 	m_nv11_initialized = true;
 }
 
+uint32_t m_old_tick = 0;
+
 int8_t vdm_NV11_Process(uint32_t poll_time)
 {
 	SSP_RESPONSE_ENUM m_rsp_status;
 	SSP_POLL_DATA6 m_poll;
-	static uint32_t m_old_tick = 0;
+
 	
 	uint32_t now = HAL_GetTick();//cmt_by_duclq
   if (now - m_old_tick > (uint32_t)poll_time)
@@ -2066,7 +2068,7 @@ int8_t vdm_NV11_Process(uint32_t poll_time)
 				if (m_rsp_status == SSP_RESPONSE_TIMEOUT) /* Neu phan hoi su kien ve la SSP_RESPONSE_TIMEOUT */
 				{
 						// If the poll timed out, then give up
-						DEBUG_ERROR("NV11 >> SSP Poll Timeout\r\n"); /* Bao len man hinh debug */
+						//DEBUG_ERROR("NV11 >> SSP Poll Timeout\r\n"); /* Bao len man hinh debug */
 					m_nv11_initialized = false;
 					return ERR_POLL_TIMEOUT;
 				}

@@ -270,17 +270,17 @@ float evalTemperature(uint8_t* data, uint8_t len, DHT_TypeDef type)
 }
 
 
-
+uint32_t count_wait=0;
 uint32_t waitForPulse(uint8_t level){
 
 //	resetTick_us();
-	uint32_t count_wait=0;
-
+	
+count_wait=0;
 	while (HAL_GPIO_ReadPin(DHT_GPIO_conf, DHT_PIN_conf) == level) {
 //	    if (getTick_us() >= MAX_WAIT_TIME_US) {
 //				time_test = count_wait;
 				if(count_wait++ >=MAX_WAIT_TIME_US)	{
-				printf("HDT21>> Timeout\r\n");
+				printf("HDT21>> Timeout %d\r\n", count_wait);
 				flag_readDHT12= false;
 	      return TIMEOUT; // Exceeded timeout, fail.
 	    }

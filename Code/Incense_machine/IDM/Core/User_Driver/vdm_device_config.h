@@ -92,6 +92,14 @@ typedef struct
     uint8_t mic_volume;
 } __attribute__((packed)) vdm_device_config_volume_t;
 
+typedef struct
+{
+    /* Volume from 0 to 100 */
+    uint16_t max_current_conveyer;
+		uint16_t max_current_swap;
+		uint8_t trip_over;
+} __attribute__((packed)) vdm_device_config_motor_t;
+
 typedef union __attribute__((packed))
 {
     struct __attribute__((packed))
@@ -239,6 +247,7 @@ typedef struct
     uint8_t qrm_supplier;
     vdm_device_config_motor_calibrate_t motor_calib;
 		vdm_run_mode_t run_mode;
+		vdm_device_config_motor_t motor;
     uint8_t reserve[10]; // Reverse for feature use
 } __attribute__((packed)) vdm_device_config_t;
 

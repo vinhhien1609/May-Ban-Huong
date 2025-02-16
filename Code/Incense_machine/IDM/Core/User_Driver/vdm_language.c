@@ -124,6 +124,10 @@ const char *m_lang_txt[VDM_LANG_ID_MAX][VDM_LANG_MAX] =
 		{		"SỐ ĐIỆN THOẠI LIÊN HỆ", "PHONE NUMBER"},
 		{		"SỐ LẦN BÁN LỖI", "SALE ERROR NUMBER"},	//VDM_LANG_NUMBER_SALE_ERROR
 		{		"XÁC NHẬN", "ACCEPT"},	//VDM_LANG_ACCEPT
+		{		"THÔNG TIN THIẾT BỊ", "HARDWARE INFO"},	//VDM_LANG_VERION_INFO
+		{		"BẢO VỆ ĐỘNG CƠ", "PROTECT MOTOR"},	//VDM_PROTECT_MOTOR
+		{		"BĂNG TẢI"	, "CONVEYOR"},	
+		{		"ĐẢO HƯƠNG"	, "SWAP"},
 };
 
 static vdm_language_t m_current_language = VDM_LANG_VNI; /* Ngon ngu khai bao ban dau: Tieng Viet*/

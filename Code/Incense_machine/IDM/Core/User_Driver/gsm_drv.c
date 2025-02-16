@@ -15,9 +15,9 @@ void GSM_PWR(GPIO_PinState pwr)
 void GSM_On(void)
 {
 	GSM_PWR(ON);
-	HAL_Delay(500);
-	HAL_GPIO_WritePin(GSM_PWKEY_GPIO_Port, GSM_PWKEY_Pin, GPIO_PIN_SET);
 	HAL_Delay(1000);
+	HAL_GPIO_WritePin(GSM_PWKEY_GPIO_Port, GSM_PWKEY_Pin, GPIO_PIN_SET);
+	HAL_Delay(1500);
 	HAL_GPIO_WritePin(GSM_PWKEY_GPIO_Port, GSM_PWKEY_Pin, GPIO_PIN_RESET);
 }
 void GSM_Off(void)
@@ -26,4 +26,5 @@ void GSM_Off(void)
 //	HAL_Delay(1000);
 //	HAL_GPIO_WritePin(GSM_PWKEY_GPIO_Port, GSM_PWKEY_Pin, GPIO_PIN_RESET);
 	GSM_PWR(OFF);
+	HAL_Delay(2000);
 }

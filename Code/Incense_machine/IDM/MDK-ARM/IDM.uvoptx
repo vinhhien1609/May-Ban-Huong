@@ -158,37 +158,37 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>imageHeader</ItemText>
+          <ItemText>m_nv11_initialized</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>header</ItemText>
+          <ItemText>IDM,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_nv11_initialized</ItemText>
+          <ItemText>count,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Led2</ItemText>
+          <ItemText>current_display</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_device_config,0x0A</ItemText>
+          <ItemText>count_timeout,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>IDM,0x0A</ItemText>
+          <ItemText>key_tick,0x10</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>count,0x0A</ItemText>
+          <ItemText>m_device_config,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
@@ -198,117 +198,127 @@
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>State,0x0A</ItemText>
+          <ItemText>buy</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>count_timeout,0x0A</ItemText>
+          <ItemText>current_display</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>current_display</ItemText>
+          <ItemText>m_lastest_note,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>buy</ItemText>
+          <ItemText>m_last_n11_event,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>APN</ItemText>
+          <ItemText>isSecond_display,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>USER</ItemText>
+          <ItemText>show_time,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>1</WinNumber>
-          <ItemText>PASS</ItemText>
+          <ItemText>DHT_21,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>count_timeout,0x0A</ItemText>
+          <ItemText>_adc_sample,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>key_tick,0x10</ItemText>
+          <ItemText>m_old_tick</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_device_config,0x0A</ItemText>
+          <ItemText>isTouch</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>IDM_state,0x0A</ItemText>
+          <ItemText>sub1_point</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>1</WinNumber>
-          <ItemText>buy</ItemText>
+          <ItemText>old_point</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
           <WinNumber>1</WinNumber>
-          <ItemText>current_display</ItemText>
+          <ItemText>timeInterval,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>21</count>
           <WinNumber>1</WinNumber>
-          <ItemText>key_pressed</ItemText>
+          <ItemText>count_wait,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>22</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ts_event</ItemText>
+          <ItemText>count_timeout,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>23</count>
           <WinNumber>1</WinNumber>
-          <ItemText>s</ItemText>
+          <ItemText>stt_DHT</ItemText>
         </Ww>
         <Ww>
           <count>24</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_lastest_note,0x0A</ItemText>
+          <ItemText>TCP_step,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>25</count>
           <WinNumber>1</WinNumber>
-          <ItemText>m_last_n11_event,0x0A</ItemText>
+          <ItemText>nv11_timeout_count,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>26</count>
           <WinNumber>1</WinNumber>
-          <ItemText>isSecond_display,0x0A</ItemText>
+          <ItemText>NV11_res,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>27</count>
           <WinNumber>1</WinNumber>
-          <ItemText>show_time,0x0A</ItemText>
+          <ItemText>topQueue,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>28</count>
           <WinNumber>1</WinNumber>
-          <ItemText>hdht</ItemText>
+          <ItemText>bottomQueue,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>29</count>
           <WinNumber>1</WinNumber>
-          <ItemText>DHT_21,0x0A</ItemText>
+          <ItemText>GSM_buffer</ItemText>
         </Ww>
         <Ww>
           <count>30</count>
           <WinNumber>1</WinNumber>
-          <ItemText>_adc_sample,0x0A</ItemText>
+          <ItemText>GSM,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>31</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>current_TCP_step,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>32</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>AT_timeout,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -351,6 +361,11 @@
           <count>7</count>
           <WinNumber>2</WinNumber>
           <ItemText>I_MOTOR,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\IDM\../Core/User_Driver/GSM_APP.c\bottomQueue,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>
